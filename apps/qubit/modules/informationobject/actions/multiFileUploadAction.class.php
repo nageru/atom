@@ -44,8 +44,8 @@ class InformationObjectMultiFileUploadAction extends sfAction
     }
 
     // Add javascript libraries
-    $this->response->addJavaScript('/vendor/yui/logger/logger', 'last');
-    $this->response->addJavaScript('/vendor/yui/uploader/uploader-min', 'last');
+    $this->response->addJavaScript('/vendor/uppy/uppy-bundle.js', 'last');
+    $this->response->addStylesheet('/vendor/uppy/uppy-bundle.css', 'last');
     $this->response->addJavaScript('multiFileUpload', 'last');
 
     // Get max upload size limits
@@ -131,16 +131,10 @@ class InformationObjectMultiFileUploadAction extends sfAction
         $digitalObject->save();
       }
 
-      $thumbnailIsGeneric = (bool) strstr($file['thumb'], 'generic-icons');
-
       // Clean up temp files
       if (file_exists("$tmpPath/$file[tmpName]"))
       {
         unlink("$tmpPath/$file[tmpName]");
-      }
-      if (!$thumbnailIsGeneric && file_exists("$tmpPath/$file[thumb]"))
-      {
-        unlink("$tmpPath/$file[thumb]");
       }
     }
 

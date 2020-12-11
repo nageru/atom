@@ -22,18 +22,6 @@
     </section>
   </noscript>
 
-  <div id="no-flash" style="display: none;">
-    <div class="messages warning">
-      <?php echo __('Your browser does not have Flash player installed. To import digital objects, please <a href="https://get.adobe.com/flashplayer/">Download Adobe Flash Player</a> (requires version 9.0.45 or higher)') ?>
-    </div>
-
-    <section class="actions">
-      <ul>
-        <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject'), array('class' => 'c-btn')) ?></li>
-      </ul>
-    </section>
-  </div>
-
   <?php if (QubitDigitalObject::reachedAppUploadLimit()): ?>
 
     <div id="upload_limit_reached">
@@ -52,7 +40,7 @@
 
     <?php echo $form->renderGlobalErrors() ?>
 
-    <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'informationobject', 'action' => 'multiFileUpload')), array('id' => 'multiFileUploadForm', 'style' => 'display: none')) ?>
+    <?php echo $form->renderFormTag(url_for(array($resource, 'module' => 'informationobject', 'action' => 'multiFileUpload')), array('id' => 'multiFileUploadForm', 'style' => 'inline')) ?>
 
       <?php echo $form->renderHiddenFields() ?>
 
@@ -71,7 +59,7 @@
             ->label(__('Level of description'))
             ->renderRow() ?>
 
-          <div class="multiFileUpload section">
+          <div class="multiFileUploadSection">
 
             <h3><?php echo __('Digital objects') ?></h3>
 
@@ -79,13 +67,10 @@
 
             <div id="uiElements" style="display: inline;">
               <div id="uploaderContainer">
-                <div id="uploaderOverlay" style="position: absolute; z-index: 2;"></div>
-                <div id="selectFilesLink" style="z-index: 1"><a id="selectLink" href="#">Select files</a></div>
+                  <div class="uppy-dashboard"></div>
               </div>
             </div>
-
           </div>
-
         </fieldset>
 
       </section>
@@ -104,41 +89,29 @@
 <?php end_slot() ?>
 
 <?php slot('after-content') ?>
-  <?php echo javascript_tag(<<<content
-// If JavaScript and Flash Player installed
-if (0 == YAHOO.deconcept.SWFObjectUtil.getPlayerVersion().major)
-{
-  var noflash = jQuery('#no-flash');
-  noflash.show();
-}
-else
-{
-  jQuery('form#multiFileUploadForm').show();
-}
 
-// Uncomment following line to enable logging to Firebug or Safari js console
-//YAHOO.widget.Logger.enableBrowserConsole();
-
-YAHOO.widget.Uploader.SWFURL = '$uploadSwfPath';
-
-Qubit.multiFileUpload.maxUploadSize = '$maxUploadSize';
-Qubit.multiFileUpload.uploadTmpDir = '$uploadTmpDir';
+<?php echo javascript_tag(<<<content
+//Qubit.multiFileUpload.maxUploadSize = '$maxUploadSize';
+//Qubit.multiFileUpload.uploadTmpDir = '$uploadTmpDir';
 Qubit.multiFileUpload.uploadResponsePath = '$uploadResponsePath';
 Qubit.multiFileUpload.objectId = '$resource->id';
 Qubit.multiFileUpload.thumbWidth = 150;
 
-Qubit.multiFileUpload.i18nUploading = '{$sf_context->i18n->__('Uploading...')}';
-Qubit.multiFileUpload.i18nLoadingPreview = '{$sf_context->i18n->__('Loading preview...')}';
-Qubit.multiFileUpload.i18nWaiting = '{$sf_context->i18n->__('Waiting...')}';
-Qubit.multiFileUpload.i18nUploadError = '{$sf_context->i18n->__('Upload error, retry?')}';
+Qubit.multiFileUpload.i18nClear = '{$sf_context->i18n->__('Clear')}';
 Qubit.multiFileUpload.i18nInfoObjectTitle = '{$sf_context->i18n->__('Title')}';
-Qubit.multiFileUpload.i18nFilename  = '{$sf_context->i18n->__('Filename')}';
-Qubit.multiFileUpload.i18nFilesize  = '{$sf_context->i18n->__('Filesize')}';
-Qubit.multiFileUpload.i18nDelete = '{$sf_context->i18n->__('Delete')}';
-Qubit.multiFileUpload.i18nCancel = '{$sf_context->i18n->__('Cancel')}';
-Qubit.multiFileUpload.i18nStart = '{$sf_context->i18n->__('Start')}';
-Qubit.multiFileUpload.i18nDuplicateFile = '{$sf_context->i18n->__('Warning: duplicate of %1%')}';
-Qubit.multiFileUpload.i18nOversizedFile = '{$sf_context->i18n->__('This file couldn\\\'t be uploaded because of file size upload limits')}';
+//Qubit.multiFileUpload.i18nUploading = '{$sf_context->i18n->__('Uploading...')}';
+//Qubit.multiFileUpload.i18nLoadingPreview = '{$sf_context->i18n->__('Loading preview...')}';
+//Qubit.multiFileUpload.i18nWaiting = '{$sf_context->i18n->__('Waiting...')}';
+Qubit.multiFileUpload.i18nUploadError = '{$sf_context->i18n->__('Some files failed to upload. Press the \\\'Import\\\' button to continue importing anyways, or press \\\'Retry\\\' to re-attempt upload.')}';
+Qubit.multiFileUpload.i18nRetrySuccess = '{$sf_context->i18n->__('Files successfully uploaded! Press the \\\'Import\\\' button to complete the import.')}';
+//Qubit.multiFileUpload.i18nFilename  = '{$sf_context->i18n->__('Filename')}';
+//Qubit.multiFileUpload.i18nFilesize  = '{$sf_context->i18n->__('Filesize')}';
+//Qubit.multiFileUpload.i18nDelete = '{$sf_context->i18n->__('Delete')}';
+//Qubit.multiFileUpload.i18nCancel = '{$sf_context->i18n->__('Cancel')}';
+//Qubit.multiFileUpload.i18nStart = '{$sf_context->i18n->__('Start')}';
+//Qubit.multiFileUpload.i18nDuplicateFile = '{$sf_context->i18n->__('Warning: duplicate of %1%')}';
+//Qubit.multiFileUpload.i18nOversizedFile = '{$sf_context->i18n->__('This file couldn\\\'t be uploaded because of file size upload limits')}';
+//Qubit.multiFileUpload.uploadResponsePath = '$uploadResponsePath';
 
 content
 ) ?>
