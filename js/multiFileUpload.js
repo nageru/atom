@@ -6,7 +6,16 @@
 
   var MultiFileUpload = function (element)
   {
-    this.uppy = new Uppy.Core({ debug: true, autoProceed: false })
+    this.uppy = new Uppy.Core({ 
+      debug: true,
+      id: 'Uppy-unique',
+      autoProceed: false,
+      restrictions: {
+        minNumberOfFiles: 1
+      },
+      onBeforeFileAdded: (currentFile, files) => this.onBeforeFileAddedChecks(currentFile, files),
+    });
+
     this.nextImageNum = 1;
     this.uploadItems = [];
     this.result = "";
@@ -28,6 +37,11 @@
     init: function()
     {
       this.$retryButton.hide();
+
+      let noteText = Qubit.multiFileUpload.i18nMaxSizeNote
+          .replace('%{maxFileSizeMessage}', Qubit.multiFileUpload.i18nMaxFileSizeMessage + Qubit.multiFileUpload.maxFileSize / 1024 / 1024 + "MB")
+          .replace('%{maxPostSizeMessage}', Qubit.multiFileUpload.i18nMaxPostSizeMessage + Qubit.multiFileUpload.maxPostSize / 1024 / 1024 + "MB");
+
       this.uppy
         .use(Uppy.Dashboard, {
           id: 'Dashboard',
@@ -39,7 +53,7 @@
           hideCancelButton: true,
           hideAfterFinish: true,
           hideRetryButton: true,
-          note: Qubit.multiFileUpload.i18nMaxUploadSizeMessage + Qubit.multiFileUpload.maxUploadSizeMb,
+          note: noteText,
           doneButtonHandler: null,
           browserBackButtonClose: false,
           fileManagerSelectionType: 'files',
@@ -108,7 +122,7 @@
         .on('upload-success', $.proxy(this.onUploadSuccess, this))
         .on('complete', $.proxy(this.onComplete, this))
         .on('file-added', $.proxy(this.onFileAdded, this))
-        .on('cancel-all', $.proxy(this.onCancelAll, this))
+        .on('cancel-all', $.proxy(this.onCancelAll, this));
     },
 
     listen: function ()
@@ -118,29 +132,63 @@
       this.$retryButton.on('click', $.proxy(this.onRetryButton, this));
     },
 
+    // Retry is available if some/all DO's do not successfully upload.
     onRetryButton: function ()
     {
       this.uppy.retryAll().then((result) => {
-        if (this.uppy.getState().error === null && this.result.failed.length === 0) {
+        if (this.uppy.getState().error === null && result.successful.length > 0 && result.failed.length === 0) {
           this.$retryButton.hide();
-          this.clearAlerts('alert-error');
           this.showAlert(Qubit.multiFileUpload.i18nRetrySuccess, 'alert-info');
         }
       })
     },
 
+    // Checks if ANY uploads were successful.
+    checkUploadSuccessful: function ()
+    {
+      const uploaded = (element) => element.progress.uploadComplete === true;
+      var completed = this.uppy.getFiles().some(uploaded);
+
+      return completed;
+    },
+
+    // Import button logic.
     onSubmitButton: function ()
     {
-      // Test if any uploads failed.
-      if (this.uppy.getState().error && this.result.successful.length > 0) {
-        // Post any successful uploads.
-        $('#multiFileUploadForm').submit();
+      this.clearAlerts();
+
+      // Ensure they are not on Uppy's 'add more' page. Do not allow uppy.upload() to
+      // be called while 'add more' is open.
+      if ($(".uppy-DashboardContent-back").length) {
+        $(".uppy-DashboardContent-back").click();
+      }
+
+      // Ensure that some files have been added for upload.
+      if (this.uppy.getFiles().length == 0) {
+        this.showAlert(Qubit.multiFileUpload.i18nNoFilesError, 'alert-info');
+
+        return false;
+      }
+
+      if (this.uppy.getState().error) {
+        if (this.checkUploadSuccessful() === true) {
+          // Post any successful uploads.
+          $('#multiFileUploadForm').submit();
+        }
+        else {
+          // In error state with zero successful uploads. Prevent POST.
+          this.showAlert(Qubit.multiFileUpload.i18nNoSuccessfulFilesError, 'alert-error');
+
+          return false;
+        }
       }
       else {
-        // Trigger upload - wait on promise until all complete.
+        // Upload to AtoM - wait on promise until all complete.
         this.uppy.upload().then((result) => {
-          if (this.result.failed.length > 0) {
-            this.showAlert(Qubit.multiFileUpload.i18nUploadError, 'alert-error');
+          if (result.failed.length > 0) {
+            (this.checkUploadSuccessful() === true) ?
+              this.showAlert(Qubit.multiFileUpload.i18nSomeFilesFailedError, 'alert-error') :
+              this.showAlert(Qubit.multiFileUpload.i18nNoSuccessfulFilesError, 'alert-error');
 
             this.$retryButton.show();
           }
@@ -170,8 +218,6 @@
     {
       // Iterates over successfully uploaded items.
       var uploadItems = this.uploadItems;
-      // Assign result when all uploads are complete from this upload attempt.
-      this.result = result;
 
       $.each(result.successful, function(key, file) {
         // Get the corresponding upload response.
@@ -194,6 +240,66 @@
       });
     },
 
+    onBeforeFileAddedChecks: function (currentFile, files)
+    {
+      // Ensure currentFile is not larger that AtoM's max file upload size.
+      if (currentFile.data.size > Qubit.multiFileUpload.maxFileSize) {
+        let fileName = currentFile.data.name;
+        let maxSize = Qubit.multiFileUpload.maxFileSize / 1024 / 1024;
+        let fileSize = (currentFile.data.size / 1024 / 1024).toFixed(2);
+        let sizeErrorText = Qubit.multiFileUpload.i18nSizeError
+          .replace('%{fileName}', fileName)
+          .replace('%{fileSize}', fileSize)
+          .replace('%{maxSize}', maxSize);
+
+        // Add console mssg and alert error.
+        this.uppy.log(sizeErrorText);
+        this.showAlert(sizeErrorText, 'alert-info');
+
+        // Press the Uppy back button after the error to return to the Dashboard.
+        if ($(".uppy-DashboardContent-back").length) {
+          $(".uppy-DashboardContent-back").click();
+        }
+
+        return false;
+      }
+
+      // Watch total size of upload and ensure it's not larger than AtoM's POST size config.
+      if ((this.getTotalFileSize(files) + currentFile.data.size) > Qubit.multiFileUpload.maxPostSize) {
+        let maxPostSize = Qubit.multiFileUpload.maxPostSize / 1024 / 1024;
+        let postSizeErrorText = Qubit.multiFileUpload.i18nPostSizeError
+          .replace('%{maxPostSize}', maxPostSize);
+
+        this.clearAlerts();
+
+        // Add console mssg and alert error.
+        this.uppy.log(postSizeErrorText);
+        this.showAlert(postSizeErrorText, 'alert-info');
+
+        // Press the Uppy back button after the error to return to the Dashboard.
+        if ($(".uppy-DashboardContent-back").length) {
+          $(".uppy-DashboardContent-back").click();
+        }
+
+        return false;
+      }
+    },
+
+    getTotalFileSize: function (files)
+    {
+      let totalFileSize = 0;
+
+      if (!files) {
+        files = this.uppy.getFiles();
+      }
+
+      for (var key in files) {
+        totalFileSize = totalFileSize + files[key].size;
+      }
+
+      return totalFileSize;
+    },
+
     // Set objectId and template-based title when files are added to the Dashboard.
     onFileAdded: function (file) 
     {
@@ -207,7 +313,6 @@
     {
       this.uploadItems = [];
       this.nextImageNum = 1;
-      this.result = "";
     },
 
     // User pressed cancel - reset upload state.
@@ -223,11 +328,12 @@
       this.reset();
     },
 
+    // Show an AtoM style alert message.
     showAlert: function (message, type) {
       if (!type) {
         type = '';
       }
-  
+
       var $alert = $('<div class="alert ' + type + '">');
       $alert.append('<button type="button" data-dismiss="alert" class="close">&times;</button>');
       $alert.append(message).prependTo($('#uploaderContainer'));
@@ -235,7 +341,7 @@
       return $alert;
     },
 
-    clearAlerts: function (type) {
+    clearAlerts: function () {
       $( "div" ).remove( ".alert" );
     },
 

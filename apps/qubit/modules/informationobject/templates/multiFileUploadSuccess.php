@@ -91,20 +91,22 @@
 <?php slot('after-content') ?>
 
 <?php echo javascript_tag(<<<content
-Qubit.multiFileUpload.maxUploadSize = '$maxUploadSize';
-Qubit.multiFileUpload.maxUploadSizeMb = '$maxUploadSizeMb MB';
+Qubit.multiFileUpload.maxFileSize = '$maxFileSize';
+Qubit.multiFileUpload.maxPostSize = '$maxPostSize';
 Qubit.multiFileUpload.uploadResponsePath = '$uploadResponsePath';
 Qubit.multiFileUpload.objectId = '$resource->id';
 Qubit.multiFileUpload.thumbWidth = 150;
 
-Qubit.multiFileUpload.i18nMaxUploadSizeMessage = '{$sf_context->i18n->__('Maxiumum file size: ')}'
+Qubit.multiFileUpload.i18nMaxFileSizeMessage = '{$sf_context->i18n->__('Maximum file size: ')}';
+Qubit.multiFileUpload.i18nMaxPostSizeMessage = '{$sf_context->i18n->__('Maximum total upload size: ')}';
+Qubit.multiFileUpload.i18nMaxSizeNote = '{$sf_context->i18n->__('%{maxFileSizeMessage}; %{maxPostSizeMessage}')}';
 Qubit.multiFileUpload.i18nRetry = '{$sf_context->i18n->__('Retry')}';
 Qubit.multiFileUpload.i18nInfoObjectTitle = '{$sf_context->i18n->__('Title')}';
 Qubit.multiFileUpload.i18nSave = '{$sf_context->i18n->__('Save')}';
 Qubit.multiFileUpload.i18nAddMoreFiles = '{$sf_context->i18n->__('Add more files')}';
 Qubit.multiFileUpload.i18nAddMore = '{$sf_context->i18n->__('Add more')}';
 Qubit.multiFileUpload.i18nAddingMoreFiles = '{$sf_context->i18n->__('Adding more files')}';
-Qubit.multiFileUpload.i18nUploadError = '{$sf_context->i18n->__('Some files failed to upload. Press the \\\'Import\\\' button to continue importing anyways, or press \\\'Retry\\\' to re-attempt upload.')}';
+Qubit.multiFileUpload.i18nSomeFilesFailedError = '{$sf_context->i18n->__('Some files failed to upload. Press the \\\'Import\\\' button to continue importing anyways, or press \\\'Retry\\\' to re-attempt upload.')}';
 Qubit.multiFileUpload.i18nRetrySuccess = '{$sf_context->i18n->__('Files successfully uploaded! Press the \\\'Import\\\' button to complete importing these files.')}';
 Qubit.multiFileUpload.i18nFileSelected = '{$sf_context->i18n->__('%{smart_count} file selected')}';
 Qubit.multiFileUpload.i18nFilesSelected = '{$sf_context->i18n->__('%{smart_count} files selected')}';
@@ -124,6 +126,10 @@ Qubit.multiFileUpload.i18nEditing = '{$sf_context->i18n->__('Editing %{file}')}'
 Qubit.multiFileUpload.i18nUploadingFile = '{$sf_context->i18n->__('Uploading %{smart_count} file')}';
 Qubit.multiFileUpload.i18nUploadingFiles = '{$sf_context->i18n->__('Uploading %{smart_count} files')}';
 Qubit.multiFileUpload.i18nFailedToUpload = '{$sf_context->i18n->__('Failed to upload %{file}')}';
+Qubit.multiFileUpload.i18nSizeError = '{$sf_context->i18n->__('Skipping file %{fileName} because file size %{fileSize} is larger than file size limit of %{maxSize} MB')}';
+Qubit.multiFileUpload.i18nNoFilesError = '{$sf_context->i18n->__('Please add a file to begin uploading.')}';
+Qubit.multiFileUpload.i18nNoSuccessfulFilesError = '{$sf_context->i18n->__('Files not uploaded successfully. Please retry.')}';
+Qubit.multiFileUpload.i18nPostSizeError = '{$sf_context->i18n->__('Upload limit of %{maxPostSize} MB reached. Unable to add additional files.')}';
 content
 ) ?>
 <?php end_slot() ?>

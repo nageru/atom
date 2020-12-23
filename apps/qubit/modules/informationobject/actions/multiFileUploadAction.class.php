@@ -49,11 +49,10 @@ class InformationObjectMultiFileUploadAction extends sfAction
     $this->response->addJavaScript('multiFileUpload', 'last');
 
     // Get max upload size limits
-    $this->maxUploadSize = QubitDigitalObject::getMaxUploadSize();
-    $this->maxUploadSizeMb = QubitDigitalObject::getMaxUploadSize() / 1024 / 1024;
+    $this->maxFileSize = QubitDigitalObject::getMaxUploadSize();
+    $this->maxPostSize = QubitDigitalObject::getMaxPostSize();
 
     // Paths for uploader javascript
-    $this->uploadSwfPath = "{$this->request->getRelativeUrlRoot()}/vendor/yui/uploader/assets/uploader.swf";
     $this->uploadResponsePath = "{$this->context->routing->generate(null, array('module' => 'digitalobject', 'action' => 'upload'))}?".http_build_query(array(session_name() => session_id()));
     $this->uploadTmpDir = "{$this->request->getRelativeUrlRoot()}/uploads/tmp";
 
