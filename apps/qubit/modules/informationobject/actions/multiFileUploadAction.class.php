@@ -50,6 +50,7 @@ class InformationObjectMultiFileUploadAction extends sfAction
 
     // Get max upload size limits
     $this->maxUploadSize = QubitDigitalObject::getMaxUploadSize();
+    $this->maxUploadSizeMb = QubitDigitalObject::getMaxUploadSize() / 1024 / 1024;
 
     // Paths for uploader javascript
     $this->uploadSwfPath = "{$this->request->getRelativeUrlRoot()}/vendor/yui/uploader/assets/uploader.swf";

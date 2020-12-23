@@ -91,28 +91,39 @@
 <?php slot('after-content') ?>
 
 <?php echo javascript_tag(<<<content
-//Qubit.multiFileUpload.maxUploadSize = '$maxUploadSize';
-//Qubit.multiFileUpload.uploadTmpDir = '$uploadTmpDir';
+Qubit.multiFileUpload.maxUploadSize = '$maxUploadSize';
+Qubit.multiFileUpload.maxUploadSizeMb = '$maxUploadSizeMb MB';
 Qubit.multiFileUpload.uploadResponsePath = '$uploadResponsePath';
 Qubit.multiFileUpload.objectId = '$resource->id';
 Qubit.multiFileUpload.thumbWidth = 150;
 
-Qubit.multiFileUpload.i18nClear = '{$sf_context->i18n->__('Clear')}';
+Qubit.multiFileUpload.i18nMaxUploadSizeMessage = '{$sf_context->i18n->__('Maxiumum file size: ')}'
+Qubit.multiFileUpload.i18nRetry = '{$sf_context->i18n->__('Retry')}';
 Qubit.multiFileUpload.i18nInfoObjectTitle = '{$sf_context->i18n->__('Title')}';
-//Qubit.multiFileUpload.i18nUploading = '{$sf_context->i18n->__('Uploading...')}';
-//Qubit.multiFileUpload.i18nLoadingPreview = '{$sf_context->i18n->__('Loading preview...')}';
-//Qubit.multiFileUpload.i18nWaiting = '{$sf_context->i18n->__('Waiting...')}';
+Qubit.multiFileUpload.i18nSave = '{$sf_context->i18n->__('Save')}';
+Qubit.multiFileUpload.i18nAddMoreFiles = '{$sf_context->i18n->__('Add more files')}';
+Qubit.multiFileUpload.i18nAddMore = '{$sf_context->i18n->__('Add more')}';
+Qubit.multiFileUpload.i18nAddingMoreFiles = '{$sf_context->i18n->__('Adding more files')}';
 Qubit.multiFileUpload.i18nUploadError = '{$sf_context->i18n->__('Some files failed to upload. Press the \\\'Import\\\' button to continue importing anyways, or press \\\'Retry\\\' to re-attempt upload.')}';
-Qubit.multiFileUpload.i18nRetrySuccess = '{$sf_context->i18n->__('Files successfully uploaded! Press the \\\'Import\\\' button to complete the import.')}';
-//Qubit.multiFileUpload.i18nFilename  = '{$sf_context->i18n->__('Filename')}';
-//Qubit.multiFileUpload.i18nFilesize  = '{$sf_context->i18n->__('Filesize')}';
-//Qubit.multiFileUpload.i18nDelete = '{$sf_context->i18n->__('Delete')}';
-//Qubit.multiFileUpload.i18nCancel = '{$sf_context->i18n->__('Cancel')}';
-//Qubit.multiFileUpload.i18nStart = '{$sf_context->i18n->__('Start')}';
-//Qubit.multiFileUpload.i18nDuplicateFile = '{$sf_context->i18n->__('Warning: duplicate of %1%')}';
-//Qubit.multiFileUpload.i18nOversizedFile = '{$sf_context->i18n->__('This file couldn\\\'t be uploaded because of file size upload limits')}';
-//Qubit.multiFileUpload.uploadResponsePath = '$uploadResponsePath';
-
+Qubit.multiFileUpload.i18nRetrySuccess = '{$sf_context->i18n->__('Files successfully uploaded! Press the \\\'Import\\\' button to complete importing these files.')}';
+Qubit.multiFileUpload.i18nFileSelected = '{$sf_context->i18n->__('%{smart_count} file selected')}';
+Qubit.multiFileUpload.i18nFilesSelected = '{$sf_context->i18n->__('%{smart_count} files selected')}';
+Qubit.multiFileUpload.i18nUploading = '{$sf_context->i18n->__('Uploading')}';
+Qubit.multiFileUpload.i18nComplete = '{$sf_context->i18n->__('Complete')}';
+Qubit.multiFileUpload.i18nUploadFailed = '{$sf_context->i18n->__('Upload failed')}';
+Qubit.multiFileUpload.i18nRemoveFile = '{$sf_context->i18n->__('Remove file')}';
+Qubit.multiFileUpload.i18nDropFile = '{$sf_context->i18n->__('Drop files here, paste or %{browse}')}';
+Qubit.multiFileUpload.i18nFileUploadedOfTotal = '{$sf_context->i18n->__('%{complete} of %{smart_count} file uploaded')}';
+Qubit.multiFileUpload.i18nFilesUploadedOfTotal = '{$sf_context->i18n->__('%{complete} of %{smart_count} files uploaded')}';
+Qubit.multiFileUpload.i18nDataUploadedOfTotal = '{$sf_context->i18n->__('%{complete} of %{total}')}';
+Qubit.multiFileUpload.i18nTimeLeft = '{$sf_context->i18n->__('%{time} left')}';
+Qubit.multiFileUpload.i18nCancel = '{$sf_context->i18n->__('Cancel')}';
+Qubit.multiFileUpload.i18nEdit = '{$sf_context->i18n->__('Edit')}';
+Qubit.multiFileUpload.i18nBack = '{$sf_context->i18n->__('Back')}';
+Qubit.multiFileUpload.i18nEditing = '{$sf_context->i18n->__('Editing %{file}')}';
+Qubit.multiFileUpload.i18nUploadingFile = '{$sf_context->i18n->__('Uploading %{smart_count} file')}';
+Qubit.multiFileUpload.i18nUploadingFiles = '{$sf_context->i18n->__('Uploading %{smart_count} files')}';
+Qubit.multiFileUpload.i18nFailedToUpload = '{$sf_context->i18n->__('Failed to upload %{file}')}';
 content
 ) ?>
 <?php end_slot() ?>

@@ -15,7 +15,7 @@
     this.$submitButton = this.$element.find('input[type="submit"]');
     this.$retryButton = $('<a class="c-btn" title="retry"/>')
       .attr('type','hidden')
-      .text('Retry')
+      .text(Qubit.multiFileUpload.i18nRetry)
       .appendTo('.actions');
 
     this.init();
@@ -39,22 +39,62 @@
           hideCancelButton: true,
           hideAfterFinish: true,
           hideRetryButton: true,
-          note: 'Images and video only, 2–3 files, up to 1 MB',
+          note: Qubit.multiFileUpload.i18nMaxUploadSizeMessage + Qubit.multiFileUpload.maxUploadSizeMb,
           doneButtonHandler: null,
           browserBackButtonClose: false,
           fileManagerSelectionType: 'files',
           proudlyDisplayPoweredByUppy: false,
           closeModalOnClickOutside: false,
+          hideDoneButton: true,
           locale: {
             strings: {
-              done: Qubit.multiFileUpload.i18nClear,
+              done: Qubit.multiFileUpload.i18nSave,
+              // 'Add more' hover text.
+              addMoreFiles: Qubit.multiFileUpload.i18nAddMoreFiles,
+              // 'Add more' button label.
+              addMore: Qubit.multiFileUpload.i18nAddMore,
+              addingMoreFiles: Qubit.multiFileUpload.i18nAddingMoreFiles,
+              xFilesSelected: {
+                0: Qubit.multiFileUpload.i18nFileSelected,
+                1: Qubit.multiFileUpload.i18nFilesSelected
+              },
+              // Upload status strings.
+              uploading: Qubit.multiFileUpload.i18nUploading,
+              complete: Qubit.multiFileUpload.i18nComplete,
+              uploadFailed: Qubit.multiFileUpload.i18nUploadFailed,
+              // Remove file hover text.
+              removeFile: Qubit.multiFileUpload.i18nRemoveFile,
+              // Main 'drop here' message.
+              dropPaste: Qubit.multiFileUpload.i18nDropFile,
+              filesUploadedOfTotal: {
+                0: Qubit.multiFileUpload.i18nFileUploadedOfTotal,
+                1: Qubit.multiFileUpload.i18nFilesUploadedOfTotal
+              },
+              dataUploadedOfTotal: Qubit.multiFileUpload.i18nDataUploadedOfTotal,
+              // When `showProgressDetails` is set, shows an estimation of how long the upload will take to complete.
+              xTimeLeft: Qubit.multiFileUpload.i18nTimeLeft,
+              uploadingXFiles: {
+                0: Qubit.multiFileUpload.i18nUploadingFile,
+                1: Qubit.multiFileUpload.i18nUploadingFiles
+              },
+              // Label cancel button.
+              cancel: Qubit.multiFileUpload.i18nCancel,
+              // Edit file hover text.
+              edit: Qubit.multiFileUpload.i18nEdit,
+              // Save changes button.
+              saveChanges: Qubit.multiFileUpload.i18nSave,
+              // Leave 'Add more' dialog.
+              back: Qubit.multiFileUpload.i18nBack,
+              // Edit Title dialog message.
+              editing: Qubit.multiFileUpload.i18nEditing,
+              failedToUpload: Qubit.multiFileUpload.i18nFailedToUpload,
             }
           },
           thumbnailWidth: Qubit.multiFileUpload.thumbWidth,
           trigger: '#pick-files',
           // Enable editing of field with id 'title' label: 'Title'
           metaFields: [
-            { id: 'title', name: 'Title' },
+            { id: 'title', name: Qubit.multiFileUpload.i18nInfoObjectTitle },
           ],
         })
         .use(Uppy.XHRUpload, {
