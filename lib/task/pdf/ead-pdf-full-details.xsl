@@ -287,19 +287,14 @@
     <!-- Calls template with links to archive icon -->
     <fo:block border-bottom="1pt solid #666" margin-top="0in" id="cover-page">
       <fo:block xsl:use-attribute-sets="h1" linefeed-treatment="preserve">
-        <xsl:choose>
-          <xsl:when test="ead:titleproper[@type='filing']">
-            Finding Aid - <xsl:apply-templates select="ead:titleproper[@type='filing']"/>
-          </xsl:when>
-          <xsl:otherwise>
-            <fo:external-graphic src="pdf-logo.png"  height="4cm" width="3.5cm"
-              content-width="scale-to-fit" content-height="scale-to-fit"/>
-            <xsl:text> </xsl:text>
-            <xsl:apply-templates select="(//ead:repository/ead:corpname)[1]"/>
-            <fo:block/>
-            Finding Aid - <xsl:apply-templates select="ead:titleproper[1]"/> (<xsl:value-of select="//ead:eadid"/>)
-          </xsl:otherwise>
-        </xsl:choose>
+        <fo:external-graphic src="images/pdf-logo.png" height="4cm"
+          width="3.5cm" content-width="scale-to-fit"
+          content-height="scale-to-fit"
+        />
+        <xsl:text> </xsl:text>
+        <xsl:apply-templates select="(//ead:repository/ead:corpname)[1]"/>
+        <fo:block/>
+        Finding Aid - <xsl:apply-templates select="ead:titleproper[1]"/> (<xsl:value-of select="//ead:eadid"/>)
       </fo:block>
       <xsl:if test="ead:subtitle">
         <fo:block font-size="16" font-weight="bold"><xsl:apply-templates select="ead:subtitle"/></fo:block>
