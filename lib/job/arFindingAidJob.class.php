@@ -33,6 +33,7 @@ class arFindingAidJob extends arBaseJob
   protected $extraRequiredParameters = array('objectId');
 
   private $resource = null;
+  private $appRoot;
 
   public function runJob($parameters)
   {
@@ -76,7 +77,7 @@ class arFindingAidJob extends arBaseJob
   {
     $this->info($this->i18n->__('Generating finding aid (%1)...', array('%1' => $this->resource->slug)));
 
-    $appRoot = rtrim(sfConfig::get('sf_root_dir'), '/');
+    $this->appRoot = rtrim(sfConfig::get('sf_root_dir'), '/');
 
     $eadFileHandle = tmpfile();
     $foFileHandle = tmpfile();
@@ -103,7 +104,15 @@ class arFindingAidJob extends arBaseJob
     // Call generate EAD task
     $slug = $this->resource->slug;
     $output = array();
-    exec(PHP_BINARY ." $appRoot/symfony export:bulk --single-slug=\"$slug\" $public $eadFilePath 2>&1", $output, $exitCode);
+
+    exec(
+      sprintf(
+        '%s %s/symfony export:bulk --single-slug="%s" %s %s 2>&1',
+        PHP_BINARY,  $this->appRoot, $slug, $public, $eadFilePath
+      ),
+      $output,
+      $exitCode
+    );
 
     if ($exitCode > 0)
     {
@@ -113,32 +122,14 @@ class arFindingAidJob extends arBaseJob
       return false;
     }
 
-    // Use XSL file selected in Finding Aid model setting
-    $findingAidModel = 'inventory-summary';
-    if (null !== $setting = QubitSetting::getByName('findingAidModel'))
+    try
     {
-      $findingAidModel = $setting->getValue(array('sourceCulture' => true));
+      $this->generateFop($eadFilePath, $foFilePath);
     }
-
-    $eadXslFilePath = $appRoot . '/lib/task/pdf/ead-pdf-' . $findingAidModel . '.xsl';
-    $saxonPath = $appRoot . '/lib/task/pdf/saxon9he.jar';
-
-    // Crank the XML through XSL stylesheet and fix header / fonds URL
-    $eadFileString = file_get_contents($eadFilePath);
-    $eadFileString = $this->fixHeader($eadFileString, sfConfig::get('app_site_base_url', null));
-    file_put_contents($eadFilePath, $eadFileString);
-
-    // Transform EAD file with Saxon
-    $pdfPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . self::getFindingAidPath($this->resource->id);
-    $cmd = sprintf("java -jar '%s' -s:'%s' -xsl:'%s' -o:'%s' 2>&1", $saxonPath, $eadFilePath, $eadXslFilePath, $foFilePath);
-    $this->info(sprintf('Running: %s', $cmd));
-    $output = array();
-    exec($cmd, $output, $exitCode);
-
-    if ($exitCode > 0)
+    catch (Exception $e)
     {
-      $this->error($this->i18n->__('Transforming the EAD with Saxon has failed.'));
-      $this->logCmdOutput($output, 'ERROR(SAXON)');
+      $this->error('Transforming the EAD with Saxon has failed.');
+      $this->logCmdOutput($e->getMessage(), 'ERROR(SAXON)');
 
       return false;
     }
@@ -346,22 +337,22 @@ class arFindingAidJob extends arBaseJob
     }
   }
 
-  private function fixHeader($xmlString, $url = null)
+  /**
+   * Apache FOP requires certain namespaces to be included in the XML in order
+   * to process it.
+   */
+  private function addEadNamespaces($filename, $url = null)
   {
-    // Apache FOP requires certain namespaces to be included in the XML in order to process it.
-    $xmlString = preg_replace('(<ead .*?>|<ead>)', '<ead xmlns:ns2="http://www.w3.org/1999/xlink" ' .
-        'xmlns="urn:isbn:1-931666-22-9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">', $xmlString, 1);
+    $content = file_get_contents($filename);
 
-    // TODO: Use new base url functionality in AtoM instead of doing this kludge
-    if ($url !== null)
-    {
-      // Since we call the EAD generation from inside Symfony and not as part as a web request,
-      // the url was returning symfony://weirdurlhere. We can get around this by passing the referring url into
-      // the job as an option when the user clicks 'generate' and replace the url in the EAD manually.
-      $xmlString = preg_replace('/<eadid(.*?)url=\".*?\"(.*?)>/', '<eadid$1url="' . $url . '"$2>', $xmlString, 1);
-    }
+    $eadHeader = <<<EOL
+<ead xmlns:ns2="http://www.w3.org/1999/xlink" xmlns="urn:isbn:1-931666-22-9"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+EOL;
 
-    return $xmlString;
+    $content = preg_replace('(<ead .*?>|<ead>)', $eadHeader, $content, 1);
+
+    file_put_contents($filename, $content);
   }
 
   private function getTmpFilePath($handle)
@@ -369,6 +360,71 @@ class arFindingAidJob extends arBaseJob
     $meta_data = stream_get_meta_data($handle);
 
     return $meta_data['uri'];
+  }
+
+  private function renderXsl($filename, $vars)
+  {
+    // Get XSL file contents
+    $content = file_get_contents($filename);
+
+    // Replace placeholder vars (e.g. "{{ app_root }}")
+    foreach($vars as $key => $val)
+    {
+      $content = str_replace("{{ $key }}", $val);
+    }
+
+    // Write contents to temp file for processing with Saxon
+    $tmpFilePath = tempnam(sys_get_temp_dir(), 'ATM');
+    file_put_contents($tmpFilePath, $content);
+
+    return $tmpFilePath;
+  }
+
+  private function generateFop($eadFilePath, $foFilePath)
+  {
+    // Use XSL file selected in Finding Aid model setting
+    $findingAidModel = 'inventory-summary';
+
+    if (null !== $setting = QubitSetting::getByName('findingAidModel'))
+    {
+      $findingAidModel = $setting->getValue(array('sourceCulture' => true));
+    }
+
+    $saxonPath = $this->appRoot . '/lib/task/pdf/saxon9he.jar';
+    $eadXslFilePath = sprintf(
+      '%s/lib/task/pdf/ead-pdf-%s.xsl', $this->appRoot, $findingAidModel
+    );
+
+    // Add required namespaces to EAD header
+    $this->addEadNamespaces($eadFilePath);
+
+    // Replace {{ app_root }} placeholder var with the $this->appRoot value, and
+    // return the temp XSL file path for Saxon processing
+    $xslTmpPath = $this->renderXsl(
+      $eadXslFilePath,
+      ['app_root' => $this->appRoot]
+    );
+
+    // Transform EAD file with Saxon
+    $pdfPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR .
+      self::getFindingAidPath($this->resource->id);
+
+    $cmd = sprintf(
+      "java -jar '%s' -s:'%s' -xsl:'%s' -o:'%s' 2>&1",
+      $saxonPath, $eadFilePath, $xslTmpPath, $foFilePath
+    );
+
+    $this->info(sprintf('Running: %s', $cmd));
+
+    $output = array();
+    $exitCode = null;
+
+    exec($cmd, $output, $exitCode);
+
+    if ($exitCode > 0)
+    {
+      throw new Exception($output);
+    }
   }
 
   public static function getStatus($id)

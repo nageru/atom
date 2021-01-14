@@ -287,8 +287,8 @@
     <!-- Calls template with links to archive icon -->
     <fo:block border-bottom="1pt solid #666" margin-top="0in" id="cover-page">
       <fo:block xsl:use-attribute-sets="h1" linefeed-treatment="preserve">
-        <fo:external-graphic src="images/pdf-logo.png" height="4cm"
-          width="3.5cm" content-width="scale-to-fit"
+        <fo:external-graphic src="{{ app_root }}/images/pdf-logo.png"
+          height="4cm" width="3.5cm" content-width="scale-to-fit"
           content-height="scale-to-fit"
         />
         <xsl:text> </xsl:text>
