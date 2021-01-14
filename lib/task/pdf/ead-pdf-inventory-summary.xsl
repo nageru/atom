@@ -290,6 +290,7 @@
         <xsl:apply-templates select="(//ead:repository/ead:corpname)[1]"/>
         <fo:block/>
         Finding Aid - <xsl:apply-templates select="ead:titleproper[1]"/> (<xsl:value-of select="//ead:eadid"/>)
+      </fo:block>
       <xsl:if test="ead:subtitle">
         <fo:block font-size="16" font-weight="bold"><xsl:apply-templates select="ead:subtitle"/></fo:block>
       </xsl:if>
