@@ -39,6 +39,13 @@ EOL;
    */
   protected function configure()
   {
+    $this->addArguments(array(
+      new sfCommandArgument(
+        'slug',
+        sfCommandArgument::REQUIRED,
+        'The archival description slug')
+    ));
+
     $this->addOptions(array(
       new sfCommandOption(
         'application',
