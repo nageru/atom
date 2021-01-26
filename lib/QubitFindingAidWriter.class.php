@@ -34,7 +34,10 @@ class QubitFindingAidWriter
     $resource,
     $options;
 
-  public function __construct(QubitInformationObject $resource, array $options = [])
+  public function __construct(
+    QubitInformationObject $resource,
+    array $options = []
+  )
   {
     // Check that $resource this is not the QubitInformationObject root
     if (QubitInformationObject::ROOT_ID === $resource->id)
@@ -63,31 +66,19 @@ class QubitFindingAidWriter
       sprintf('Generating finding aid (%s)...', $this->resource->slug)
     );
 
-    // Get EAD file path
-    $eadFilePath = $this->getEadFilePath($eadFilePath);
+    // Get the path for this resource's EAD cache file, if one exists
+    $eadFilePath = $this->getCachedEadFilePath();
 
-    $foFileHandle = tmpfile();
-
-    if (!$foFileHandle)
+    // Generate an EAD file, if there is no cache file
+    if (empty($eadFilePath))
     {
-      $this->error($this->i18n->__('Failed to create temporary file.'));
-
-      return false;
+      $eadFilePath = $this->generateEadFile();
     }
 
-    $foFilePath = $this->getTmpFilePath($foFileHandle);
+    $foFilePath = $this->generateFopFile($eadFilePath, $foFilePath);
 
-    try
-    {
-      $this->generateFop($eadFilePath, $foFilePath);
-    }
-    catch (Exception $e)
-    {
-      $this->error('Transforming the EAD with Saxon has failed.');
-      $this->logCmdOutput($e->getMessage(), 'ERROR(SAXON)');
-
-      return false;
-    }
+    // DEBUGGING
+    return;
 
     // Use FOP generated in previous step to generate PDF
     $cmd = sprintf("fop -r -q -fo '%s' -%s '%s' 2>&1", $foFilePath, self::getFindingAidFormat(), $pdfPath);
@@ -136,30 +127,11 @@ class QubitFindingAidWriter
   }
 
   /**
-   * Get the EAD XML file path for this resource
-   *
-   * @return string EAD XML filepath
-   */
-  public function getEadFilepath()
-  {
-    // Check for a cached EAD file
-    $cachedEadFilepath = $this->getCachedEadFilePath();
-
-    if (!empty($cachedEadFilepath) && file_exists($cachedEadFilepath))
-    {
-      return $cachedEadFilepath;
-    }
-
-    // No cached file, so generate an EAD file
-    return $this->generateEadFile();
-  }
-
-  /**
    * Generate an EAD XML file and return the file path
    *
-   * @return string EAD XML file path
+   * @return string Generated EAD XML file path
    */
-  public function generateEadFile()
+  public function generateEadFile(): string
   {
     exportBulkBaseTask::includeXmlExportClassesAndHelpers();
 
@@ -208,6 +180,81 @@ class QubitFindingAidWriter
     }
 
     return $filepath;
+  }
+
+  /**
+   * Get the path to the cached EAD XML file for this resource
+   *
+   * @return string|null path to cache file, null if there is no cache file
+   */
+  public function getCachedEadFilePath(): ?string
+  {
+    $filepath =  QubitInformationObjectXmlCache::resourceExportFilePath(
+      $this->resource, self::XML_STANDARD
+    );
+
+    if (!empty($filepath) && file_exists($filepath))
+    {
+      return $filepath;
+    }
+
+    return null;
+  }
+
+  private function generateFopFile($eadFilePath): string
+  {
+    // Use XSL file selected in Finding Aid model setting
+    $findingAidModel = 'inventory-summary';
+
+    if (null !== $setting = QubitSetting::getByName('findingAidModel'))
+    {
+      $findingAidModel = $setting->getValue(array('sourceCulture' => true));
+    }
+
+    $saxonPath = $this->appRoot . '/lib/task/pdf/saxon9he.jar';
+    $eadXslFilePath = sprintf(
+      '%s/lib/task/pdf/ead-pdf-%s.xsl', $this->appRoot, $findingAidModel
+    );
+
+    // Add required namespaces to EAD header
+    $this->addEadNamespaces($eadFilePath);
+
+    // Replace {{ app_root }} placeholder var with the $this->appRoot value, and
+    // return the temp XSL file path for Saxon processing
+    $xslTmpPath = $this->renderXsl(
+      $eadXslFilePath,
+      ['app_root' => $this->appRoot]
+    );
+
+    // Transform EAD file with Saxon
+    $pdfPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR .
+      self::getFindingAidPath($this->resource->id);
+
+    // Get a temporary file path for the FO file
+    $foFilePath = tempnam(sys_get_temp_dir(), 'ATM');
+
+    $cmd = sprintf(
+      "java -jar '%s' -s:'%s' -xsl:'%s' -o:'%s' 2>&1",
+      $saxonPath, $eadFilePath, $xslTmpPath, $foFilePath
+    );
+
+    $this->info(sprintf('Running: %s', $cmd));
+
+    $output = array();
+    $exitCode = null;
+
+    exec($cmd, $output, $exitCode);
+
+    if ($exitCode > 0)
+    {
+      $this->logger->error(
+        'ERROR(SAXON): Transforming the EAD with Saxon has failed.'
+      );
+
+      throw new Exception('ERROR(SAXON): ' . implode("\n", $output));
+    }
+
+    return $foFilePath;
   }
 
   public function delete()
@@ -283,13 +330,6 @@ class QubitFindingAidWriter
       // Get the default symfony logger
       $this->logger = sfContext::getInstance()->getLogger();
     }
-  }
-
-  private function getCachedEadFilePath()
-  {
-    return QubitInformationObjectXmlCache::resourceExportFilePath(
-      $this->resource, self::XML_STANDARD
-    );
   }
 
   private function upload($path)
@@ -437,53 +477,6 @@ EOL;
     file_put_contents($tmpFilePath, $content);
 
     return $tmpFilePath;
-  }
-
-  private function generateFop($eadFilePath, $foFilePath)
-  {
-    // Use XSL file selected in Finding Aid model setting
-    $findingAidModel = 'inventory-summary';
-
-    if (null !== $setting = QubitSetting::getByName('findingAidModel'))
-    {
-      $findingAidModel = $setting->getValue(array('sourceCulture' => true));
-    }
-
-    $saxonPath = $this->appRoot . '/lib/task/pdf/saxon9he.jar';
-    $eadXslFilePath = sprintf(
-      '%s/lib/task/pdf/ead-pdf-%s.xsl', $this->appRoot, $findingAidModel
-    );
-
-    // Add required namespaces to EAD header
-    $this->addEadNamespaces($eadFilePath);
-
-    // Replace {{ app_root }} placeholder var with the $this->appRoot value, and
-    // return the temp XSL file path for Saxon processing
-    $xslTmpPath = $this->renderXsl(
-      $eadXslFilePath,
-      ['app_root' => $this->appRoot]
-    );
-
-    // Transform EAD file with Saxon
-    $pdfPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR .
-      self::getFindingAidPath($this->resource->id);
-
-    $cmd = sprintf(
-      "java -jar '%s' -s:'%s' -xsl:'%s' -o:'%s' 2>&1",
-      $saxonPath, $eadFilePath, $xslTmpPath, $foFilePath
-    );
-
-    $this->info(sprintf('Running: %s', $cmd));
-
-    $output = array();
-    $exitCode = null;
-
-    exec($cmd, $output, $exitCode);
-
-    if ($exitCode > 0)
-    {
-      throw new Exception($output);
-    }
   }
 
   public static function getStatus($id)
