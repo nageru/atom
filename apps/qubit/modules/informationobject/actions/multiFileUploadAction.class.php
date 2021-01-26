@@ -90,6 +90,7 @@ class InformationObjectMultiFileUploadAction extends sfAction
 
     // Upload files
     $i = 0;
+    $idList = array();
 
     foreach ($this->form->getValue('files') as $file)
     {
@@ -131,6 +132,8 @@ class InformationObjectMultiFileUploadAction extends sfAction
         $digitalObject->save();
       }
 
+      $informationObjectIdList[] = $informationObject->id;
+
       // Clean up temp files
       if (file_exists("$tmpPath/$file[tmpName]"))
       {
@@ -138,6 +141,6 @@ class InformationObjectMultiFileUploadAction extends sfAction
       }
     }
 
-    $this->redirect(array($this->resource, 'module' => 'informationobject'));
+    $this->redirect(array($this->resource, 'module' => 'informationobject', 'action' => 'multiFileUpdate', 'ids' => implode(",", $informationObjectIdList)));
   }
 }
