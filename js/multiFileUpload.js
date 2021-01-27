@@ -47,6 +47,8 @@
           id: 'Dashboard',
           inline: true,
           target: '.uppy-dashboard',
+          width: '100%',
+          height: '475px',
           hideUploadButton: true,
           replaceTargetContent: true,
           showProgressDetails: true,
