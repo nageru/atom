@@ -25,7 +25,7 @@
         <tbody>
           <?php foreach ($digitalObjectTitleForm->getInformationObjects() as $io): ?>
             <tr>
-              <td>
+              <td class="thumbnail-container">
                 <?php foreach ($io->digitalObjectsRelatedByobjectId as $do): ?>
                   <?php if (
                     (null !== $thumbnail = $do->getRepresentationByUsage(QubitTerm::THUMBNAIL_ID))
@@ -47,7 +47,7 @@
                 <?php echo $digitalObjectTitleForm[$io->id]
                     ->label(__('Title')) ?>
                 <?php echo __($io->digitalObjectsRelatedByobjectId[0]->name) ?>
-                <?php echo render_show(__('Level of description'), render_value($io->levelOfDescription)) ?>
+                <?php echo render_show(__('Level of description'), render_value_inline($io->levelOfDescription)) ?>
               </td>
             </tr>
           <?php endforeach; ?>
