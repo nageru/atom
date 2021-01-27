@@ -50,6 +50,12 @@
 
           <legend><?php echo __('Import multiple digital objects') ?></legend>
 
+          <div class="alert alert-info">
+            <p><?php echo __('Add your digital objects by dragging and dropping local files into the pane below, or by clicking the browse link to open your local file explorer.') ?></p>
+            <p><?php echo __('The Title and Level of description values entered on this page will be applied to each child description created for the associated digital objects - %dd% represents an incrementing 2-value number, so by default descriptions created via this uploader will be named image 01, image 02, etc.') ?></p>
+            <p><?php echo __('You will also be able to review and individually modify each description title on the next page after clicking "Upload."') ?></p>
+          </div>
+
           <?php echo $form->title
             ->help(__('The "<strong>%dd%</strong>" placeholder will be replaced with a incremental number (e.g. \'image <strong>01</strong>\', \'image <strong>02</strong>\')'))
             ->label(__('Title'))
