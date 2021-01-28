@@ -96,4 +96,3 @@ class QubitActorAcl extends QubitAcl
     return $user->isAuthenticated();
   }
 }
-
