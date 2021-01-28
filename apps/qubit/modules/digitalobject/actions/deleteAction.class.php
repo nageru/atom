@@ -56,7 +56,7 @@ class DigitalObjectDeleteAction extends sfAction
     if ($request->isMethod('delete'))
     {
       $this->form->bind($request->getPostParameters());
-      
+
       if ($this->form->isValid())
       {
         // Delete the digital object record from the database

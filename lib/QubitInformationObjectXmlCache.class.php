@@ -101,7 +101,7 @@ class QubitInformationObjectXmlCache
       WHERE i.id != :root_id \r
       AND s.status_id=:status_id AND s.type_id=:type_id \r
       ORDER BY i.id";
- 
+
     $params = array(
       ':status_id' => QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID,
       ':type_id' => QubitTerm::STATUS_TYPE_PUBLICATION_ID,

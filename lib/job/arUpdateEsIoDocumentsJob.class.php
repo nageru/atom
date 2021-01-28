@@ -65,7 +65,7 @@ class arUpdateEsIoDocumentsJob extends arBaseJob
 
         continue;
       }
-      
+
       // Don't count invalid description ids
       $count++;
 

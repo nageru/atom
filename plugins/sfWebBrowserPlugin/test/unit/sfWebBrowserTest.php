@@ -58,23 +58,23 @@ foreach($adapter_list as $adapter)
 {
   $t->diag('Testing '.$adapter);
   $t->diag('');
-  
+
   /******************/
   /* Initialization */
   /******************/
 
   $t->diag('Initialization');
   $b = new sfWebBrowser(array(), $adapter);
-  
+
   $t->is($b->getUserAgent(), '', 'a new browser has an empty user agent');
   $t->is($b->getResponseText(), '', 'a new browser has an empty response');
   $t->is($b->getResponseCode(), '', 'a new browser has an empty response code');
   $t->is($b->getResponseHeaders(), array(), 'a new browser has empty reponse headers');
-  
+
   /*******************/
   /* Utility methods */
   /*******************/
-  
+
   $t->diag('Utility methods');
   $b = new sfWebBrowser(array(), $adapter);
   $t->is($b->setUserAgent('foo bar')->getUserAgent(), 'foo bar', 'setUserAgent() sets the user agent');
@@ -84,11 +84,11 @@ foreach($adapter_list as $adapter)
   $t->is_deeply($b->setResponseHeaders(array('HTTP1.1 200 OK', 'foo: bar', 'bar: baz'))->getResponseHeaders(), array('Foo' => 'bar', 'Bar' => 'baz'), 'setResponseHeaders() extracts the headers array');
   $t->is_deeply($b->setResponseHeaders(array('ETag: "535a8-9fb-44ff4a13"', 'WWW-Authenticate: Basic realm="Myself"'))->getResponseHeaders(), array('ETag' => '"535a8-9fb-44ff4a13"', 'WWW-Authenticate' => 'Basic realm="Myself"'), 'setResponseHeaders() extracts the headers array and accepts response headers with several uppercase characters');
   $t->is_deeply($b->setResponseHeaders(array('HTTP1.1 200 OK', 'foo: bar', 'bar:baz', 'baz:bar'))->getResponseHeaders(), array('Foo' => 'bar'), 'setResponseHeaders() ignores malformed headers');
-  
+
   /**************/
   /* Exceptions */
   /**************/
-  
+
   $t->diag('Exceptions');
   $b = new sfWebBrowser(array(), $adapter);
   try
@@ -100,60 +100,60 @@ foreach($adapter_list as $adapter)
   {
     $t->pass('get() throws an exception when passed an uri which is neither http nor https');
   }
-  
+
   /**********************/
   /* Simple GET request */
   /**********************/
-  
+
   $t->diag('Simple GET request');
   $t->like($b->get($dump_headers_url)->getResponseText(), '/\[REQUEST_METHOD\] => GET/', 'get() performs a GET request');
   $t->isa_ok($b, 'sfWebBrowser', 'get() make a web request and returns a browser object');
   $t->is($b->getResponseCode(), 200, 'get() fills up the browser status code with the response');
   $t->like($b->get($example_site_url)->getResponseHeader('Content-Type'), '/text\/html/', 'get() populates the header array');
   $t->like(strtolower($b->getResponseText()), '/<head>/', 'get() populates the HTML of the response');
-  
+
   /***********************/
   /* Simple HEAD request */
   /***********************/
-  
+
   $t->diag('Simple HEAD request');
   $t->like($b->head($dump_headers_url)->getResponseHeader('Content-Type'), '/text\/html/', 'head() populates the header array');
   $t->is($b->getResponseText(), '', 'HEAD requests do not return a response body');
-  
+
   /***********************/
   /* Simple POST request */
   /***********************/
-  
+
   $t->diag('Simple POST request');
   $t->like($b->post($dump_headers_url)->getResponseText(), '/\[REQUEST_METHOD\] => POST/', 'post() performs a POST request');
   $t->like($b->post($dump_headers_url, array('post body'))->getResponseText(), '/post body/', 'post() sends body to server');
-  
+
   /**********************/
   /* Simple PUT request */
   /**********************/
-  
+
   $t->diag('Simple PUT request');
   $t->like($b->put($dump_headers_url)->getResponseText(), '/\[REQUEST_METHOD\] => PUT/', 'put() performs a PUT request');
   $t->like($b->put($dump_headers_url, array('PUT body'))->getResponseText(), '/PUT body/', 'put() sends body to server');
-  
+
   /*************************/
   /* Simple DELETE request */
   /*************************/
-  
+
   $t->diag('Simple DELETE request');
   $t->like($b->delete($dump_headers_url)->getResponseText(), '/\[REQUEST_METHOD\] => DELETE/', 'delete() performs a DELETE request');
-  
+
   /*********************/
   /* Arbitrary request */
   /*********************/
-  
+
   $t->diag('Arbitrary request');
   $t->like($b->call($dump_headers_url, 'MICHEL')->getResponseText(), '/\[REQUEST_METHOD\] => MICHEL/', 'call() supports any HTTP methods');
-  
+
   /****************************/
   /* Response formats methods */
   /****************************/
-  
+
   $t->diag('Response formats methods');
   $b = new sfWebBrowser(array(), $adapter);
   $b->get($example_site_url);
@@ -173,24 +173,24 @@ foreach($adapter_list as $adapter)
   {
     $t->pass('Incorrect XML throws an exception');
   }
-  
+
   try
   {
     /******************************/
     /* Absolute and relative URls */
     /******************************/
-    
+
     $t->diag('Absolute and relative URls');
     $b = new sfWebBrowser(array(), $adapter);
     $t->like($b->get($askeet_params['url'])->getResponseText(), '/<h1>featured questions<\/h1>/', 'get() understands absolute urls');
     $t->like($b->get($askeet_params['url'].'/index/1')->getResponseText(), '/<h1>popular questions<\/h1>/', 'get() understands absolute urls');
     $t->like($b->get('/recent/1')->getResponseText(), '/<h1>recent questions<\/h1>/', 'get() understands relative urls with a trailing slash');
     $t->like($b->get('/')->get('recent/1')->getResponseText(), '/<h1>recent questions<\/h1>/', 'get() understands relative urls without a trailing slash');
-    
+
     /***********************/
     /* Interaction methods */
     /***********************/
-    
+
     $t->diag('Interaction methods');
     $b = new sfWebBrowser(array(), $adapter);
     $t->like($b->get($askeet_params['url'])->click('activities')->getResponseText(), '/tag "activities"/', 'click() clicks on a link and executes the related request');
@@ -203,11 +203,11 @@ foreach($adapter_list as $adapter)
   {
     $t->fail(sprintf('%s : skipping askeet related tests', $e->getMessage()));
   }
-  
+
   /*******************************/
   /* GET request with parameters */
   /*******************************/
-  
+
   $t->diag('GET request with parameters');
   $b = new sfWebBrowser(array(), $adapter);
   $test_params = array('foo' => 'bar', 'baz' => '1');
@@ -218,11 +218,11 @@ foreach($adapter_list as $adapter)
 
   $b = new sfWebBrowser(array(), $adapter);
   $b->get($dump_headers_url);
-  
+
   /***************************/
   /* Default request headers */
   /***************************/
-  
+
   $t->diag('Default request headers');
   $headers = array('Accept-language' => 'fr,fr-fr;q=0.8,en-us;q=0.5,en;q=0.3');
   $b = new sfWebBrowser($headers, $adapter);
@@ -239,7 +239,7 @@ foreach($adapter_list as $adapter)
   /***************************/
   /* Request headers support */
   /***************************/
-  
+
   $t->diag('Request headers support');
   $b = new sfWebBrowser(array(), $adapter);
   $headers = array(
@@ -265,7 +265,7 @@ foreach($adapter_list as $adapter)
   {
     $t->fail($msg);
   }
-  
+
   $msg = 'get() can pass request headers not common that are IE7 dependent: see http://www.w3.org/2006/http-header, now: ';
   $field = '';
   try
@@ -281,13 +281,13 @@ foreach($adapter_list as $adapter)
   {
     $t->fail($msg.field.' - header refused');
   }
-  
+
   /*********************************/
   /* Encoded response body support */
   /*********************************/
-  
+
   $t->diag('Encoded response body support');
-  
+
   $headers = array('Accept-Encoding' => 'gzip');
   $t->like(
     $b->get($dump_headers_url, array(), $headers)->getResponseText(),
@@ -298,7 +298,7 @@ foreach($adapter_list as $adapter)
     $b->get($dump_headers_url, array(), $headers)->getResponseText(),
     "/deflate/",
     'getResponseText() can decode deflate encoded response body');
-  
+
   $encodings = array();
   if (function_exists('gzuncompress'))
   {
@@ -330,11 +330,11 @@ foreach($adapter_list as $adapter)
     $b->get($dump_headers_url, array(), $headers)->getResponseText(),
     "/$target_headers/",
     'it is possible to set supplementary encodings');
-  
+
   /*******************/
   /* History methods */
   /*******************/
-  
+
   $t->diag('History methods');
   $b = new sfWebBrowser(array(), $adapter);
   $b->get($dump_headers_url);
@@ -345,11 +345,11 @@ foreach($adapter_list as $adapter)
   $t->like($b->getResponseText(), '/foo=bar/', 'forward() executes again the next request in the history');
   $b->reload();
   $t->like($b->getResponseText(), '/foo=bar/', 'reload() executes again the current request in the history');
-  
+
   /********************/
   /* Error management */
   /********************/
-  
+
   $t->diag('Error management');
   try
   {
@@ -360,14 +360,14 @@ foreach($adapter_list as $adapter)
   {
     $t->pass('an exception is thrown when an adapter error occurs');
   }
-  
+
   $t->is($b->get($example_site_url . '/nonexistentpage.html')->responseIsError(), true, 'responseIsError() returns true when response is an error');
   $t->is($b->get($example_site_url)->responseIsError(), false, 'responseIsError() returns false when response is not an error');
-  
+
   /*******************/
   /* Browser restart */
   /*******************/
-  
+
   $t->diag('Browser restart');
   $b->restart();
   try
@@ -380,27 +380,27 @@ foreach($adapter_list as $adapter)
     $t->pass('restart() reinitializes the browser history');
   }
   $t->is($b->getResponseText(), '', 'restart() reinitializes the response');
-  
+
   /*************/
   /* Redirects */
   /*************/
-  
+
   $t->diag('Redirects');
   $b = new sfWebBrowser(array(), $adapter);
   $b->get('http://www.symfony-project.com/trac/wiki/sfUJSPlugin');
   $t->like($b->getResponseText(), '/learn more about the unobtrusive approach/', 'follows 302 redirect after a GET');
-  
+
   $b = new myTestWebBrowser(array(), $adapter);
   $b->call($askeet_params['url'].'/index.php/login', 'POST', array('nickname' => $askeet_params['login'], 'password' => $askeet_params['password']));
   //$t->like($b->getResponseText(), '/url='.preg_quote($askeet_params['url'], '/').'\/index\.php/', 'does NOT follow a 302 redirect after a POST');
   $t->like($b->getResponseText(), '/featured questions/', 'follows 302 redirect after POST ****** DESPITE THE HTTP SPEC ******');
   $t->is($b->getRequestMethod(), 'GET', 'request method is changed to GET after POST for 302 redirect ***** DESPITE THE HTTP SPEC *****');
   $t->todo('request method is changed to GET after POST for 303 redirect');
-  
+
   /***********/
   /* Cookies */
   /***********/
-  
+
   $t->diag('Cookies');
   if ($adapter == 'sfCurlAdapter')
   {
@@ -414,7 +414,7 @@ foreach($adapter_list as $adapter)
       'password' => $askeet_params['password'],
     ));
     $t->like($b->getResponseBody(), '/'.$askeet_params['login'].' profile/', 'Cookies can be added to the request');
-  
+
     rmdir($cookies_dir);
     rmdir(dirname(__FILE__).'/../data');
   }
@@ -422,11 +422,11 @@ foreach($adapter_list as $adapter)
   {
     $t->todo('Cookies can be added to the request (sfCurlAdapter only for now)');
   }
-  
+
   /****************/
   /* File Uploads */
   /****************/
-  
+
   $t->diag('File uploads');
   if ($adapter == 'sfCurlAdapter')
   {
@@ -443,7 +443,7 @@ foreach($adapter_list as $adapter)
   /*****************/
   /* Soap requests */
   /*****************/
-  
+
   $t->diag('Soap requests');
   $url = 'http://www.abundanttech.com/WebServices/Population/population.asmx';
   $headers = array(
@@ -480,6 +480,6 @@ EOT;
   $b = new sfWebBrowser(array(), $adapter);
   $b->post($url, $requestBody, $headers);
   $t->like($b->getResponseText(), '/<Country>Comoros<\/Country>/', 'sfWebBrowser can make a low-level SOAP call with parameter');
-  
+
   $t->diag('');
 }

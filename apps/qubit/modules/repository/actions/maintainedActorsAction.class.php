@@ -34,7 +34,7 @@ class RepositoryMaintainedActorsAction extends sfAction
 
     // Avoid pagination over ES' max result window config (default: 10000)
     $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
-    
+
     if ((int)$limit * (int)$request->page > $maxResultWindow)
     {
       // Return nothing to not break the list

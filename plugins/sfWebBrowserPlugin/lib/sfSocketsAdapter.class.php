@@ -135,9 +135,9 @@ class sfSocketsAdapter
         $response_headers[] = $response_lines[$i];
       }
     }
-    
+
     $browser->setResponseHeaders($response_headers);
-    
+
     // grab status code
     preg_match('@(\d{3})@', $status_line, $status_code);
     if(isset($status_code[1]))

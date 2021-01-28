@@ -60,7 +60,7 @@ EOF;
 
     $sql = 'SELECT count(1) FROM job WHERE status_id=?';
     $runningJobCount = QubitPdo::fetchColumn($sql, array(QubitTerm::JOB_STATUS_IN_PROGRESS_ID));
-    
+
     if ($runningJobCount > 0)
     {
       print "WARNING: AtoM reports there are jobs currently running. It is *highly* recommended you make sure ".

@@ -28,7 +28,7 @@ class RightsHolderDeleteAction extends sfAction
     if ($request->isMethod('delete'))
     {
       $this->form->bind($request->getPostParameters());
-      
+
       if ($this->form->isValid())
       {
         foreach (QubitRelation::getBySubjectOrObjectId($this->resource->id) as $item)

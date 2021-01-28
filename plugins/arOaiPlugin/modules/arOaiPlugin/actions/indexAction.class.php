@@ -158,7 +158,7 @@ class arOaiPluginIndexAction extends sfAction
         {
           $request->setParameter('errorCode', 'idDoesNotExist');
           $request->setParameter('errorMsg', 'The value of the identifier argument is unknown or illegal in this repository.');
-  
+
           $this->forward('arOaiPlugin', 'error');
         }
       }

@@ -45,7 +45,7 @@ class sfSkosUniqueRelations implements Iterator, Countable
     $vec = array($x, $y);
     sort($vec);
     list($x, $y) = $vec;
-    
+
     return (($x + $y) * ($x + $y + 1)) / 2 + $y;
   }
 

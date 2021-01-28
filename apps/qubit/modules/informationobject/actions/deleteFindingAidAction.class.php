@@ -43,7 +43,7 @@ class InformationObjectDeleteFindingAidAction extends sfAction
     if ($request->isMethod('delete'))
     {
       $this->form->bind($request->getPostParameters());
-      
+
       if ($this->form->isValid())
       {
         $i18n = $this->context->i18n;

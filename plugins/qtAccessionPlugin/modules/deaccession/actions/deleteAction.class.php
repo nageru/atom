@@ -34,7 +34,7 @@ class DeaccessionDeleteAction extends sfAction
     if ($request->isMethod('delete'))
     {
       $this->form->bind($request->getPostParameters());
-      
+
       if ($this->form->isValid())
       {
         $accession = $this->resource->accession;

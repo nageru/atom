@@ -91,13 +91,13 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
         $publicationStatusId = $this->form->getValue('publicationStatus');
         $this->resource->setPublicationStatus($publicationStatusId);
         $this->resource->save();
-        
+
         // Update descendants using job scheduler
         if (filter_var($this->form->getValue('updateDescendants'), FILTER_VALIDATE_BOOLEAN))
         {
           $options = array('objectId' => $this->resource->id, 'publicationStatusId' => $publicationStatusId);
           QubitJob::runJob('arUpdatePublicationStatusJob', $options);
-      
+
           // Let user know descendants update has started
           $i18n = $this->context->i18n;
           $this->context->getConfiguration()->loadHelpers(array('Url'));

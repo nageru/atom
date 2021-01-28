@@ -22,12 +22,12 @@ class sfFopenAdapter
     $options             = array(),
     $adapterErrorMessage = null,
     $browser             = null;
-    
+
   public function __construct($options = array())
   {
     $this->options = $options;
   }
-    
+
   /**
    * Submits a request
    *
@@ -43,7 +43,7 @@ class sfFopenAdapter
   {
     $m_headers = array_merge(array('Content-Type' => 'application/x-www-form-urlencoded'), $browser->getDefaultRequestHeaders(), $browser->initializeRequestHeaders($headers));
     $request_headers = $browser->prepareHeaders($m_headers);
-    
+
     // Read the response from the server
     // FIXME: use sockets to avoid depending on allow_url_fopen
     $context = stream_context_create(array('http' => array_merge(
@@ -67,17 +67,17 @@ class sfFopenAdapter
     }
 
     restore_error_handler();
-    
+
     if ($this->adapterErrorMessage == true)
     {
       $msg = $this->adapterErrorMessage;
       $this->adapterErrorMessage = null;
       throw new Exception($msg);
     }
-    
+
     return $browser;
   }
-  
+
   /**
    * Handles PHP runtime error.
    * 
@@ -103,7 +103,7 @@ class sfFopenAdapter
                 E_STRICT             => 'Runtime Notice',
                 E_RECOVERABLE_ERROR  => 'Catchable Fatal Error'
                 );
-    
+
     $msg = sprintf('%s : "%s" occured in %s on line %d',
                    $error_types[$errno], $errstr, $errfile, $errline);
 

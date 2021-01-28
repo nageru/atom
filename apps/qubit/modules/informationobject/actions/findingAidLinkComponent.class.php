@@ -35,7 +35,7 @@ class InformationObjectFindingAidLinkComponent extends sfComponent
 
     $parts = explode(DIRECTORY_SEPARATOR, $this->path);
     $this->filename = array_pop($parts);
-    
+
     $i18n = $this->context->i18n;
 
     switch ((integer)$this->resource->getFindingAidStatus())

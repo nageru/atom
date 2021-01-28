@@ -54,7 +54,7 @@ class arUpdateEsActorRelationsJob extends arBaseJob
 
         continue;
       }
-      
+
       // Don't count invalid description ids
       $count++;
 

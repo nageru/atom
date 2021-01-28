@@ -47,7 +47,7 @@ class sfCurlAdapter
 
     $this->options = $options;
     $curl_options = $options;
-    
+
     $this->curl = curl_init();
 
     // cookies
@@ -90,26 +90,26 @@ class sfCurlAdapter
     curl_setopt($this->curl, CURLOPT_AUTOREFERER, true);
     curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, false);
     curl_setopt($this->curl, CURLOPT_FRESH_CONNECT, true);
-    
+
     if(isset($curl_options['followlocation']))
     {
       curl_setopt($this->curl, CURLOPT_FOLLOWLOCATION, (bool) $this->options['followlocation']);
       unset($curl_options['followlocation']);
     }
-    
+
     // activate ssl certificate verification?
     if (isset($curl_options['ssl_verify_host']))
     {
       curl_setopt($this->curl, CURLOPT_SSL_VERIFYHOST, (bool) $this->options['ssl_verify_host']);
       unset($curl_options['ssl_verify_host']);
     }
-    
+
     if (isset($curl_options['ssl_verify']))
     {
       curl_setopt($this->curl, CURLOPT_SSL_VERIFYPEER, (bool) $this->options['ssl_verify']);
       unset($curl_options['ssl_verify']);
     }
-    
+
     // verbose execution?
     if (isset($curl_options['verbose']))
     {
@@ -117,7 +117,7 @@ class sfCurlAdapter
       curl_setopt($this->curl, CURLOPT_VERBOSE, true);
       unset($curl_options['cookies']);
     }
-    
+
     if (isset($curl_options['verbose_log']))
     {
       $log_file = sfConfig::get('sf_log_dir').'/sfCurlAdapter_verbose.log';
@@ -126,7 +126,7 @@ class sfCurlAdapter
       curl_setopt($this->curl, CURLOPT_STDERR, $this->fh);
       unset($curl_options['verbose_log']);
     }
-    
+
     // Additional options
     foreach ($curl_options as $key => $value)
     {
@@ -136,7 +136,7 @@ class sfCurlAdapter
         curl_setopt($this->curl, $const, $value);
       }
     }
-    
+
     // response header storage - uses callback function
     curl_setopt($this->curl, CURLOPT_HEADERFUNCTION, array($this, 'read_header'));
   }
@@ -160,19 +160,19 @@ class sfCurlAdapter
     $m_headers = array_merge($browser->getDefaultRequestHeaders(), $browser->initializeRequestHeaders($headers));
     $request_headers = explode("\r\n", $browser->prepareHeaders($m_headers));
     curl_setopt($this->curl, CURLOPT_HTTPHEADER, $request_headers);
-   
+
     // encoding support
     if(isset($headers['Accept-Encoding']))
     {
       curl_setopt($this->curl, CURLOPT_ENCODING, $headers['Accept-Encoding']);
     }
-    
+
     // timeout support
     if(isset($this->options['Timeout']))
     {
       curl_setopt($this->curl, CURLOPT_TIMEOUT, $this->options['Timeout']);
     }
-    
+
     if (!empty($parameters))
     {
       if (!is_array($parameters))
@@ -209,7 +209,7 @@ class sfCurlAdapter
     curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, $method);
 
     $response = curl_exec($this->curl);
-    
+
     if (curl_errno($this->curl))
     {
       throw new Exception(curl_error($this->curl), curl_errno($this->curl));
@@ -235,7 +235,7 @@ class sfCurlAdapter
   protected function read_header($curl, $headers)
   {
     $this->headers[] = $headers;
-    
+
     return strlen($headers);
   }
 }

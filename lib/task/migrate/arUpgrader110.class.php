@@ -571,7 +571,7 @@ class arUpgrader110
         $sql = "SELECT id, information_object_id
                 FROM digital_object
                 WHERE information_object_id IS NOT NULL";
-        
+
         foreach (QubitPdo::fetchAll($sql) as $item)
         {
           $io = QubitInformationObject::getById($item->information_object_id);

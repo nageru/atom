@@ -154,18 +154,18 @@ class QubitOai
 
     return false;
   }
-  
+
   protected static function parseUrlHost($URL)
   {
     $parsedURL = parse_url($URL);
-    
+
     // If the scheme is missing from a URL, parse_url() mistakenly interprets the host as the path.
     // Prepend a dummy scheme and re-parse, if this is the case.
     if (!isset($parsedURL['scheme']))
     {
       $parsedURL = parse_url('http://'.$URL);
     }
-    
+
     return $parsedURL['host'];
   }
 
@@ -293,19 +293,19 @@ class QubitOai
 
     return false;
   }
-  
+
   public static function getOaiNamespaceIdentifier()
   {
     $siteBaseUrl = QubitSetting::getByName('siteBaseUrl')->getValue(array('cultureFallback' => true));
     $oaiNamespaceIdentifier = QubitOai::parseUrlHost($siteBaseUrl);
-    
+
     return $oaiNamespaceIdentifier;
   }
 
   public static function getRepositoryIdentifier()
   {
     $repositoryIdentifier = QubitOai::getOaiNamespaceIdentifier();
-    
+
     if ($repositoryCode = sfConfig::get('app_oai_oai_repository_code'))
     {
       $repositoryIdentifier .= ':'.$repositoryCode;

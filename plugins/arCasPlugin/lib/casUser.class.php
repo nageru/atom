@@ -54,7 +54,7 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
       $attributes = phpCAS::getAttributes();
       $this->setGroupsFromCasAttributes($user, $attributes);
     }
-    
+
     $authenticated = true;
     $this->signIn($user);
 
@@ -75,9 +75,9 @@ class casUser extends myUser implements Zend_Acl_Role_Interface
       sfContext::getInstance()->getLogger()->err('Key not found in CAS attributes');
       return;
     }
-    
+
     $attributeToCheck = $attributes[$attributeKey];
-    
+
     if (null === $attributeToCheck)
     {
       sfContext::getInstance()->getLogger()->err('CAS attribute used for setting AtoM group membership is null');

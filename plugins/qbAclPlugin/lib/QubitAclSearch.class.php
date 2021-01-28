@@ -54,7 +54,7 @@ class QubitAclSearch
 
           $query = new \Elastica\Query\Term;
           $query->setTerm('repositoryId', $repo['id']);
-          
+
           if (QubitAcl::DENY == $repo['access'])
           {
             // Require repos to be specifically allowed (all others prohibited)

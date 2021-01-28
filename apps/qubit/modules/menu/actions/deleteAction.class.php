@@ -33,7 +33,7 @@ class MenuDeleteAction extends sfAction
     if ($request->isMethod('delete'))
     {
       $this->form->bind($request->getPostParameters());
-      
+
       if ($this->form->isValid())
       {
         if (!$this->resource->isProtected())
