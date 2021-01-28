@@ -86,7 +86,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
     {
       if (isset($this->parent))
       {
-        list ($this->objects, $sorted) = $this->parent->getData($leaf);
+        list($this->objects, $sorted) = $this->parent->getData($leaf);
 
         // Possibly re-index
         if (isset($this->indexByName))
@@ -107,7 +107,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
         if (isset($this->criteria))
         {
-          list ($this->statement, $sorted) = $this->getStatement($leaf);
+          list($this->statement, $sorted) = $this->getStatement($leaf);
 
           while ($row = $this->statement->fetch())
           {
@@ -175,7 +175,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   public function __isset($name)
   {
-    list ($objects, $sorted) = $this->getData($this);
+    list($objects, $sorted) = $this->getData($this);
 
     return array_key_exists($name, $this->objects);
   }
@@ -199,7 +199,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
       return $this->objects;
     }
 
-    list ($objects, $sorted) = $this->getData($this);
+    list($objects, $sorted) = $this->getData($this);
 
     if (isset($this->objects[$name]))
     {
@@ -287,14 +287,14 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
 
   public function current()
   {
-    list ($objects, $sorted) = $this->getData($this);
+    list($objects, $sorted) = $this->getData($this);
 
     return current($this->objects);
   }
 
   public function key()
   {
-    list ($objects, $sorted) = $this->getData($this);
+    list($objects, $sorted) = $this->getData($this);
 
     return key($this->objects);
   }
@@ -303,7 +303,7 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
   {
     $this->offset++;
 
-    list ($objects, $sorted) = $this->getData($this);
+    list($objects, $sorted) = $this->getData($this);
 
     return next($this->objects);
   }
@@ -312,14 +312,14 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
   {
     $this->offset = 0;
 
-    list ($objects, $sorted) = $this->getData($this);
+    list($objects, $sorted) = $this->getData($this);
 
     return reset($this->objects);
   }
 
   public function valid()
   {
-    list ($objects, $sorted) = $this->getData($this);
+    list($objects, $sorted) = $this->getData($this);
 
     return $this->offset < count($this->objects);
   }

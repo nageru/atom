@@ -88,7 +88,7 @@ class sfFopenAdapter
    */
   function handleRuntimeError($errno, $errstr, $errfile = null, $errline = null, $errcontext = array())
   {
-     $error_types = array (
+     $error_types = array(
                 E_ERROR              => 'Error',
                 E_WARNING            => 'Warning',
                 E_PARSE              => 'Parsing Error',

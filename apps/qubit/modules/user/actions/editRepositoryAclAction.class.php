@@ -75,7 +75,7 @@ class UserEditRepositoryAclAction extends DefaultEditAction
       // If key has an underscore, then we are creating a new permission
       if (1 == preg_match('/([\w]+)_(.*)/', $key, $matches))
       {
-        list ($action, $uri) = array_slice($matches, 1, 2);
+        list($action, $uri) = array_slice($matches, 1, 2);
         $params = $this->context->routing->parse(Qubit::pathInfo($uri));
         $resource = $params['_sf_route']->resource;
 

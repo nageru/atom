@@ -67,7 +67,7 @@ class sfGDAdapter
   {
     if (!extension_loaded('gd'))
     {
-      throw new Exception ('GD not enabled. Check your php.ini file.');
+      throw new Exception('GD not enabled. Check your php.ini file.');
     }
     $this->maxWidth = $maxWidth;
     $this->maxHeight = $maxHeight;

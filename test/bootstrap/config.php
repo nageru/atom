@@ -1,13 +1,13 @@
 <?php
 
-return array (
+return array(
   'all' =>
-  array (
+  array(
     'propel' =>
-    array (
+    array(
       'class' => 'sfPropelDatabase',
       'param' =>
-      array (
+      array(
         'encoding' => 'utf8mb4',
         'persistent' => true,
         'pooling' => true,
@@ -18,36 +18,36 @@ return array (
     ),
   ),
   'dev' =>
-  array (
+  array(
     'propel' =>
-    array (
+    array(
       'param' =>
-      array (
+      array(
         'classname' => 'DebugPDO',
         'debug' =>
-        array (
+        array(
           'realmemoryusage' => true,
           'details' =>
-          array (
+          array(
             'time' =>
-            array (
+            array(
               'enabled' => true,
             ),
             'slow' =>
-            array (
+            array(
               'enabled' => true,
               'threshold' => 0.1,
             ),
             'mem' =>
-            array (
+            array(
               'enabled' => true,
             ),
             'mempeak' =>
-            array (
+            array(
               'enabled' => true,
             ),
             'memdelta' =>
-            array (
+            array(
               'enabled' => true,
             ),
           ),
@@ -56,11 +56,11 @@ return array (
     ),
   ),
   'test' =>
-  array (
+  array(
     'propel' =>
-    array (
+    array(
       'param' =>
-      array (
+      array(
         'classname' => 'DebugPDO',
       ),
     ),
