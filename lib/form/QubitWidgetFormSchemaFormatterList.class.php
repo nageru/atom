@@ -35,5 +35,3 @@ class QubitWidgetFormSchemaFormatterList extends sfWidgetFormSchemaFormatter
     $namedErrorRowFormatInARow = " <li>%name%: %error%</li>\n",
     $decoratorFormat = "<table>\n %content%</table>";
 }
-
-?>
