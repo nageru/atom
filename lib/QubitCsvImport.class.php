@@ -220,7 +220,7 @@ class QubitCsvImport
     // Example: ./transform_csv.py /tmp/original_file.csv /tmp/transformed_file.csv
     $command = sprintf(sfConfig::get('app_csv_transform_script_name') . ' %s %s',
       escapeshellarg($csvFile),
-      escapeshellarg($outputFileName)) ;
+      escapeshellarg($outputFileName));
 
     // Redirect stderr to stdout to logfile.
     $command .= ' 2>&1 > ' . $logFileName;
