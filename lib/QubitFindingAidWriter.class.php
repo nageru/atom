@@ -28,18 +28,51 @@
 
 class QubitFindingAidWriter
 {
+  private const XML_STANDARD = 'ead';
+
   private
     $appRoot,
     $logger,
     $resource,
     $options;
 
+  // Valid finding aid "models"
+  private $models = [
+    'inventory-summary',
+    'full-details'
+  ];
+
+  // Default options
+  private $defaults = [
+    'appRoot' => null,
+    'logger'  => null,
+    'model'   => 'inventory-summary',
+  ];
+
   public function __construct(
     QubitInformationObject $resource,
     array $options = []
   )
   {
-    // Check that $resource this is not the QubitInformationObject root
+    $this->setResource($resource);
+
+    // Fill options array with default values if explicit $options not passed
+    $options = array_merge($this->defaults, $options);
+
+    $this->setAppRoot($options['appRoot']);
+
+    // Set logger (use default symfony logger if $option['logger'] is not set)
+    $this->setLogger($options['logger']);
+
+    $this->setModel($options['model']);
+  }
+
+  /**
+   * Set the parent resource used to generated the finding aid
+   */
+  public function setResource(QubitInformationObject $resource): void
+  {
+    // Make sure $resource is not the QubitInformationObject root
     if (QubitInformationObject::ROOT_ID === $resource->id)
     {
       throw new UnexpectedValueException(
@@ -51,15 +84,57 @@ class QubitFindingAidWriter
     }
 
     $this->resource = $resource;
-    $this->options = $options;
-
-    // Get AtoM application root directory
-    $this->appRoot = rtrim(sfConfig::get('sf_root_dir'), '/');
-
-    // $options['logger'] (if set), or default symfony logger
-    $this->setLogger();
   }
 
+  /**
+   * Set the application root directory, or use symfony's sf_root_dir value
+   */
+  public function setAppRoot(?string $appRoot): void
+  {
+    if (!empty($appRoot))
+    {
+      $this->appRoot = $appRoot;
+
+      return;
+    }
+
+    // Use the symfony sf_root_dir config setting
+    $this->appRoot = rtrim(sfConfig::get('sf_root_dir'), '/');
+  }
+
+  /**
+   * Set a logger, or use the default symfony logger
+   */
+  public function setLogger(?sfLogger $logger): void
+  {
+    // Use the passed logger
+    if (!empty($logger))
+    {
+      $this->logger = $logger;
+
+      return;
+    }
+
+    // Or default to the configured symfony logger
+    $this->logger = sfContext::getInstance()->getLogger();
+  }
+
+  /**
+   * Set a finding aid model
+   */
+  public function setModel(string $model): void
+  {
+    if (!in_array($model, $this->models))
+    {
+      throw new UnexpectedValueException(sprintf('Invalid model "%s"', $model));
+    }
+
+    $this->model = $model;
+  }
+
+  /**
+   * Generate the finding aid document
+   */
   public function generate()
   {
     $this->logger->info(
@@ -75,10 +150,12 @@ class QubitFindingAidWriter
       $eadFilePath = $this->generateEadFile();
     }
 
-    $foFilePath = $this->generateFopFile($eadFilePath, $foFilePath);
+    $this->logger->info(sprintf('Generated EAD file "%s"', $eadFilePath));
 
     // DEBUGGING
     return;
+
+    $foFilePath = $this->generateFopFile($eadFilePath, $foFilePath);
 
     // Use FOP generated in previous step to generate PDF
     $cmd = sprintf("fop -r -q -fo '%s' -%s '%s' 2>&1", $foFilePath, self::getFindingAidFormat(), $pdfPath);
@@ -167,16 +244,16 @@ class QubitFindingAidWriter
     if (empty($filepath))
     {
       $filename = exportBulkBaseTask::generateSortableFilename(
-        $resource, 'xml', 'ead'
+        $this->resource, 'xml', 'ead'
       );
-      $filepath = $path . PATH_SEPARATOR . $filename;
+      $filepath = sys_get_temp_dir() . DIRECTORY_SEPARATOR  . $filename;
     }
 
     if (false === file_put_contents($filepath, $xml))
     {
-      throw new sfException($this->i18n->__(
-        "ERROR (EAD-EXPORT): Couldn't write file: '%1%'", ['%1%' => $filepath]
-      ));
+      throw new sfException(
+        sprintf('ERROR (EAD-EXPORT): Couldn\'t write file: "%s"', $filepath)
+      );
     }
 
     return $filepath;
@@ -308,28 +385,6 @@ class QubitFindingAidWriter
     $this->info($this->i18n->__('Finding aid deleted successfully.'));
 
     return true;
-  }
-
-  /**
-   * Set an sfLogger
-   *
-   * @return void
-   */
-  private function setLogger()
-  {
-    // Set logger from options, if passed
-    if (
-      isset($this->options['logger']) &&
-      $this->options['logger'] instanceof sfLogger
-    )
-    {
-      $this->logger = $options['logger'];
-    }
-    else
-    {
-      // Get the default symfony logger
-      $this->logger = sfContext::getInstance()->getLogger();
-    }
   }
 
   private function upload($path)

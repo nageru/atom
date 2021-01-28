@@ -24,7 +24,7 @@
  * @subpackage task
  * @author     David Juhasz <djjuhasz@gmail.com>
  */
-class findingAidGenerateTask extends exportBulkBaseTask
+class findingAidGenerateTask extends arBaseTask
 {
   protected $namespace        = 'finding-aid';
   protected $name             = 'generate';
@@ -43,7 +43,7 @@ EOL;
       new sfCommandArgument(
         'slug',
         sfCommandArgument::REQUIRED,
-        'The archival description slug')
+        'The top-level archival description slug')
     ));
 
     $this->addOptions(array(
@@ -71,28 +71,48 @@ EOL;
       new sfCommandOption(
         'model',
         'm',
+        sfCommandOption::PARAMETER_REQUIRED,
+        'Finding aid model ("inventory-summary" or "full-details")',
+        'inventory-summary'
+      ),
+      new sfCommandOption(
+        'verbose',
+        'v',
         sfCommandOption::PARAMETER_NONE,
-        'Finding aid modle ("summary" or "', null),
+        'Output extra debugging information',
+        null
+      ),
     ));
   }
 
-  /**
-   * @see sfTask
-   */
-  public function execute($arguments = array(), $options = array())
+  public function execute($args = array(), $opts = array())
   {
-    parent::execute($arguments, $options);
+    /**
+     * @see sfTask
+     */
+    parent::execute($args, $opts);
 
-    // Offer to abort if not using --force or --dry-run options
-    if (!$options['force'] && !$options['dry-run'])
+    $resource = QubitInformationObject::getBySlug($args['slug']);
+
+    if (null === $resource)
     {
-      $confirmation = $this->askConfirmation("Are you sure you'd like to delete all unlinked physical objects?");
+      $this->log(sprintf('Invalid slug "%s"', $args['slug']));
 
-      if (!$confirmation)
-      {
-        $this->log('Aborted.');
-        exit();
-      }
+      die(1);
     }
+
+    // Turn up logging output level
+    if (!empty($opts['verbose']))
+    {
+      $logger = new sfConsoleLogger(
+        $this->dispatcher,
+        ['level' => sfLogger::DEBUG]
+      );
+
+      $opts['logger'] = $logger;
+    }
+
+    $writer = new QubitFindingAidWriter($resource, $opts);
+    $writer->generate();
   }
 }
