@@ -181,11 +181,11 @@ class QubitGrantedRight extends BaseGrantedRight
   }
 
   /**
-	 * Get all the granted rights for a particular information object
-	 * @param $id  The information object ID
-	 * @param $actId  The optional ID for the act type (gets all types by default)
-	 * @return array  An array of QubitGrantedRight objects
-	 */
+   * Get all the granted rights for a particular information object
+   * @param $id  The information object ID
+   * @param $actId  The optional ID for the act type (gets all types by default)
+   * @return array  An array of QubitGrantedRight objects
+   */
   public static function getByObjectIdAndAct($id, $actId = null)
   {
     $c = new Criteria;

@@ -308,13 +308,13 @@ class sfImageMagickAdapter
 
         break;
       case 'custom':
-      	$coords = $this->options['coords'];
-      	if (empty($coords)) break;
+        $coords = $this->options['coords'];
+        if (empty($coords)) break;
 
-      	$x = $coords['x1'];
-      	$y = $coords['y1'];
-      	$width = $coords['x2'] - $coords['x1'];
-      	$height = $coords['y2'] - $coords['y1'];
+        $x = $coords['x1'];
+        $y = $coords['y1'];
+        $width = $coords['x2'] - $coords['x1'];
+        $height = $coords['y2'] - $coords['y1'];
 
         if (is_null($thumbDest))
         {
@@ -340,7 +340,8 @@ class sfImageMagickAdapter
 
           $this->image = $thumbDest;
         }
-      	break;
+
+        break;
     } // end switch
 
     $command .= ' -thumbnail ';
