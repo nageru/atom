@@ -150,7 +150,7 @@ class QubitJob extends BaseJob
     $className = QubitPdo::fetchColumn('SELECT class_name FROM object WHERE id = ?', array($this->objectId));
     if (!$className)
     {
-      return null;
+      return;
     }
 
     return strtolower(str_replace('Qubit', '', $className));

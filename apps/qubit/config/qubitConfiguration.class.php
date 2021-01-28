@@ -155,6 +155,6 @@ class qubitConfiguration extends sfApplicationConfiguration
     }
 
     // Return null if the variable is not set in the specified config file
-    return null;
+
   }
 }

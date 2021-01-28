@@ -140,7 +140,7 @@ class QubitUser extends BaseUser
     {
       $error = 'invalid username';
 
-      return null;
+      return;
     }
 
     $criteria = new Criteria;
@@ -155,7 +155,7 @@ class QubitUser extends BaseUser
       {
         $error = 'inactive user';
 
-        return null;
+        return;
       }
 
       // Check password, hashed with salt using SHA-1, against stored hash

@@ -413,7 +413,6 @@ class arFindingAidJob extends arBaseJob
       }
     }
 
-    return null;
   }
 
   public static function getFindingAidPath($id)

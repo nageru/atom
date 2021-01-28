@@ -133,6 +133,5 @@ class qtSwordPluginDepositAction extends sfAction
       $this->setTemplate($template);
     }
 
-    return null;
   }
 }

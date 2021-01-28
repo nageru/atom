@@ -543,7 +543,6 @@ class QubitActor extends BaseActor
   {
     //TO DO
 
-    return null;
   }
 
   /**

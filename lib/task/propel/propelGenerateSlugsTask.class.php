@@ -306,7 +306,7 @@ EOF;
 
     if (!$results->count())
     {
-      return null;
+      return;
     }
 
     $doc = $results[0]->getData();

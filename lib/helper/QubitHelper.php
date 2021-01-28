@@ -432,7 +432,7 @@ function get_search_creation_details($hit, $culture = null)
 
   if (0 == count($details))
   {
-    return null;
+    return;
   }
 
   return implode(', ', $details);

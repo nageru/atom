@@ -85,6 +85,5 @@ class QubitInformationObjectXmlCacheResource
       return $path;
     }
 
-    return null;
   }
 }

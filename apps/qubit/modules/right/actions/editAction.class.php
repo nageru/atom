@@ -285,7 +285,6 @@ class RightEditAction extends sfAction
       return $results[0];
     }
 
-    return null;
   }
 
   protected function newRightWithDefaults()

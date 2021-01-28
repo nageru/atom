@@ -111,7 +111,7 @@ class QubitEvent extends BaseEvent
     }
     else
     {
-      return null;
+      return;
     }
   }
 }

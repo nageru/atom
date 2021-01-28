@@ -237,7 +237,6 @@ class PhysicalObjectCsvImporter
       return basename($this->filename);
     }
 
-    return null;
   }
 
   public function setPhysicalObjectTypeTaxonomy(QubitTaxonomy $object)
@@ -660,7 +659,7 @@ EOQ;
 
     if (!$this->getOption('updateExisting'))
     {
-      return null;
+      return;
     }
 
     if ($this->getOption('partialMatches'))
@@ -673,7 +672,7 @@ EOQ;
 
     if (0 == count($matches))
     {
-      return null;
+      return;
     }
     elseif (1 == count($matches))
     {

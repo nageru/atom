@@ -407,7 +407,6 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
       return $digitalObjects[0];
     }
 
-    return null;
   }
 
   /**
@@ -459,19 +458,19 @@ class QubitObject extends BaseObject implements Zend_Acl_Resource_Interface
     // If there are no digital objects linked to this actor, return null
     if (null === $digitalObject)
     {
-      return null;
+      return;
     }
 
     // If the linked digital object isn't accessible via URL, return null
     if (!$digitalObject->masterAccessibleViaUrl())
     {
-      return null;
+      return;
     }
 
     // If the current user isn't authorized to read the master, return null
     if (!QubitAcl::check($this, 'readMaster'))
     {
-      return null;
+      return;
     }
 
     if (QubitTerm::EXTERNAL_URI_ID == $digitalObject->usageId)

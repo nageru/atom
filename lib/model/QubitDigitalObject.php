@@ -1720,7 +1720,7 @@ class QubitDigitalObject extends BaseDigitalObject
     // Make sure we have a valid mime-type (with a forward-slash).
     if (!strlen($this->mimeType) || !strpos($this->mimeType, '/'))
     {
-      return null;
+      return;
     }
 
     $mimePieces = explode('/', $this->mimeType);

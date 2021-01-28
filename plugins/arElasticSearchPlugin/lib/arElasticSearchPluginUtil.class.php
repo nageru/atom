@@ -64,7 +64,7 @@ class arElasticSearchPluginUtil
   {
     if (!strlen($date))
     {
-      return null;
+      return;
     }
 
     $dateParts = explode('-', $date);
@@ -80,7 +80,7 @@ class arElasticSearchPluginUtil
     // with year 0000. See #8796
     if ((int)$year === 0)
     {
-      return null;
+      return;
     }
 
     if ((int)$month === 0)

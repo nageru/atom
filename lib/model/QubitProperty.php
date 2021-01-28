@@ -94,7 +94,6 @@ class QubitProperty extends BaseProperty
       return $sourceCultureValue;
     }
 
-    return null;
   }
 
   /**
@@ -154,7 +153,6 @@ class QubitProperty extends BaseProperty
       return $property;
     }
 
-    return null;
   }
 
   /**

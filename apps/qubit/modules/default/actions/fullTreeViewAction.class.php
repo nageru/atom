@@ -93,7 +93,7 @@ class DefaultFullTreeViewAction extends sfAction
 
     if (null === $result)
     {
-      return null;
+      return;
     }
 
     $data = $result->getData();
@@ -115,7 +115,7 @@ class DefaultFullTreeViewAction extends sfAction
     // If $this->ancestorIds is empty, something went wrong
     if (empty($this->ancestorIds))
     {
-      return null;
+      return;
     }
 
     // If the parent of $this->resource is the root node, then this resource is
@@ -202,7 +202,7 @@ class DefaultFullTreeViewAction extends sfAction
     // If the information object is a draft, no results are returned
     if (0 === $results->count())
     {
-      return null;
+      return;
     }
 
     // There should only be one result in the resultset

@@ -140,7 +140,6 @@ class QubitSetting extends BaseSetting
       return $sourceCultureValue;
     }
 
-    return null;
   }
 
   /**

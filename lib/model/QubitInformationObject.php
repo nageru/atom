@@ -531,7 +531,7 @@ class QubitInformationObject extends BaseInformationObject
     }
     else
     {
-      return null;
+      return;
     }
   }
 
@@ -1234,7 +1234,7 @@ class QubitInformationObject extends BaseInformationObject
     }
     else
     {
-      return null;
+      return;
     }
   }
 
@@ -1254,7 +1254,7 @@ class QubitInformationObject extends BaseInformationObject
     }
     else
     {
-      return null;
+      return;
     }
   }
 
@@ -1274,7 +1274,7 @@ class QubitInformationObject extends BaseInformationObject
     }
     else
     {
-      return null;
+      return;
     }
   }
 
@@ -1546,7 +1546,6 @@ class QubitInformationObject extends BaseInformationObject
       }
     }
 
-    return null;
   }
 
   /**
@@ -1573,7 +1572,6 @@ class QubitInformationObject extends BaseInformationObject
       }
     }
 
-    return null;
   }
 
   /**
@@ -2278,7 +2276,7 @@ class QubitInformationObject extends BaseInformationObject
     // 6 for year & month, or 8 for year & month & day
     if (!in_array(strlen($date), array(4, 6, 8)))
     {
-      return null;
+      return;
     }
 
     $year = $month = $day = 0;
@@ -2292,7 +2290,7 @@ class QubitInformationObject extends BaseInformationObject
 
     if ($year === 0)
     {
-      return null; // Garbage date
+      return; // Garbage date
     }
 
     return "$year-$month-$day";

@@ -536,7 +536,7 @@ class QubitFlatfileExport
 
     if (null === $digitalObject)
     {
-      return null;
+      return;
     }
 
     // If user can access the master DO, use the master DO metadata
@@ -553,6 +553,5 @@ class QubitFlatfileExport
       return $digitalObject->reference;
     }
 
-    return null;
   }
 }

@@ -556,7 +556,7 @@ EOF;
     // Return null if no UUIDs found
     if (empty($matches[0]))
     {
-      return null;
+      return;
     }
 
     // If UUIDs found, inform user and return first UUID found
