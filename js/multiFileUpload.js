@@ -7,8 +7,8 @@
   var MultiFileUpload = function (element)
   {
     this.uppy = new Uppy.Core({ 
-      debug: true,
-      id: 'Uppy-unique',
+      debug: false,
+      id: 'Uppy-atom',
       autoProceed: false,
       restrictions: {
         minNumberOfFiles: 1
@@ -22,6 +22,7 @@
 
     this.$element = $(element);
     this.$submitButton = this.$element.find('input[type="submit"]');
+    this.$cancelButton = this.$element.find('a[title="Cancel"]');
     this.$retryButton = $('<a class="c-btn" title="retry"/>')
       .attr('type','hidden')
       .text(Qubit.multiFileUpload.i18nRetry)
@@ -44,7 +45,7 @@
 
       this.uppy
         .use(Uppy.Dashboard, {
-          id: 'Dashboard',
+          id: 'Dashboard-atom',
           inline: true,
           target: '.uppy-dashboard',
           width: '100%',
@@ -174,6 +175,9 @@
 
       if (this.uppy.getState().error) {
         if (this.checkUploadSuccessful() === true) {
+          this.$submitButton.attr('disabled', 'disabled');
+          this.$cancelButton.removeAttr("href").attr('disabled', 'disabled');
+          this.showAlert(Qubit.multiFileUpload.i18nImporting, 'alert-info');
           // Post any successful uploads.
           $('#multiFileUploadForm').submit();
         }
@@ -195,6 +199,9 @@
             this.$retryButton.show();
           }
           else {
+            this.$submitButton.attr('disabled', 'disabled');
+            this.$cancelButton.removeAttr("href").attr('disabled', 'disabled');
+            this.showAlert(Qubit.multiFileUpload.i18nImporting, 'alert-info');
             // Post to multiFileUpload.
             $('#multiFileUploadForm').submit();
           }
@@ -333,10 +340,10 @@
     // Show an AtoM style alert message.
     showAlert: function (message, type) {
       if (!type) {
-        type = '';
+        type = 'alert-info';
       }
 
-      var $alert = $('<div class="alert ' + type + '">');
+      var $alert = $('<div class="alert ' + type + ' animateNicely">');
       $alert.append('<button type="button" data-dismiss="alert" class="close">&times;</button>');
       $alert.append(message).prependTo($('#uploaderContainer'));
   
@@ -344,7 +351,7 @@
     },
 
     clearAlerts: function () {
-      $( "div" ).remove( ".alert" );
+      $("div#uploaderContainer > div").remove( ".alert" );
     },
 
     // Build title from Title field template.

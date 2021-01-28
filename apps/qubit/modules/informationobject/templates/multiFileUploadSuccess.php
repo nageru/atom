@@ -131,6 +131,7 @@ Qubit.multiFileUpload.i18nBack = '{$sf_context->i18n->__('Back')}';
 Qubit.multiFileUpload.i18nEditing = '{$sf_context->i18n->__('Editing %{file}')}';
 Qubit.multiFileUpload.i18nUploadingFile = '{$sf_context->i18n->__('Uploading %{smart_count} file')}';
 Qubit.multiFileUpload.i18nUploadingFiles = '{$sf_context->i18n->__('Uploading %{smart_count} files')}';
+Qubit.multiFileUpload.i18nImporting = '{$sf_context->i18n->__('Importing digital objects - please wait...')}';
 Qubit.multiFileUpload.i18nFailedToUpload = '{$sf_context->i18n->__('Failed to upload %{file}')}';
 Qubit.multiFileUpload.i18nSizeError = '{$sf_context->i18n->__('Skipping file %{fileName} because file size %{fileSize} is larger than file size limit of %{maxSize} MB')}';
 Qubit.multiFileUpload.i18nNoFilesError = '{$sf_context->i18n->__('Please add a file to begin uploading.')}';
