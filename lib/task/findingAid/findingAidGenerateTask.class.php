@@ -88,7 +88,7 @@ EOL;
   public function execute($args = array(), $opts = array())
   {
     /**
-     * @see sfTask
+     * @see arBaseTask
      */
     parent::execute($args, $opts);
 
@@ -101,18 +101,21 @@ EOL;
       die(1);
     }
 
-    // Turn up logging output level
-    if (!empty($opts['verbose']))
-    {
-      $logger = new sfConsoleLogger(
-        $this->dispatcher,
-        ['level' => sfLogger::DEBUG]
-      );
-
-      $opts['logger'] = $logger;
-    }
+    $opts['logger'] = $this->getLogger($opts);
 
     $writer = new QubitFindingAidWriter($resource, $opts);
     $writer->generate();
+  }
+
+  private function getLogger($opts)
+  {
+    $logger = new sfConsoleLogger($this->dispatcher);
+
+    if (!empty($opts['verbose']))
+    {
+      $logger->setLogLevel(sfLogger::DEBUG);
+    }
+
+    return $logger;
   }
 }

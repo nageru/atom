@@ -21,7 +21,7 @@
  * Generate a Finding Aid document (PDF or RTF format) from an information
  * object and it's descendants
  *
- * @package    AccesstoMemory
+ * @package    AccessToMemory
  * @author     Mike G <mikeg@artefactual.com>
  * @author     David Juhasz <djjuhasz@gmail.com>
  */
