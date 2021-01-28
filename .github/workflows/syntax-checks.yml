@@ -1,0 +1,30 @@
+name: Syntax checks
+on:
+  pull_request:
+  push:
+    branches:
+    - qa/**
+    - stable/**
+jobs:
+  php-cs-fixer:
+    runs-on: ubuntu-18.04
+    name: PHP CS Fixer
+    env:
+      PHP_VERSION: 7.4
+    steps:
+    - name: Setup PHP ${{ env.PHP_VERSION }}
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{ env.PHP_VERSION }}
+        coverage: none
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Cache dependencies
+      uses: actions/cache@v2
+      with:
+        path: ~/.composer/cache/files
+        key: php-${{ env.PHP_VERSION }}-composer-${{ hashFiles('composer.json') }}
+    - name: Install dependencies
+      run: composer update
+    - name: Run php-cs-fixer
+      run: composer php-cs-fixer -- fix --dry-run --diff
