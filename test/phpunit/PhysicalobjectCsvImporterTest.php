@@ -11,7 +11,6 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
   protected $vfs;               // virtual filesystem
   protected $vdbcon;            // virtual database connection
 
-
   /**************************************************************************
    * Fixtures
    **************************************************************************/
@@ -74,7 +73,6 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
     return array_combine(
       explode(',', $this->csvHeader), str_getcsv($this->csvData[$row]));
   }
-
 
   /**************************************************************************
    * Data providers
@@ -215,7 +213,6 @@ class PhysicalObjectCsvImporterTest extends \PHPUnit\Framework\TestCase
       [$inputs[3], $expectedResults[3]],
     ];
   }
-
 
   /**************************************************************************
    * Tests

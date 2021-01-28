@@ -5,7 +5,6 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
   protected $csvData;
   protected $ormClasses;
 
-
   /**************************************************************************
    * Fixtures
    **************************************************************************/
@@ -23,7 +22,6 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
       'accession'   => \AccessToMemory\test\mock\QubitAccession::class,
     ];
   }
-
 
   /**************************************************************************
    * Data providers
@@ -92,7 +90,6 @@ class PhysicalObjectCsvHoldingsReportTest extends \PHPUnit\Framework\TestCase
       [$holdingsData]
     ];
   }
-
 
   /**************************************************************************
    * Tests

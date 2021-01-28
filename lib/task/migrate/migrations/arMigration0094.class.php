@@ -50,7 +50,6 @@ class arMigration0094
           'onDelete' => 'SET NULL',
           'onUpdate' => 'RESTRICT')));
 
-
     // Add the "Information object templates" taxonomy
     QubitMigrate::bumpTaxonomy(QubitTaxonomy::INFORMATION_OBJECT_TEMPLATE_ID, $configuration);
     $taxonomy = new QubitTaxonomy;

@@ -208,7 +208,6 @@ class sfCurlAdapter
     // handle any request method
     curl_setopt($this->curl, CURLOPT_CUSTOMREQUEST, $method);
 
-
     $response = curl_exec($this->curl);
     
     if (curl_errno($this->curl))

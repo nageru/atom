@@ -463,7 +463,6 @@ class RightEditAction extends sfAction
     $this->form->embedForm('grantedRights', $subForm);
   }
 
-
   public function execute($request)
   {
     $this->earlyExecute();

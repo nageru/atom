@@ -54,7 +54,6 @@ $testsPermissive = array(
   array('TEST АБВ абв', 'TEST-АБВ-абв'),
 );
 
-
 // Test Restrictive mode slug creation.
 foreach ($testsRestrictive as $item)
 {

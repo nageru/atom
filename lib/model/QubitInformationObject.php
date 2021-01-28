@@ -629,7 +629,6 @@ class QubitInformationObject extends BaseInformationObject
       unlink($this->pathToEadExport(true));
     }
 
-
     // Create DC XML exports if the description's published... otherwise delete any that may exist
     if ($this->getPublicationStatus()->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)
     {
@@ -880,7 +879,6 @@ class QubitInformationObject extends BaseInformationObject
 
     return count($rows) == 1;
   }
-
 
   /***********************
    Actor/Event relations

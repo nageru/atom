@@ -122,7 +122,6 @@ class UserEditAction extends DefaultEditAction
           $this->form->setDefault('active', true);
         }
 
-
         $this->form->setValidator('active', new sfValidatorBoolean);
         $this->form->setWidget('active', new sfWidgetFormInputCheckbox);
 

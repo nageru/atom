@@ -3,7 +3,6 @@
 define('_ATOM_DIR', '/atom/src');
 define('_ETC_DIR', '/usr/local/etc');
 
-
 function getenv_default($name, $default)
 {
   $value = getenv($name);
@@ -15,7 +14,6 @@ function getenv_default($name, $default)
 
   return $value;
 }
-
 
 function getenv_or_fail($name)
 {
@@ -42,7 +40,6 @@ function get_host_and_port($value, $default_port)
   return array('host' => $parts[0], 'port' => $parts[1]);
 }
 
-
 $CONFIG = array(
   'atom.development_mode'   => filter_var(getenv_default('ATOM_DEVELOPMENT_MODE', false), FILTER_VALIDATE_BOOLEAN),
   'atom.elasticsearch_host' => getenv_or_fail('ATOM_ELASTICSEARCH_HOST'),
@@ -61,7 +58,6 @@ $CONFIG = array(
   'php.date.timezone'       => getenv_default('ATOM_PHP_DATE_TIMEZONE', 'America/Vancouver')
 );
 
-
 #
 # /apps/qubit/config/settings.yml
 #
@@ -78,7 +74,6 @@ if (!file_exists(_ATOM_DIR.'/apps/qubit/config/settings.yml'))
 @unlink(_ATOM_DIR.'/config/propel.ini');
 touch(_ATOM_DIR.'/config/propel.ini');
 
-
 #
 # /apps/qubit/config/gearman.yml
 #
@@ -91,7 +86,6 @@ EOT;
 
 @unlink(_ATOM_DIR.'/apps/qubit/config/gearman.yml');
 file_put_contents(_ATOM_DIR.'/apps/qubit/config/gearman.yml', $gearman_yml);
-
 
 #
 # /apps/qubit/config/app.yml
@@ -163,7 +157,6 @@ EOT;
   file_put_contents(_ATOM_DIR.'/apps/qubit/config/factories.yml', $factories_yml);
 }
 
-
 #
 # /config/search.yml
 #
@@ -179,7 +172,6 @@ EOT;
 
 @unlink(_ATOM_DIR.'/config/search.yml');
 file_put_contents(_ATOM_DIR.'/config/search.yml', $search_yml);
-
 
 #
 # /config/config.php
@@ -230,7 +222,6 @@ $config_php = "<?php\n\nreturn ".var_export($mysql_config, 1).";\n\n?>\n";
 @unlink(_ATOM_DIR.'/config/config.php');
 file_put_contents(_ATOM_DIR.'/config/config.php', $config_php);
 
-
 #
 # php ini
 #
@@ -273,7 +264,6 @@ EOT;
 
 @unlink(_ETC_DIR.'/php/php.ini');
 file_put_contents(_ETC_DIR.'/php/php.ini', $php_ini);
-
 
 #
 # fpm ini

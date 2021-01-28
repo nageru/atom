@@ -344,7 +344,6 @@ class ApiInformationObjectsReadAction extends QubitApiAction
 
       $this->addItemToArray($rightData, 'rights_note', $right->getRightsNote(array('cultureFallback' => true)));
 
-
       if (QubitTerm::RIGHT_BASIS_COPYRIGHT_ID == $right->basisId)
       {
         if (isset($right->copyrightStatus))

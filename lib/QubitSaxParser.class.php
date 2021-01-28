@@ -336,13 +336,11 @@ class QubitSaxParser
     return $this->error;
   }
 
-
   /*
    *
    *  Helper functions for interpreting parsed data
    *  ---------------------------------------------
    */
-
 
   /**
    * Get name of current tag being processed
@@ -426,13 +424,11 @@ class QubitSaxParser
     return strpos($this->path(), $subPath) !== false;
   }
 
-
   /*
    *
    *  Diagnostic functions for troubleshooting parsers
    *  ------------------------------------------------
    */
-
 
   /**
    * Return array of handlers defined

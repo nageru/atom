@@ -17,7 +17,6 @@
  * along with Access to Memory (AtoM).  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 /**
  * Global form definition for settings module - with validation.
  *

@@ -153,7 +153,6 @@ class SettingsTreeviewAction extends DefaultEditAction
     $this->form->setWidget($fieldName, new sfWidgetFormSelectRadio(array('choices' => $options), array('class' => 'radio')));
   }
 
-
   protected function processField($field)
   {
     switch ($field->getName())

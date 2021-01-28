@@ -70,7 +70,6 @@ class PhysicalObjectCsvImporter
     'updateSearchIndex'   => false,
   ];
 
-
   #
   # Public methods
   #
@@ -545,7 +544,6 @@ EOM;
 
     return $msg;
   }
-
 
   #
   # Protected methods

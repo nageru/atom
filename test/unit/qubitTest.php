@@ -46,7 +46,6 @@ sfContext::getInstance()->request->pathInfoPrefix = null;
 $t->is(Qubit::pathInfo('/aaa/bbb/ccc/ddd'), '/aaa/bbb/ccc/ddd',
   '"::pathInfo()" without prefix');
 
-
 /*
  * Qubit::renderDate
  */

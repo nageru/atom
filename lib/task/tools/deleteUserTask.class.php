@@ -68,7 +68,6 @@ EOF;
       throw new Exception('Unknown user.');
     }
 
-    
     // If user is an administrator, abort if the user is the only administrator
     if ($user->hasGroup(QubitAclGroup::ADMINISTRATOR_ID))
     {

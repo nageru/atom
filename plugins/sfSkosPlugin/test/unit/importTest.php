@@ -913,7 +913,6 @@ withTransaction(function ($conn) use ($t, $vocabCSS2)
   $t->is($errors[0], 'The following languages are used in the dataset imported but not supported by AtoM: ru', 'There is an error about Russian being not defined in AtoM');
 });
 
-
 withTransaction(function ($conn) use ($t, $vocabSimple)
 {
   // Count existing subjects that are children of the root term
@@ -947,7 +946,6 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
   }
   $t->is(get_class($match), 'QubitTerm', 'Translations are properly imported too');
 });
-
 
 withTransaction(function ($conn) use ($t, $vocabSimple)
 {
@@ -992,7 +990,6 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
   $t->is($doc['numberOfDescendants'], count($importer->getGraph()->allOfType('skos:Concept')), 'Parent term ES document :numberOfDescendants: field is up to date');
 
 });
-
 
 /**
  * Test that getRootConcepts() is matching all the concepts.

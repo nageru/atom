@@ -45,7 +45,6 @@ class QubitFlatfileExport
   protected $separatorChar = '|';          // character to use when imploding arrays
                                            // to a single value
 
-
   /*
    * Constructor
    *
@@ -73,7 +72,6 @@ class QubitFlatfileExport
 
     include_once sfConfig::get('sf_root_dir').'/lib/helper/QubitHelper.php';
   }
-
 
   /*
    *
@@ -219,7 +217,6 @@ class QubitFlatfileExport
   {
   }
 
-
   /*
    *
    *  Taxonomy caching methods
@@ -298,7 +295,6 @@ class QubitFlatfileExport
     // culture matching on import. On export we're still only using english terms
     return $terms['en'];
   }
-
 
   /*
    *

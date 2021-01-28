@@ -403,7 +403,6 @@ class QubitRepository extends BaseRepository
     return $size;
   }
 
-
   /**************
   Import methods
   ***************/

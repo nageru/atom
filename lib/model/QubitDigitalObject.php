@@ -1671,7 +1671,6 @@ class QubitDigitalObject extends BaseDigitalObject
     }
   }
 
-
   /**
    * Get absolute path to asset
    *
@@ -3057,7 +3056,6 @@ class QubitDigitalObject extends BaseDigitalObject
 
     return file_get_contents($tmpFilePath);
   }
-
 
   /*
    * -----------------------------------------------------------------------
