@@ -33,7 +33,7 @@
         <ul>
           <li><?php echo link_to(__('Cancel'), array($resource, 'module' => 'informationobject')) ?></li>
         </ul>
-      </sectin>
+      </section>
     </div>
 
   <?php else: ?>
@@ -65,7 +65,7 @@
             ->label(__('Level of description'))
             ->renderRow() ?>
 
-          <div class="multiFileUploadSection">
+          <div class="multiFileUpload">
 
             <h3><?php echo __('Digital objects') ?></h3>
 
