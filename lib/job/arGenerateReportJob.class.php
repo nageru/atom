@@ -214,7 +214,7 @@ class arGenerateReportJob extends arBaseJob
     // Sort items by selected criteria
     foreach ($results as $key => &$items)
     {
-      uasort($items, function($a, $b) use ($sortBy) {
+      uasort($items, function ($a, $b) use ($sortBy) {
         return strnatcasecmp($a[$sortBy], $b[$sortBy]);
       });
     }

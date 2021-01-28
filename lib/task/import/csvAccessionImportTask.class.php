@@ -193,7 +193,7 @@ EOF;
       ),
 
       // Import logic to load accession
-      'rowInitLogic' => function(&$self)
+      'rowInitLogic' => function (&$self)
       {
         $accessionNumber =  $self->rowStatusVars['accessionNumber'];
 
@@ -229,7 +229,7 @@ EOF;
       },
 
       // Import logic to save accession
-      'saveLogic' => function(&$self)
+      'saveLogic' => function (&$self)
       {
         // If row was skipped due to not having an accession number, don't attempt to save
         if (isset($self->object) && $self->object instanceof QubitAccession)
@@ -239,7 +239,7 @@ EOF;
       },
 
       // Create related objects
-      'postSaveLogic' => function(&$self)
+      'postSaveLogic' => function (&$self)
       {
         // If row was skipped due to not having an accession number, don't create related objects
         if (isset($self->object) && $self->object instanceof QubitAccession && isset($self->object->id))
@@ -452,7 +452,7 @@ EOF;
       }
     ));
 
-    $import->addColumnHandler('acquisitionDate', function($self, $data)
+    $import->addColumnHandler('acquisitionDate', function ($self, $data)
     {
       if ($data)
       {
@@ -471,7 +471,7 @@ EOF;
       }
     });
 
-    $import->addColumnHandler('resourceType', function($self, $data)
+    $import->addColumnHandler('resourceType', function ($self, $data)
     {
       if ($data)
       {
@@ -495,7 +495,7 @@ EOF;
       }
     });
 
-    $import->addColumnHandler('acquisitionType', function($self, $data)
+    $import->addColumnHandler('acquisitionType', function ($self, $data)
     {
       if ($data)
       {
@@ -519,7 +519,7 @@ EOF;
       }
     });
 
-    $import->addColumnHandler('processingStatus', function($self, $data)
+    $import->addColumnHandler('processingStatus', function ($self, $data)
     {
       $this->setObjectPropertyToTermIdLookedUpFromTermNameArray(
         $self,
@@ -530,7 +530,7 @@ EOF;
       );
     });
 
-    $import->addColumnHandler('processingPriority', function($self, $data)
+    $import->addColumnHandler('processingPriority', function ($self, $data)
     {
       $this->setObjectPropertyToTermIdLookedUpFromTermNameArray(
         $self,

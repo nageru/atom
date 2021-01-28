@@ -24,7 +24,7 @@ $renameColumns = array(
   'LEVEL' => 'levelOfDescription'
 );
 
-$transformLogic = function(&$self)
+$transformLogic = function (&$self)
 {
   $self->amalgamateColumns(array(
     'NOTES',
@@ -32,7 +32,7 @@ $transformLogic = function(&$self)
   ), 'generalNote');
 };
 
-$parentKeyLogic = function(&$self) {
+$parentKeyLogic = function (&$self) {
   // if row is a parent, return its key... otherwise return false
 
   // if row doesn't have a parent in our example, then it itself is a parent
@@ -45,7 +45,7 @@ $parentKeyLogic = function(&$self) {
   } 
 };
 
-$rowParentKeyLookupLogic = function(&$self) {
+$rowParentKeyLookupLogic = function (&$self) {
   // if row has a parent, figure out the key for it and return it... otherwise
   // return false
   $parentKey = trim($self->columnValue('PARENT'));

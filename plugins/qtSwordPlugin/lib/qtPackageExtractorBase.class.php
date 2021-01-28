@@ -131,7 +131,7 @@ class qtPackageExtractorBase
   {
     unlink($this->filename);
 
-    $rrmdir = function($directory) use (&$rrmdir)
+    $rrmdir = function ($directory) use (&$rrmdir)
     {
       $objects = scandir($directory);
 

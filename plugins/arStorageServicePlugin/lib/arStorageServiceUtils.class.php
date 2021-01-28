@@ -35,13 +35,13 @@ class arStorageServiceUtils
     curl_setopt($ch, CURLOPT_URL, $url);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 500);
-    curl_setopt($ch, CURLOPT_WRITEFUNCTION, function($ch, $data) {
+    curl_setopt($ch, CURLOPT_WRITEFUNCTION, function ($ch, $data) {
         echo $data;
 
         return strlen($data);
     });
 
-    curl_setopt($ch, CURLOPT_HEADERFUNCTION, function($ch, $header) {
+    curl_setopt($ch, CURLOPT_HEADERFUNCTION, function ($ch, $header) {
         header($header);
 
         return strlen($header);

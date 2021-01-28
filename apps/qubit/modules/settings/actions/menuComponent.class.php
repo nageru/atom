@@ -129,7 +129,7 @@ class SettingsMenuComponent extends sfComponent
     }
 
     // Sort alphabetically
-    usort($this->nodes, function($el1, $el2) {
+    usort($this->nodes, function ($el1, $el2) {
       return strnatcmp($el1['label'], $el2['label']);
     });
   }

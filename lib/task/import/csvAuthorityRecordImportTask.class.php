@@ -224,13 +224,13 @@ EOF;
         'script' => '|'
       ),
 
-      'updatePreparationLogic' => function(&$self)
+      'updatePreparationLogic' => function (&$self)
       {
         $this->deleteDigitalObjectIfUpdatingAndNotKeeping($self);
       },
 
       // Import logic to execute before saving actor
-      'preSaveLogic' => function(&$self)
+      'preSaveLogic' => function (&$self)
       {
         if ($self->object)
         {
@@ -301,7 +301,7 @@ EOF;
       },
 
       // Import logic to execute after saving actor
-      'postSaveLogic' => function(&$self)
+      'postSaveLogic' => function (&$self)
       {
         if ($self->object)
         {

@@ -93,7 +93,7 @@ EOF;
     }
 
     $worker->attachCallback(
-      function($handle, $job, $e)
+      function ($handle, $job, $e)
       {
         $this->log("Job failed: ".$e->getMessage());
       },
@@ -112,7 +112,7 @@ EOF;
       // Another option would be to catch the ProperException from the worker
       // and restablish the connection when needed. Also, the persistent mode
       // could be disabled for this worker. See issue #4182.
-      function() use (&$counter)
+      function () use (&$counter)
       {
         if (30 == $counter++)
         {

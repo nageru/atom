@@ -864,7 +864,7 @@ function withTransaction($callback)
   }
 }
 
-withTransaction(function($conn) use ($t, $vocabCSS2)
+withTransaction(function ($conn) use ($t, $vocabCSS2)
 {
   // Make sure that Russian is not defined as a supported language
   $criteria = new Criteria;
@@ -914,7 +914,7 @@ withTransaction(function($conn) use ($t, $vocabCSS2)
 });
 
 
-withTransaction(function($conn) use ($t, $vocabSimple)
+withTransaction(function ($conn) use ($t, $vocabSimple)
 {
   // Count existing subjects that are children of the root term
   $criteria = new Criteria;
@@ -949,7 +949,7 @@ withTransaction(function($conn) use ($t, $vocabSimple)
 });
 
 
-withTransaction(function($conn) use ($t, $vocabSimple)
+withTransaction(function ($conn) use ($t, $vocabSimple)
 {
   // Create subject parent term
   $parent = new QubitTerm;

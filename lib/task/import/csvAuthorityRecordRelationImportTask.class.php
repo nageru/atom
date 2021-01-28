@@ -108,7 +108,7 @@ EOF;
         'endDate'
       ],
 
-      'saveLogic' => function($self)
+      'saveLogic' => function ($self)
       {
         // Figure out ID of the two actors
         $sourceActor = QubitActor::getByAuthorizedFormOfName(

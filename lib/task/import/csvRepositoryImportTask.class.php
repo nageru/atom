@@ -217,7 +217,7 @@ EOF;
       ),
 
       // Import logic to execute before saving QubitRepository
-      'preSaveLogic' => function(&$self)
+      'preSaveLogic' => function (&$self)
       {
         $opts = $self->getStatus('options');
         if (isset($opts['upload-limit']) && !isset($self->object->uploadLimit))
@@ -243,7 +243,7 @@ EOF;
       },
 
       // Import logic to execute after saving QubitRepository
-      'postSaveLogic' => function(&$self)
+      'postSaveLogic' => function (&$self)
       {
         csvImportBaseTask::importAlternateFormsOfName($self);
 

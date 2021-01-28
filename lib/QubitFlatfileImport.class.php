@@ -73,7 +73,7 @@ class QubitFlatfileImport
   public function __construct($options = array())
   {
     // Replaceable logic to filter content before entering Qubit
-    $this->contentLogic = function($text)
+    $this->contentLogic = function ($text)
     {
       return $text;
     };
@@ -609,7 +609,7 @@ class QubitFlatfileImport
   private function rowContainsData($row)
   {
     // Filter out empty strings
-    $result = array_filter($row, function($columnValue) {
+    $result = array_filter($row, function ($columnValue) {
       return is_string($columnValue) && trim($columnValue) != '';
     });
 
@@ -1141,7 +1141,7 @@ class QubitFlatfileImport
   protected function rowProcessingBeforeObjectCreation($row)
   {
     // process import columns that don't produce child data
-    $this->forEachRowColumn($row, function(&$self, $index, $columnName, $value)
+    $this->forEachRowColumn($row, function (&$self, $index, $columnName, $value)
     {
       // Trim whitespace
       $value = trim($value);
@@ -1174,7 +1174,7 @@ class QubitFlatfileImport
   protected function rowProcessingBeforeSave($row)
   {
     // process import columns that don't produce child data
-    $this->forEachRowColumn($row, function(&$self, $index, $columnName, $value)
+    $this->forEachRowColumn($row, function (&$self, $index, $columnName, $value)
     {
       // Trim whitespace
       $value = trim($value);
@@ -1233,7 +1233,7 @@ class QubitFlatfileImport
    */
   protected function rowProcessingAfterSave($row)
   {
-    $this->forEachRowColumn($row, function(&$self, $index, $columnName, $value)
+    $this->forEachRowColumn($row, function (&$self, $index, $columnName, $value)
     {
       // Trim whitespace
       $value = trim($value);

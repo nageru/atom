@@ -111,7 +111,7 @@ EOF;
 
       'errorLog' => $options['error-log'],
 
-      'saveLogic' => function(&$self)
+      'saveLogic' => function (&$self)
       {
         if (!$self->status['dataCached'])
         {
@@ -211,7 +211,7 @@ EOF;
         }
       },
 
-      'completeLogic' => function(&$self)
+      'completeLogic' => function (&$self)
       {
         print "Import complete.\n";
         print "Good subjects: ". $self->status['goodSubjects'] ."\n";

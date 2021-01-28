@@ -1371,7 +1371,7 @@ class QubitMigrate108 extends QubitMigrate
           if (false !== strpos($name, ' '))
           {
             $name = strtolower(trim($row['name']));
-            $name = preg_replace_callback('/ (.)/', function($matches)
+            $name = preg_replace_callback('/ (.)/', function ($matches)
               {
                 return strtoupper($matches[1]);
               }, $name);
@@ -1458,7 +1458,7 @@ class QubitMigrate108 extends QubitMigrate
           break;
 
         default:
-          $label = preg_replace_callback('/^(\w)/', function($matches)
+          $label = preg_replace_callback('/^(\w)/', function ($matches)
             {
               return strtoupper($matches[1]);
             }, $label);
@@ -1482,7 +1482,7 @@ class QubitMigrate108 extends QubitMigrate
     {
       if ($page['permalink'] == 'homepage' || $page['permalink'] == 'about')
       {
-        array_walk($this->data['QubitStaticPage'][$key]['content'], function(&$x)
+        array_walk($this->data['QubitStaticPage'][$key]['content'], function (&$x)
         {
           $x = preg_replace('/1\.0\.8(\.1)?/', '1.0.9', $x);
         });

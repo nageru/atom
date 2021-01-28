@@ -350,7 +350,7 @@ function get_search_i18n($hit, $fieldName, $options = array())
   }
 
   // Filter return value if empty
-  $showUntitled = function() use ($allowEmpty)
+  $showUntitled = function () use ($allowEmpty)
   {
     if ($allowEmpty)
     {
@@ -370,7 +370,7 @@ function get_search_i18n($hit, $fieldName, $options = array())
     $hit = $hit->getData(); // type=sfOutputEscaperArrayDecorator
   }
 
-  $accessField = function($culture) use ($hit, $fieldName)
+  $accessField = function ($culture) use ($hit, $fieldName)
   {
     if (empty($hit['i18n'][$culture][$fieldName]))
     {

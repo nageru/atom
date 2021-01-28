@@ -59,7 +59,7 @@ EOF;
 
     // Disable plugin loading from plugins/ before this task.
     // Using command.pre_command to ensure that it happens early enough.
-    $this->dispatcher->connect('command.pre_command', function($e) {
+    $this->dispatcher->connect('command.pre_command', function ($e) {
       if (!$e->getSubject() instanceof self)
       {
         return;

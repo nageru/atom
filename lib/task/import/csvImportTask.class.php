@@ -446,13 +446,13 @@ EOF;
         'creationDateNotes'  => '|'
       ),
 
-      'updatePreparationLogic' => function(&$self)
+      'updatePreparationLogic' => function (&$self)
       {
         $this->deleteDigitalObjectIfUpdatingAndNotKeeping($self);
       },
 
       // Import logic to execute before saving information object
-      'preSaveLogic' => function(&$self)
+      'preSaveLogic' => function (&$self)
       {
         $notImportingTranslation = $self->object instanceof QubitInformationObject;
 
@@ -628,7 +628,7 @@ EOF;
       },
 
       // Import logic to execute after saving information object
-      'postSaveLogic' => function(&$self)
+      'postSaveLogic' => function (&$self)
       {
         if (!$self->object->id)
         {
@@ -986,18 +986,18 @@ EOF;
     $import->setUpdateOptions($options);
 
     // Convert content with | characters to a bulleted list
-    $import->contentFilterLogic = function($text)
+    $import->contentFilterLogic = function ($text)
     {
       return (substr_count($text, '|')) ? '* '. str_replace("|", "\n* ", $text) : $text;
     };
 
-    $import->addColumnHandler('levelOfDescription', function($self, $data)
+    $import->addColumnHandler('levelOfDescription', function ($self, $data)
     {
       $self->object->setLevelOfDescriptionByName(trim($data));
     });
 
     // Map value to taxonomy term name and take note of taxonomy term's ID
-    $import->addColumnHandler('radGeneralMaterialDesignation', function($self, $data)
+    $import->addColumnHandler('radGeneralMaterialDesignation', function ($self, $data)
     {
       if ($data)
       {

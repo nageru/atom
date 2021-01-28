@@ -85,7 +85,7 @@ class QubitCsvTransformFactory
 
       'renameColumns' => $this->renameColumns,
 
-      'saveLogic' => function(&$self)
+      'saveLogic' => function (&$self)
       {
         $self->writeHeadersOnFirstPass();
 
@@ -106,7 +106,7 @@ class QubitCsvTransformFactory
         fputcsv($self->status['outFh'], $self->status['row']);
       },
 
-      'completeLogic' => function(&$self)
+      'completeLogic' => function (&$self)
       {
         print "Step 1 complete.\n";
 
@@ -133,7 +133,7 @@ class QubitCsvTransformFactory
 
           'errorLog' => $self->errorLog,
 
-          'saveLogic' => function(&$self)
+          'saveLogic' => function (&$self)
           {
             // Ignore row if ignore check is present and returns true
             $ignore = isset($self->status['ignoreRowCheckLogic']) && $self->status['ignoreRowCheckLogic']($self);
@@ -196,7 +196,7 @@ class QubitCsvTransformFactory
             }
           },
 
-          'completeLogic' => function(&$self)
+          'completeLogic' => function (&$self)
           {
             $self->writeMySQLRowsToCsvFilePath($self->status['finalOutputFile']);
 

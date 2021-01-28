@@ -71,7 +71,7 @@ EOF;
           'numberOfSampleValues'        => 1
         ),
 
-        'saveLogic' => function(&$self)
+        'saveLogic' => function (&$self)
         {
           foreach($self->status['row'] as $key => $value)
           {

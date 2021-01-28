@@ -34,7 +34,7 @@ class arMigration0106
    *
    * @return bool True if the upgrade succeeded, False otherwise
    */
-  public function up ($configuration)
+  public function up($configuration)
   {
     // Remove the converse_term_id column
     QubitMigrate::dropColumn(QubitTerm::TABLE_NAME, 'converse_term_id');

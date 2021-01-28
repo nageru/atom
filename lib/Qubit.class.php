@@ -435,7 +435,7 @@ class Qubit
    */
   public static function generateIdentifierFromCounterAndMask($counter, $mask)
   {
-    return preg_replace_callback('/([#%])([A-z]+)/', function($match) use ($counter)
+    return preg_replace_callback('/([#%])([A-z]+)/', function ($match) use ($counter)
     {
       if ('%' == $match[1])
       {

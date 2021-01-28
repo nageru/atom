@@ -107,7 +107,7 @@ EOF;
       ),
 
       // Import logic to load deaccession
-      'rowInitLogic' => function(&$self)
+      'rowInitLogic' => function (&$self)
       {
         $accessionIdentifier =  $self->rowStatusVars['accessionNumber'];
 
@@ -131,7 +131,7 @@ EOF;
         }
       },
 
-      'preSaveLogic' => function(&$self)
+      'preSaveLogic' => function (&$self)
       {
         $ignoreDuplicates = ($self->status['options']['ignore-duplicates']) ? true : false;
 
@@ -176,7 +176,7 @@ EOF;
       },
 
       // Import logic to save accession
-      'saveLogic' => function(&$self)
+      'saveLogic' => function (&$self)
       {
         if (get_class($self->object) == 'QubitDeaccession' && isset($self->object) && is_object($self->object))
         {
@@ -185,7 +185,7 @@ EOF;
       }
     ));
 
-    $import->addColumnHandler('scope', function($self, $data)
+    $import->addColumnHandler('scope', function ($self, $data)
     {
       $this->setObjectPropertyToTermIdLookedUpFromTermNameArray(
         $self,
