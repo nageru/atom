@@ -3322,7 +3322,7 @@ class QubitDigitalObject extends BaseDigitalObject
 
     // Return false if "show compound" toggle is not set to '1' (yes)
     $showCompoundProp = QubitProperty::getOneByObjectIdAndName($this->id, 'displayAsCompound');
-    if (null === $showCompoundProp || '1' != $showCompoundProp->getValue(array('sourceCulture' => true)) )
+    if (null === $showCompoundProp || '1' != $showCompoundProp->getValue(array('sourceCulture' => true)))
     {
       return false;
     }

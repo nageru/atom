@@ -93,7 +93,7 @@ class sfInstallDatabaseConfigHandler extends sfDatabaseConfigHandler
   public function execute($configFiles)
   {
     $includes = array();
-    $config = self::getConfiguration( $configFiles);
+    $config = self::getConfiguration($configFiles);
 
     // compile data
     return sprintf("<?php\n".

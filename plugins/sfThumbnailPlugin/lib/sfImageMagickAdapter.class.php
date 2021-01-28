@@ -272,7 +272,7 @@ class sfImageMagickAdapter
       case "shave_bottom":
         if ($width > $height)
         {
-          $x = ceil(($width - $height) / 2 );
+          $x = ceil(($width - $height) / 2);
           $width = $height;
         }
         elseif ($height > $width)

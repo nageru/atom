@@ -22,7 +22,7 @@ class sfIsadPluginStylesheetComponent extends sfComponent
   public function execute($request)
   {
     // If institutional scoping is on, repo comes from the search-realm
-    if (sfConfig::get('app_enable_institutional_scoping') && sfContext::getInstance()->user->hasAttribute('search-realm') )
+    if (sfConfig::get('app_enable_institutional_scoping') && sfContext::getInstance()->user->hasAttribute('search-realm'))
     {
       $repository = QubitRepository::getById(sfContext::getInstance()->user->getAttribute('search-realm'));
     }
