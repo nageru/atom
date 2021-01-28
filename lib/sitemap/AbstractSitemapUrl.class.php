@@ -34,7 +34,7 @@ abstract class AbstractSitemapUrl
 
   protected function getPriority()
   {
-    return;
+
   }
 
   protected function getLastmod()

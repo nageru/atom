@@ -88,6 +88,5 @@ class SitemapInformationObjectUrl extends AbstractSitemapUrl
       return "0.9";
     }
 
-    return;
   }
 }
