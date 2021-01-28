@@ -452,11 +452,11 @@ class QubitFlatfileExport
         {
           $value = $this->resource->{$column};
         }
-        else if (($sourceColumn = array_search($column, $this->columnMap)) !== false)
+        elseif (($sourceColumn = array_search($column, $this->columnMap)) !== false)
         {
           $value = $this->resource->{$sourceColumn};
         }
-        else if (isset($this->propertyMap[$column]))
+        elseif (isset($this->propertyMap[$column]))
         {
           $value = $this->resource->getPropertyByName($this->propertyMap[$column])->__toString();
         }

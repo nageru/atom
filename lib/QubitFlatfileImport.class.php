@@ -909,7 +909,7 @@ class QubitFlatfileImport
     {
       return 'updating using delete and replace';
     }
-    else if ($this->matchAndUpdate)
+    elseif ($this->matchAndUpdate)
     {
       return 'updating in place';
     }
@@ -1153,7 +1153,7 @@ class QubitFlatfileImport
       {
         $self->rowStatusVars[$self->columnNames[$index]] = $value;
       }
-      else if (
+      elseif (
         isset($self->columnNames[$index])
         && isset($self->arrayColumns[($self->columnNames[$index])])
       )
@@ -1185,7 +1185,7 @@ class QubitFlatfileImport
         $self->mappedColumnHandler($self->columnMap[$columnName], $value);
       }
       // if column maps to a property, set the property
-      else if (
+      elseif (
         isset($self->propertyMap)
         && isset($self->propertyMap[$columnName])
         && $value
@@ -1200,7 +1200,7 @@ class QubitFlatfileImport
           );
         }
       }
-      else if (
+      elseif (
         isset($self->columnNames[$index])
         && isset($self->handlers[($self->columnNames[$index])])
       )
@@ -1211,7 +1211,7 @@ class QubitFlatfileImport
           array($self, $value)
         );
       }
-      else if (
+      elseif (
         isset($self->columnNames[$index])
         && in_array($self->columnNames[$index], $self->standardColumns)
         && $value
@@ -1986,7 +1986,7 @@ class QubitFlatfileImport
       {
         $terms[] = QubitTerm::getById($rows[$key]['id']);
       }
-      else if (!isset($termsCreated) || !in_array($name, $termsCreated))
+      elseif (!isset($termsCreated) || !in_array($name, $termsCreated))
       {
         $terms[] = QubitFlatfileImport::createTerm($taxonomyId, $name, $culture);
         // Don't create duplicates
@@ -2482,7 +2482,7 @@ class QubitFlatfileImport
     {
       return $value; // Value was a country code
     }
-    else if ($countryCode = array_search($value, $countries))
+    elseif ($countryCode = array_search($value, $countries))
     {
       return $countryCode; // Value was a country name
     }

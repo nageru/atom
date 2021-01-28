@@ -79,7 +79,7 @@ class DigitalObjectDeleteAction extends sfAction
           {
             $this->redirect(array($this->object, 'module' => 'informationobject'));
           }
-          else if ($this->object instanceOf QubitActor)
+          elseif ($this->object instanceOf QubitActor)
           {
             $this->redirect(array($this->object, 'module' => 'actor'));
           }

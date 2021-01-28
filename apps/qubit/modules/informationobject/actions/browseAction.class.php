@@ -356,7 +356,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         $this->context->user->setAttribute('search-realm', $request->repos);
       }
     }
-    else if (sfConfig::get('app_enable_institutional_scoping'))
+    elseif (sfConfig::get('app_enable_institutional_scoping'))
     {
       // Remove realm
       $this->context->user->removeAttribute('search-realm');
@@ -418,7 +418,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         $this->getParameters['collection'] = $this->collection->id;
       }
     }
-    else if (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection']))
+    elseif (isset($this->getParameters['collection']) && ctype_digit($this->getParameters['collection']))
     {
       $this->collection = QubitInformationObject::getById($this->getParameters['collection']);
     }
@@ -432,7 +432,7 @@ class InformationObjectBrowseAction extends DefaultBrowseAction
         $this->context->user->setAttribute('search-realm', $request->repos);
       }
     }
-    else if (sfConfig::get('app_enable_institutional_scoping'))
+    elseif (sfConfig::get('app_enable_institutional_scoping'))
     {
       // Remove realm
       $this->context->user->removeAttribute('search-realm');

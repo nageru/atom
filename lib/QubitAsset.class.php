@@ -46,7 +46,7 @@ class QubitAsset
       $this->path = $args[0];
     }
     // File name and contents passed
-    else if (2 == func_num_args())
+    elseif (2 == func_num_args())
     {
       $this->name = $args[0];
       $this->contents = $args[1];
@@ -131,7 +131,7 @@ class QubitAsset
     {
       $this->checksum = hash($algorithm, $this->contents);
     }
-    else if (isset($this->path))
+    elseif (isset($this->path))
     {
       $this->checksum = hash_file($algorithm, $this->path);
     }

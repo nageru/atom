@@ -157,7 +157,7 @@ class QubitCsvTransformFactory
               {
                 $self->columnValue('parentId', $self->status['parentKeys'][$keyOfRowParent]);
               }
-              else if ($keyOfRowParent)
+              elseif ($keyOfRowParent)
               {
                 $self->columnValue('parentId', $keyOfRowParent);
               }
@@ -182,7 +182,7 @@ class QubitCsvTransformFactory
               //  print "Description sort order is ". $sortorder .".\n";
                 $self->addRowToMySQL($sortorder);
               }
-              else if (isset($self->status['ignoreBadLod']) && $self->status['ignoreBadLod'])
+              elseif (isset($self->status['ignoreBadLod']) && $self->status['ignoreBadLod'])
               {
                 $sortorder = count($self->levelsOfDescription);
               //  print "Description sort order is ". $sortorder .".\n";

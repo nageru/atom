@@ -57,7 +57,7 @@ class sfSkosPlugin
     {
       $this->parent = QubitTerm::getRoot();
     }
-    else if (null === $this->parent = QubitTerm::getById($options['parentId']))
+    elseif (null === $this->parent = QubitTerm::getById($options['parentId']))
     {
       throw new sfSkosPluginException($this->i18n->__('Term with ID %1% could not be found', array('%1%' => $options['parentId'])));
     }
@@ -93,11 +93,11 @@ class sfSkosPlugin
     {
       $this->graph->parseFile($resource);
     }
-    else if ($scheme === 'data')
+    elseif ($scheme === 'data')
     {
       $this->graph->parse(file_get_contents($resource));
     }
-    else if (in_array($scheme, array('http', 'https')))
+    elseif (in_array($scheme, array('http', 'https')))
     {
       $this->graph->load($resource);
     }

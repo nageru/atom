@@ -135,7 +135,7 @@ class arUpgrader120
           {
             $name = 'repository';
           }
-          else if ('%p[taxonomyId] == %k[taxonomyId]' == $item->conditional)
+          elseif ('%p[taxonomyId] == %k[taxonomyId]' == $item->conditional)
           {
             $name = 'taxonomy';
           }

@@ -34,11 +34,11 @@ class QubitMigrateFactory
        {
          return new QubitMigrate108($data, $version);
        }
-       else if (QubitMigrate109::FINAL_VERSION > intval($version))
+       elseif (QubitMigrate109::FINAL_VERSION > intval($version))
        {
          return new QubitMigrate109($data, $version);
        }
-       else if (QubitMigrate110::FINAL_VERSION > intval($version))
+       elseif (QubitMigrate110::FINAL_VERSION > intval($version))
        {
          return new QubitMigrate110($data, $version);
        }

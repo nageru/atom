@@ -121,12 +121,12 @@ EOF;
       $idType = 'id';
     }
     // If no id, then lookup by identifier
-    else if (false !== $idKey = array_search('identifier', $header))
+    elseif (false !== $idKey = array_search('identifier', $header))
     {
       $idType = 'identifier';
     }
     // Lookup by slug
-    else if (false !== $idKey = array_search('slug', $header))
+    elseif (false !== $idKey = array_search('slug', $header))
     {
       $idType = 'slug';
     }
@@ -156,7 +156,7 @@ EOF;
       {
         $digitalObjects[$id] = $filename;
       }
-      else if (!is_array($digitalObjects[$id]))
+      elseif (!is_array($digitalObjects[$id]))
       {
         $digitalObjects[$id] = array($digitalObjects[$id], $filename);
       }
@@ -182,7 +182,7 @@ EOF;
     {
       $sql .= ' WHERE io.id = ?';
     }
-    else if ($idType == 'identifier')
+    elseif ($idType == 'identifier')
     {
       $sql .= ' WHERE io.identifier = ?';
     }
@@ -240,7 +240,7 @@ EOF;
       // If attach-only is set, the task will attach the new DO via a new
       // information obj regardless of whether there is one vs more in the
       // import CSV.
-      else if (!is_array($item) && !$options['attach-only'])
+      elseif (!is_array($item) && !$options['attach-only'])
       {
         // Skip if this information object already has a digital object attached
         if ($results[1] !== null)

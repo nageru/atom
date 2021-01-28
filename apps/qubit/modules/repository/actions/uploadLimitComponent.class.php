@@ -97,7 +97,7 @@ class RepositoryUploadLimitComponent extends sfComponent
         $this->diskUsagePercent = '<&nbsp;1';
         $this->usageBarPixels = '1';
       }
-      else if (100 < $dup)
+      elseif (100 < $dup)
       {
         $this->diskUsagePercent = '>&nbsp;100';
         $this->usageBarPixels = 200;

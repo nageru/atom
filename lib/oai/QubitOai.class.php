@@ -233,7 +233,7 @@ class QubitOai
         {
           $oaiSets[] = $oaiSet;
         }
-        else if (count($oaiSets) >= $options['limit'])
+        elseif (count($oaiSets) >= $options['limit'])
         {
           // The "page" is full so add this set to the remaining count
           $remaining++;

@@ -58,11 +58,11 @@ class QubitMenu extends BaseMenu
     {
       $currentRealm = sfContext::getInstance()->user->getAttribute('search-realm');
     }
-    else if (isset(sfContext::getInstance()->request->getAttribute('sf_route')->resource->id))
+    elseif (isset(sfContext::getInstance()->request->getAttribute('sf_route')->resource->id))
     {
       $currentRealm = sfContext::getInstance()->request->getAttribute('sf_route')->resource->id;
     }
-    else if (null !== sfContext::getInstance()->request->getParameter('repos'))
+    elseif (null !== sfContext::getInstance()->request->getParameter('repos'))
     {
       $currentRealm = sfContext::getInstance()->request->getParameter('repos');
     }
@@ -195,7 +195,7 @@ class QubitMenu extends BaseMenu
       return ($this->getPath() == 'informationobject/list');
     }
     // And even more hacks
-    else if (in_array($currentModule, array('sfIsadPlugin', 'sfRadPlugin', 'sfDcPlugin', 'sfModsPlugin', 'arDacsPlugin')))
+    elseif (in_array($currentModule, array('sfIsadPlugin', 'sfRadPlugin', 'sfDcPlugin', 'sfModsPlugin', 'arDacsPlugin')))
     {
       return ($this->getPath() == 'informationobject/list');
     }

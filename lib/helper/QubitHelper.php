@@ -247,7 +247,7 @@ function render_treeview_node($item, array $classes = array(), array $options = 
       $node .= ' data-title="'.strip_tags((implode(' - ', $dataTitle))).'"';
     }
   }
-  else if ($item instanceof QubitTerm)
+  elseif ($item instanceof QubitTerm)
   {
     $node .= ' data-title="'.esc_entities(sfConfig::get('app_ui_label_term')).'"';
   }
@@ -302,7 +302,7 @@ function render_treeview_node($item, array $classes = array(), array $options = 
         $node .= '<span class="pubStatus">('.render_value_inline($status->__toString()).')</span>';
       }
     }
-    else if ($rawItem instanceof QubitTerm)
+    elseif ($rawItem instanceof QubitTerm)
     {
       $action = isset($options['browser']) && true === $options['browser'] ? 'browseTerm' : 'index';
 

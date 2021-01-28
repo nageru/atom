@@ -309,7 +309,7 @@ EOM;
     {
       return $this->options['header'];
     }
-    else if (null !== $this->reader)
+    elseif (null !== $this->reader)
     {
       return $this->reader->getHeader();
     }
@@ -471,7 +471,7 @@ EOM;
         $this->getElapsedTime('total')
       );
     }
-    else if ($freq > 1 && 0 == $count % $freq)
+    elseif ($freq > 1 && 0 == $count % $freq)
     {
       $output = sprintf('Imported %u of %u rows (%01.2fs)...',
         $count, $this->rowsTotal, $this->getElapsedTime('total'));
@@ -677,7 +677,7 @@ EOQ;
     {
       return null;
     }
-    else if (1 == count($matches))
+    elseif (1 == count($matches))
     {
       $this->matchedExisting = 1;
 

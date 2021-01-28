@@ -59,7 +59,7 @@ class DefaultMoveAction extends sfAction
       {
         $this->form->setDefault('parent', QubitInformationObject::getById(QubitInformationObject::ROOT_ID)->slug);
       }
-      else if ($this->resource instanceof QubitTerm)
+      elseif ($this->resource instanceof QubitTerm)
       {
         $this->form->setDefault('parent', QubitTerm::getById(QubitTerm::ROOT_ID)->slug);
       }
@@ -160,7 +160,7 @@ class DefaultMoveAction extends sfAction
     {
       $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($this->query);
     }
-    else if ($this->resource instanceof QubitTerm)
+    elseif ($this->resource instanceof QubitTerm)
     {
       // TODO: Add parent_id for terms in ES, add move button
       $resultSet = QubitSearch::getInstance()->index->getType('QubitTerm')->search($this->query);

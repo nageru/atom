@@ -209,13 +209,13 @@ EOF;
           print $self->logError(sprintf('Found accession ID %d with identifier %s', $result->id, $accessionNumber));
           $self->object = QubitAccession::getById($result->id);
         }
-        else if (!empty($accessionNumber))
+        elseif (!empty($accessionNumber))
         {
           print $self->logError(sprintf('Could not find accession # %s, creating.', $accessionNumber));
           $self->object = new QubitAccession();
           $self->object->identifier = $accessionNumber;
         }
-        else if ($self->getStatus('assignId'))
+        elseif ($self->getStatus('assignId'))
         {
           $identifier = QubitAccession::nextAvailableIdentifier();
           print $self->logError(sprintf('No accession number, creating accession with identifier %s', $identifier));

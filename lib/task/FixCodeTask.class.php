@@ -80,7 +80,7 @@ EOF;
       $fileContents = preg_replace('/if *\(/', 'if (', $fileContents);
 
       // Fix elseif
-      $fileContents = preg_replace('/elseif/', 'else if', $fileContents);
+      $fileContents = preg_replace('/elseif/', 'elseif', $fileContents);
 
       // Remove empty argument lists from new statements
       $fileContents = preg_replace('/new (\$?\w+)\(\)/', 'new \1', $fileContents);

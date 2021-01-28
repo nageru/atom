@@ -40,7 +40,7 @@ class ApiDigitalObjectsCreateAction extends QubitApiAction
     {
       $this->do->mediaTypeId = QubitTerm::OTHER_ID;
     }
-    else if (!empty($this->do->mimeType) && 'unknown' != $this->do->mimeType)
+    elseif (!empty($this->do->mimeType) && 'unknown' != $this->do->mimeType)
     {
       $this->do->setDefaultMediaType();
     }

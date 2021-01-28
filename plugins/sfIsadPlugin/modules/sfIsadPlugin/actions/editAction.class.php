@@ -171,7 +171,7 @@ class sfIsadPluginEditAction extends InformationObjectEditAction
           {
             unset($filtered[$item->actor->id]);
           }
-          else if (!isset($this->request->sourceId))
+          elseif (!isset($this->request->sourceId))
           {
             // Will be indexed when description is saved
             $item->indexOnSave = false;

@@ -1698,7 +1698,7 @@ class QubitInformationObject extends BaseInformationObject
     }
     // In EAD import, the term relation is not always created at this point;
     // it might be created afterwards.
-    else if (isset($options['relation_type_id']) &&
+    elseif (isset($options['relation_type_id']) &&
       isset($options['createRelation']) &&
       false !== $options['createRelation'])
     {
@@ -1874,7 +1874,7 @@ class QubitInformationObject extends BaseInformationObject
       {
         $noteContent .= trim($child->textContent);
       }
-      else if ($child->nodeName == 'lb')
+      elseif ($child->nodeName == 'lb')
       {
         $noteContent .= "\n";
       }
@@ -1992,7 +1992,7 @@ class QubitInformationObject extends BaseInformationObject
 
         $this->eventsRelatedByobjectId[] = $event;
       }
-      else if (!isset($creators[$key]->history))
+      elseif (!isset($creators[$key]->history))
       {
         $creators[$key]->history = $history;
         $creators[$key]->save();
@@ -2398,7 +2398,7 @@ class QubitInformationObject extends BaseInformationObject
             $primaryContact->setCountryCode(strtoupper($options['countrycode']));
             $primaryContact->save();
           }
-          else if (count($contacts = $repository->getContactInformation()) > 0)
+          elseif (count($contacts = $repository->getContactInformation()) > 0)
           {
             $contacts[0]->setCountryCode(strtoupper($options['countrycode']));
             $contacts[0]->save();
@@ -2502,11 +2502,11 @@ class QubitInformationObject extends BaseInformationObject
     {
       $fullType = ucfirst($options['label']).' '.$options['type'];
     }
-    else if (!empty($options['type']))
+    elseif (!empty($options['type']))
     {
       $fullType = ucfirst($options['type']);
     }
-    else if (!empty($options['label']))
+    elseif (!empty($options['label']))
     {
       $fullType = ucfirst($options['label']);
     }

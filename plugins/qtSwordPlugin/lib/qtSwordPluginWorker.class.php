@@ -31,7 +31,7 @@ class qtSwordPluginWorker extends arBaseJob
       $this->info('A package was deposited by reference.');
       $this->info(sprintf('Location: %s', $package['location']));
     }
-    else if (isset($package['filename']))
+    elseif (isset($package['filename']))
     {
       $this->info('A package was deposited by upload.');
     }

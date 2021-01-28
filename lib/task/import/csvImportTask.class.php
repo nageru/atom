@@ -599,7 +599,7 @@ EOF;
             {
               $parentId = $mapEntry->target_id;
             }
-            else if (null !== QubitInformationObject::getById($self->rowStatusVars['parentId']))
+            elseif (null !== QubitInformationObject::getById($self->rowStatusVars['parentId']))
             {
               $parentId = $self->rowStatusVars['parentId'];
             }
@@ -1053,7 +1053,7 @@ EOF;
         $this->log("Parent ID of slug {$options['default-parent-slug']} is $parentId");
       }
     }
-    else if ($options['default-legacy-parent-id'])
+    elseif ($options['default-legacy-parent-id'])
     {
       if (false === $keyMapEntry = QubitFlatfileImport::fetchKeymapEntryBySourceAndTargetName(
           $options['default-legacy-parent-id'], $sourceName, 'information_object'))

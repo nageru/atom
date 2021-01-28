@@ -247,7 +247,7 @@ class QubitAcl
 
       $resource = $term;
     }
-    else if ($resource instanceOf QubitTerm && array_key_exists('taxonomyId', $options))
+    elseif ($resource instanceOf QubitTerm && array_key_exists('taxonomyId', $options))
     {
       // Create clone resource that we can assign to an arbitrary taxonomy
       $resource = clone $resource;
@@ -305,7 +305,7 @@ class QubitAcl
         }
       }
     }
-    else if (!in_array($role, $this->_roles))
+    elseif (!in_array($role, $this->_roles))
     {
       $this->acl->addRole($role);
     }
@@ -398,7 +398,7 @@ class QubitAcl
     {
       $this->buildResourceList($resource, $options);
     }
-    else if (!isset($this->resources['null']))
+    elseif (!isset($this->resources['null']))
     {
       // Still test ACL against 'null' resource (requires permissions on null)
       $this->_resources['null'] = null;
@@ -866,7 +866,7 @@ class QubitAcl
     {
       return false; // No allows, always false
     }
-    else if (!$forceBan && 0 == count($bans) && $isAllowedActionOnRoot)
+    elseif (!$forceBan && 0 == count($bans) && $isAllowedActionOnRoot)
     {
       return true; // No bans, always true
     }

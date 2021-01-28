@@ -35,7 +35,7 @@ class MenuListAction extends sfAction
       {
         $menu->moveBeforeById($request->before);
       }
-      else if (isset($request->after))
+      elseif (isset($request->after))
       {
         $menu->moveAfterById($request->after);
       }

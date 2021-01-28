@@ -150,7 +150,7 @@ class AclGroupEditAction extends sfAction
 
           $this->group->aclPermissions[] = $translatePermission;
         }
-        else if (null !== $translatePermission)
+        elseif (null !== $translatePermission)
         {
           $translatePermission->delete();
         }

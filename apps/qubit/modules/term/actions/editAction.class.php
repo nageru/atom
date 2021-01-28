@@ -427,7 +427,7 @@ class TermEditAction extends DefaultEditAction
 
           $this->resource->relationsRelatedBysubjectId[] = $relation;
         }
-        else if (isset($value) && $value != '')
+        elseif (isset($value) && $value != '')
         {
           // Create new converse relation
           $relation = new QubitRelation;

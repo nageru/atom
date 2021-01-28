@@ -390,7 +390,7 @@ class QubitMigrate104 extends QubitMigrate
     {
       $this->data['QubitTerm'][$archivistsNoteKey]['id'] = '<?php echo QubitTerm::ARCHIVIST_NOTE_ID."\n" ?>';
     }
-    else if ($taxonomyNoteTypeKey)
+    elseif ($taxonomyNoteTypeKey)
     {
       $this->data['QubitTerm']['QubitTerm_archivist_note'] = array(
         'taxonomy_id' => $taxonomyNoteTypeKey,
@@ -406,7 +406,7 @@ class QubitMigrate104 extends QubitMigrate
     {
       $this->data['QubitTerm'][$generalNoteKey]['id'] = '<?php echo QubitTerm::GENERAL_NOTE_ID."\n" ?>';
     }
-    else if ($taxonomyNoteTypeKey)
+    elseif ($taxonomyNoteTypeKey)
     {
       $this->data['QubitTerm']['QubitTerm_general_note'] = array(
         'taxonomy_id' => $taxonomyNoteTypeKey,

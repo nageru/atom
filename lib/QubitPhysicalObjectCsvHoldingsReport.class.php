@@ -227,7 +227,7 @@ class QubitPhysicalObjectCsvHoldingsReport
       $row = $this->addEmptyHoldingColumnsToRow($row);
       $writer->insertOne($row);
     }
-    else if ($this->getHoldingType() != 'none')
+    elseif ($this->getHoldingType() != 'none')
     {
       $this->writePhysicalObjectAndHoldings($writer, $row, $holdingsData);
     }

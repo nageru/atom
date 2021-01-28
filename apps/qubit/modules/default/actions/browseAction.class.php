@@ -170,7 +170,7 @@ class DefaultBrowseAction extends sfAction
     {
       $sortSetting = 'relevance';
     }
-    else if ($this->getUser()->isAuthenticated())
+    elseif ($this->getUser()->isAuthenticated())
     {
       $sortSetting = sfConfig::get('app_sort_browser_user');
     }

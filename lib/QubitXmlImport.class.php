@@ -427,7 +427,7 @@ class QubitXmlImport
       {
         $currentObject->parentId = $this->parent->id;
       }
-      else if (is_callable(array($currentObject, 'setRoot')))
+      elseif (is_callable(array($currentObject, 'setRoot')))
       {
         $currentObject->setRoot();
       }
@@ -889,7 +889,7 @@ class QubitXmlImport
       {
         $nodeValue .= "\n";
       }
-      else if (in_array($child->tagName, $fieldsArray))
+      elseif (in_array($child->tagName, $fieldsArray))
       {
         foreach ($child->childNodes as $childNode)
         {
@@ -1040,11 +1040,11 @@ class QubitXmlImport
     {
       $key = 'place';
     }
-    else if ($kind === 'unitdate')
+    elseif ($kind === 'unitdate')
     {
       $key = 'event';
     }
-    else if (in_array($kind, array('name', 'persname', 'corpname', 'famname')))
+    elseif (in_array($kind, array('name', 'persname', 'corpname', 'famname')))
     {
       $key = 'actor';
     }

@@ -257,7 +257,7 @@ abstract class BaseSlug implements ArrayAccess
         }
 
         // If this is a foreign key column then get primary key from related table
-        else if ($nameId === $column->getPhpName())
+        elseif ($nameId === $column->getPhpName())
         {
           if(!empty($value))
           {
@@ -386,7 +386,7 @@ abstract class BaseSlug implements ArrayAccess
 
       // Year and month only: one or more digits, plus separator, plus
       // one or more digits.  Convert to SQL zero special case
-      else if (preg_match('/^\d+[-\/]\d+$/', $value))
+      elseif (preg_match('/^\d+[-\/]\d+$/', $value))
       {
         $value .= '-0';
       }

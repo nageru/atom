@@ -73,7 +73,7 @@ var handleSubmit = function() {
       caption.css('background', 'none');
     }, 1000);
   }
-  else if ('null' != actorInput.val())
+  elseif ('null' != actorInput.val())
   {
     var newTable = '$tableTemplate';
 

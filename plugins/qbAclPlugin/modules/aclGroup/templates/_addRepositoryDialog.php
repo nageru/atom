@@ -74,7 +74,7 @@ var handleSubmit = function() {
       caption.css('background', 'none');
     }, 1000);
   }
-  else if ('null' != repositoryInput.val())
+  elseif ('null' != repositoryInput.val())
   {
     var newTable = '$tableTemplate';
 

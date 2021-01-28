@@ -89,13 +89,13 @@ class ActorOccupationsComponent extends sfComponent
             $note->typeId = QubitTerm::ACTOR_OCCUPATION_NOTE_ID;
             $note->content = $item['note'];
           }
-          else if (isset($note) && strlen($item['content']) > 0)
+          elseif (isset($note) && strlen($item['content']) > 0)
           {
             // Update note
             $note->content = $item['content'];
             $note->save();
           }
-          else if (isset($note) && strlen($item['content']) < 1)
+          elseif (isset($note) && strlen($item['content']) < 1)
           {
             $deleteNote = true;
 

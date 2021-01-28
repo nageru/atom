@@ -129,7 +129,7 @@ class QubitMigrate105 extends QubitMigrate
     {
       $this->data['QubitMenu'][$adminMenusMenuKey]['label']['en'] = 'menus';
     }
-    else if (false !== $adminMenusMenuKey = $this->getRowKey('QubitMenu', 'label', array('en' => 'Menu')))
+    elseif (false !== $adminMenusMenuKey = $this->getRowKey('QubitMenu', 'label', array('en' => 'Menu')))
     {
       $this->data['QubitMenu'][$adminMenusMenuKey]['label']['en'] = 'Menus';
     }

@@ -58,7 +58,7 @@ class ObjectAddDigitalObjectAction extends sfAction
     {
       $this->repository = $this->resource->getRepository(array('inherit' => true));
     }
-    else if ($this->resource instanceof QubitActor)
+    elseif ($this->resource instanceof QubitActor)
     {
       $this->repository = $this->resource->getMaintainingRepository();
     }
@@ -145,7 +145,7 @@ class ObjectAddDigitalObjectAction extends sfAction
       $digitalObject->assets[] = new QubitAsset($name, $content);
       $digitalObject->usageId = QubitTerm::MASTER_ID;
     }
-    else if (null !== $this->form->getValue('url'))
+    elseif (null !== $this->form->getValue('url'))
     {
       // Catch errors trying to download remote resource
       try

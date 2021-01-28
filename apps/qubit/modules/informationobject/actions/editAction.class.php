@@ -66,12 +66,12 @@ class InformationObjectEditAction extends DefaultEditAction
         // the current pub. status is missing (rare case)
         $this->publicationStatusId = sfConfig::get('app_defaultPubStatus', QubitTerm::PUBLICATION_STATUS_DRAFT_ID);
       }
-      else if (QubitAcl::check($this->resource, 'publish'))
+      elseif (QubitAcl::check($this->resource, 'publish'))
       {
         // Use current pub. status if the user can publish
         $this->publicationStatusId = $publicationStatus->statusId;
       }
-      else if (isset($publicationStatus) && $publicationStatus->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)
+      elseif (isset($publicationStatus) && $publicationStatus->statusId == QubitTerm::PUBLICATION_STATUS_PUBLISHED_ID)
       {
         // Take note to show a warning if the user can't publish but the current pub. status
         // is published while editing, as it will change the pub. status to draft
@@ -80,7 +80,7 @@ class InformationObjectEditAction extends DefaultEditAction
     }
 
     // Duplicate
-    else if (isset($this->request->source))
+    elseif (isset($this->request->source))
     {
       $this->resource = QubitInformationObject::getById($this->request->source);
 
@@ -730,7 +730,7 @@ class InformationObjectEditAction extends DefaultEditAction
     {
       $displayStandardId = $dsId;
     }
-    else if (isset($this->resource->id) && isset($this->resource->displayStandardId))
+    elseif (isset($this->resource->id) && isset($this->resource->displayStandardId))
     {
       $displayStandardId = $this->resource->displayStandardId;
     }

@@ -62,7 +62,7 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
           {
             $this->repositories[$repository][$item->action] = $item;
           }
-          else if (null != $item->objectId && QubitInformationObject::ROOT_ID != $item->objectId)
+          elseif (null != $item->objectId && QubitInformationObject::ROOT_ID != $item->objectId)
           {
             $this->informationObjects[$item->objectId][$item->action] = $item;
           }
@@ -118,7 +118,7 @@ class UserEditInformationObjectAclAction extends DefaultEditAction
       }
 
       // Otherwise, update an existing permission
-      else if (null !== $aclPermission = QubitAclPermission::getById($key))
+      elseif (null !== $aclPermission = QubitAclPermission::getById($key))
       {
         if ($value == QubitAcl::INHERIT)
         {

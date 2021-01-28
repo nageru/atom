@@ -114,7 +114,7 @@ class QubitAclSearch
     }
 
     // If global deny is default, then list allowed resources
-    else if (!QubitAcl::isAllowed($user, $root->id, 'read'))
+    elseif (!QubitAcl::isAllowed($user, $root->id, 'read'))
     {
       $allows = array_keys($resourceAccess, true, true);
 

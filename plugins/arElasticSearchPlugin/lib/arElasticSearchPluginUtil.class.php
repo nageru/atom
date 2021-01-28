@@ -412,7 +412,7 @@ class arElasticSearchPluginUtil
           }
         }
         // Get nested objects fields
-        else if (isset($propertyProperties['type']) && $propertyProperties['type'] == 'object')
+        elseif (isset($propertyProperties['type']) && $propertyProperties['type'] == 'object')
         {
           $nestedFields = self::getAllObjectStringFields(
             $rootIndexType,
@@ -424,7 +424,7 @@ class arElasticSearchPluginUtil
           $fields = array_merge($fields, $nestedFields);
         }
         // Get foreign objects fields (couldn't find a better way than checking the dynamic property)
-        else if (isset($propertyProperties['dynamic']))
+        elseif (isset($propertyProperties['dynamic']))
         {
           $foreignObjectFields = self::getAllObjectStringFields(
             $rootIndexType,
@@ -438,7 +438,7 @@ class arElasticSearchPluginUtil
           $fields = array_merge($fields, $foreignObjectFields);
         }
         // Get string fields included in _all
-        else if ((!isset($propertyProperties['include_in_all'])
+        elseif ((!isset($propertyProperties['include_in_all'])
           || $propertyProperties['include_in_all'])
           && (isset($propertyProperties['type'])
           && ($propertyProperties['type'] == 'text'

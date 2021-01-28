@@ -148,7 +148,7 @@ class QubitActor extends BaseActor
     {
       $this->parentId = QubitActor::ROOT_ID;
     }
-    else if (QubitRepository::ROOT_ID != $this->id && !isset($this->parentId) && 'QubitRepository' == $this->className)
+    elseif (QubitRepository::ROOT_ID != $this->id && !isset($this->parentId) && 'QubitRepository' == $this->className)
     {
       $this->parentId = QubitRepository::ROOT_ID;
     }

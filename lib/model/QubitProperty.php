@@ -180,7 +180,7 @@ class QubitProperty extends BaseProperty
     {
       $criteria->add(QubitPropertyI18n::CULTURE, $options['culture']);
     }
-    else if (isset($options['sourceCulture']))
+    elseif (isset($options['sourceCulture']))
     {
       $criteria->add(QubitPropertyI18n::CULTURE, QubitProperty::SOURCE_CULTURE.' = '.QubitPropertyI18n::CULTURE, Criteria::CUSTOM);
     }

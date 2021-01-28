@@ -55,7 +55,7 @@ class QubitAclConditionalAssert implements Zend_Acl_Assert_Interface
     }
 
     // No update if source language != current language (requires translate)
-    else if ('update' == $privilege && $resource->sourceCulture != sfContext::getInstance()->user->getCulture())
+    elseif ('update' == $privilege && $resource->sourceCulture != sfContext::getInstance()->user->getCulture())
     {
       return false;
     }
@@ -74,7 +74,7 @@ class QubitAclConditionalAssert implements Zend_Acl_Assert_Interface
         return false;
       }
     }
-    else if ($resource instanceof QubitTerm)
+    elseif ($resource instanceof QubitTerm)
     {
       // Test taxonomy conditional
       if (!$this->permission->evaluateConditional(array('taxonomy' => $resource->taxonomy->slug)))

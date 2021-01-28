@@ -83,7 +83,7 @@ class AclGroupEditDefaultAclAction extends sfAction
       }
 
       // Otherwise, update an existing permission
-      else if (null !== $aclPermission = QubitAclPermission::getById($key))
+      elseif (null !== $aclPermission = QubitAclPermission::getById($key))
       {
         if (QubitAcl::INHERIT == $value)
         {

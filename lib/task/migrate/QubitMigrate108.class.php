@@ -492,7 +492,7 @@ class QubitMigrate108 extends QubitMigrate
           // Direct match in acl_permission.action_id column
           $action = strtolower($matches[1]);
         }
-        else if (isset($this->data['QubitAclAction'][$row['action_id']]) && 0 < preg_match($pattern, $this->data['QubitAclAction'][$row['action_id']]['id'], $matches))
+        elseif (isset($this->data['QubitAclAction'][$row['action_id']]) && 0 < preg_match($pattern, $this->data['QubitAclAction'][$row['action_id']]['id'], $matches))
         {
           // Follow action_id row alias to QubitAclAction row, and match constant
           $action = strtolower($matches[1]);
@@ -555,7 +555,7 @@ class QubitMigrate108 extends QubitMigrate
         $nextKey = $key;
         break;
       }
-      else if (isset($row['name']) && 'users' == $row['name'])
+      elseif (isset($row['name']) && 'users' == $row['name'])
       {
         // Find the 'users' menu that is a child of the admin menu
         if (strpos($row['parent_id'], 'QubitMenu::ADMIN_ID') ||

@@ -233,7 +233,7 @@ EOF;
       {
         $digitalObjects[$uniqueValue] = $filepath;
       }
-      else if (!is_array($digitalObjects[$uniqueValue]))
+      elseif (!is_array($digitalObjects[$uniqueValue]))
       {
         $digitalObjects[$uniqueValue] = array($digitalObjects[$uniqueValue], $filepath);
       }

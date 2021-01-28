@@ -189,7 +189,7 @@ abstract class csvImportBaseTask extends arBaseTask
       {
         $this->addDigitalObjectFromURI($self, $uri);
       }
-      else if ($path = $self->rowStatusVars['digitalObjectPath'])
+      elseif ($path = $self->rowStatusVars['digitalObjectPath'])
       {
         $this->addDigitalObjectFromPath($self, $path);
       }

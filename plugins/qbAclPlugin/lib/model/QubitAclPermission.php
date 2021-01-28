@@ -40,7 +40,7 @@ class QubitAclPermission extends BaseAclPermission
       $this->setConstants(array('repository' => $repository->slug));
       $this->conditional = '%p[repository] == %k[repository]';
     }
-    else if (null === $repository)
+    elseif (null === $repository)
     {
       $this->setConstants(array('repository' => null));
       $this->conditional = null;
@@ -56,7 +56,7 @@ class QubitAclPermission extends BaseAclPermission
       $this->setConstants(array('taxonomy' => $taxonomy->slug));
       $this->conditional = '%p[taxonomy] == %k[taxonomy]';
     }
-    else if (null === $taxonomy)
+    elseif (null === $taxonomy)
     {
       $this->setConstants(array('taxonomy' => null));
       $this->conditional = null;
@@ -117,7 +117,7 @@ class QubitAclPermission extends BaseAclPermission
         {
           $constants[$key] = $val;
         }
-        else if (isset($constants[$key]))
+        elseif (isset($constants[$key]))
         {
           unset($constants[$key]); // Remove key if value is null
         }
@@ -159,7 +159,7 @@ class QubitAclPermission extends BaseAclPermission
           {
             $conditional = str_replace('%k['.$match.']', '\''.$constants[$match].'\'', $conditional);
           }
-          else if (is_array($constants[$match]))
+          elseif (is_array($constants[$match]))
           {
             $conditional = str_replace('%k['.$match.']', '$constants[$match]', $conditional);
           }

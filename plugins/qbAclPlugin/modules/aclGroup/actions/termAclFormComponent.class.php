@@ -45,7 +45,7 @@ class AclGroupTermAclFormComponent extends sfComponent
             $this->taxonomyPermissions[$item->objectId]['create'] = $item;
           }
         }
-        else if (null === ($taxonomy = $item->getConstants(array('name' => 'taxonomy'))))
+        elseif (null === ($taxonomy = $item->getConstants(array('name' => 'taxonomy'))))
         {
           $this->rootPermissions[$item->action] = $item;
         }

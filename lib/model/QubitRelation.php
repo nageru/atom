@@ -236,7 +236,7 @@ class QubitRelation extends BaseRelation
     {
       $opposite = $this->getObject();
     }
-    else if ($this->objectId == $refid)
+    elseif ($this->objectId == $refid)
     {
       $opposite = $this->getSubject();
     }

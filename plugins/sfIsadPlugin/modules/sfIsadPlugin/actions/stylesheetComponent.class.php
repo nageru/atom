@@ -27,7 +27,7 @@ class sfIsadPluginStylesheetComponent extends sfComponent
       $repository = QubitRepository::getById(sfContext::getInstance()->user->getAttribute('search-realm'));
     }
     // If the feature is off, fall back to the repository component rules.
-    else if (!sfConfig::get('app_enable_institutional_scoping'))
+    elseif (!sfConfig::get('app_enable_institutional_scoping'))
     {
       if (!isset($request->getAttribute('sf_route')->resource))
       {

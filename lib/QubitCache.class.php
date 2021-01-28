@@ -57,7 +57,7 @@ class QubitCache
 
           $options['servers'] = $servers;
         }
-        else if ((null !== $host = sfConfig::get('app_cache_engine_param_host')) && (null !== $port = sfConfig::get('app_cache_engine_param_port')))
+        elseif ((null !== $host = sfConfig::get('app_cache_engine_param_host')) && (null !== $port = sfConfig::get('app_cache_engine_param_port')))
         {
           $options['host'] = $host;
           $options['port'] = $port;

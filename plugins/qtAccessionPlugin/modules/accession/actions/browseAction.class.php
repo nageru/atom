@@ -63,7 +63,7 @@ class AccessionBrowseAction extends sfAction
       {
         $request->sort = 'relevance';
       }
-      else if ($this->getUser()->isAuthenticated())
+      elseif ($this->getUser()->isAuthenticated())
       {
         $request->sort = sfConfig::get('app_sort_browser_user');
       }

@@ -90,7 +90,7 @@ class sfPluginAdminPluginPluginsAction extends sfAction
           {
             $settings[] = $item;
           }
-          else if (false !== $key = array_search($item, $settings))
+          elseif (false !== $key = array_search($item, $settings))
           {
             // Don't disable default plugins
             if (!($item == 'sfIsdiahPlugin'

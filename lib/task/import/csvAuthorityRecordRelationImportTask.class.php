@@ -193,7 +193,7 @@ EOF;
           }
         }
       }
-      else if ($relationId = $this->getRelationByType($sourceActorId, $targetActorId, $relationTypeId))
+      elseif ($relationId = $this->getRelationByType($sourceActorId, $targetActorId, $relationTypeId))
       {
         // Handle match-and-update when a relation already exists
         $this->updateRelation($relationId, $sourceActorId, $targetActorId, $relationTypeId);
@@ -201,7 +201,7 @@ EOF;
         return;
       }
     }
-    else if (!empty($this->getRelationByType($sourceActorId, $targetActorId, $relationTypeId)))
+    elseif (!empty($this->getRelationByType($sourceActorId, $targetActorId, $relationTypeId)))
     {
       // If not updating, but relation already exists, then don't create new relation
       echo $this->import->logError('Skipping row as relationship already exists');

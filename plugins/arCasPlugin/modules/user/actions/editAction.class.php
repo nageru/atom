@@ -289,7 +289,7 @@ class UserEditAction extends DefaultEditAction
           $permission->grantDeny = 1;
           $permission->conditional = 'in_array(%p[language], %k[languages])';
         }
-        else if (!is_array($languages))
+        elseif (!is_array($languages))
         {
           // If $languages is not an array, then remove the translate permission
           $permission->delete();

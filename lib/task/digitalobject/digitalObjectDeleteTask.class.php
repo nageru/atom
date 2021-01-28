@@ -105,7 +105,7 @@ EOF;
     {
       throw new sfException('Failed to fetch information object with the slug given.');
     }
-    else if ($row['class_name'] == 'QubitRepository' &&
+    elseif ($row['class_name'] == 'QubitRepository' &&
       null === $repository = QubitRepository::getById($row['object_id']))
     {
       throw new sfException('Failed to fetch repository with the slug given.');

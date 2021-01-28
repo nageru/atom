@@ -52,7 +52,7 @@ class arFindingAidJob extends arBaseJob
     {
       $result = $this->delete();
     }
-    else if (isset($parameters['uploadPath']))
+    elseif (isset($parameters['uploadPath']))
     {
       $result = $this->upload($parameters['uploadPath']);
     }
@@ -240,7 +240,7 @@ class arFindingAidJob extends arBaseJob
         $this->info($message);
         $this->logCmdOutput($output, 'WARNING(PDFTOTEXT)');
       }
-      else if (0 < count($output))
+      elseif (0 < count($output))
       {
         $text = implode(PHP_EOL, $output);
 

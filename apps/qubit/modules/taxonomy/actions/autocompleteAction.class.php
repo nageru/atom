@@ -45,7 +45,7 @@ class TaxonomyAutocompleteAction extends sfAction
     {
       $criteria->addAnd($criterion);
     }
-    else if (false === $criterion)
+    elseif (false === $criterion)
     {
       // If access denied to all taxonomies, then return nothing
       return sfView::NONE;

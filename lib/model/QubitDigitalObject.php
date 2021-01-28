@@ -1354,7 +1354,7 @@ class QubitDigitalObject extends BaseDigitalObject
       }
     }
     // If the asset contents are included (HTTP upload)
-    else if (false === file_put_contents($filePathName, $asset->getContents()))
+    elseif (false === file_put_contents($filePathName, $asset->getContents()))
     {
       throw new sfException('File write to '.$filePathName.' failed. See setting directory and file permissions documentation.');
     }
@@ -1868,7 +1868,7 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       $object = $this->object;
     }
-    else if (isset($this->parent))
+    elseif (isset($this->parent))
     {
       $object = $this->parent->object;
     }
@@ -1888,7 +1888,7 @@ class QubitDigitalObject extends BaseDigitalObject
       {
         $repoDir = $repo->slug;
       }
-      else if ($object instanceof QubitActor && null !== ($repo = $object->getMaintainingRepository()))
+      elseif ($object instanceof QubitActor && null !== ($repo = $object->getMaintainingRepository()))
       {
         $repoDir = $repo->slug;
       }
@@ -2064,11 +2064,11 @@ class QubitDigitalObject extends BaseDigitalObject
             $this->createReferenceImage($connection);
             $this->createThumbnail($connection);
           }
-          else if ($usageId == QubitTerm::REFERENCE_ID)
+          elseif ($usageId == QubitTerm::REFERENCE_ID)
           {
             $this->createReferenceImage($connection);
           }
-          else if ($usageId == QubitTerm::THUMBNAIL_ID)
+          elseif ($usageId == QubitTerm::THUMBNAIL_ID)
           {
             $this->createThumbnail($connection);
           }
@@ -2088,11 +2088,11 @@ class QubitDigitalObject extends BaseDigitalObject
             // Extract text
             $this->extractText($connection);
           }
-          else if ($usageId == QubitTerm::REFERENCE_ID)
+          elseif ($usageId == QubitTerm::REFERENCE_ID)
           {
             $this->createReferenceImage($connection);
           }
-          else if ($usageId == QubitTerm::THUMBNAIL_ID)
+          elseif ($usageId == QubitTerm::THUMBNAIL_ID)
           {
             $this->createThumbnail($connection);
           }
@@ -2106,7 +2106,7 @@ class QubitDigitalObject extends BaseDigitalObject
           $this->createVideoDerivative(QubitTerm::REFERENCE_ID, $connection);
           $this->createVideoDerivative(QubitTerm::THUMBNAIL_ID, $connection);
         }
-        else if ($usageId == QubitTerm::REFERENCE_ID || $usageId == QubitTerm::THUMBNAIL_ID)
+        elseif ($usageId == QubitTerm::REFERENCE_ID || $usageId == QubitTerm::THUMBNAIL_ID)
         {
           $this->createVideoDerivative($usageId, $connection);
         }
@@ -2516,7 +2516,7 @@ class QubitDigitalObject extends BaseDigitalObject
       $maxwidth = (sfConfig::get('app_reference_image_maxwidth')) ? sfConfig::get('app_reference_image_maxwidth') : 480;
       $maxheight = null;
     }
-    else if ($usageId == QubitTerm::THUMBNAIL_ID)
+    elseif ($usageId == QubitTerm::THUMBNAIL_ID)
     {
       $maxwidth = 100;
       $maxheight = 100;
@@ -2638,7 +2638,7 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       $adapter = 'sfImageMagickAdapter';
     }
-    else if (QubitDigitalObject::hasGdExtension())
+    elseif (QubitDigitalObject::hasGdExtension())
     {
       $adapter = 'sfGDAdapter';
     }
@@ -2704,7 +2704,7 @@ class QubitDigitalObject extends BaseDigitalObject
     }
 
     // For PDFs we can only create thumbs with ImageMagick
-    else if ($mimeType == 'application/pdf' && $adapter == 'sfImageMagickAdapter')
+    elseif ($mimeType == 'application/pdf' && $adapter == 'sfImageMagickAdapter')
     {
       $canThumbnail = true;
     }
@@ -3435,7 +3435,7 @@ class QubitDigitalObject extends BaseDigitalObject
     {
       $object = $this->object;
     }
-    else if (isset($this->parent))
+    elseif (isset($this->parent))
     {
       $object = $this->parent->object;
     }

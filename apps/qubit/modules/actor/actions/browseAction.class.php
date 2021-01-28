@@ -314,7 +314,7 @@ class ActorBrowseAction extends DefaultBrowseAction
         $this->context->user->setAttribute('search-realm', $request->repository);
       }
     }
-    else if (sfConfig::get('app_enable_institutional_scoping'))
+    elseif (sfConfig::get('app_enable_institutional_scoping'))
     {
       // Remove search realm
       $this->context->user->removeAttribute('search-realm');
@@ -382,7 +382,7 @@ class ActorBrowseAction extends DefaultBrowseAction
       // Omit the specified actor
       $this->search->queryBool->addMust($this->actorExcludeQuery($this->relatedAuthority->id));
     }
-    else if (!empty($this->relatedAuthority))
+    elseif (!empty($this->relatedAuthority))
     {
       // Include actors that relate to the specified actor
       $queryBool = new \Elastica\Query\BoolQuery;
@@ -394,7 +394,7 @@ class ActorBrowseAction extends DefaultBrowseAction
       // Omit the specified actor
       $this->search->queryBool->addMust($this->actorExcludeQuery($this->relatedAuthority->id));
     }
-    else if (!empty($this->request->relatedType))
+    elseif (!empty($this->request->relatedType))
     {
       // Include actors with a direct relation of a specified type
       $queryField = new \Elastica\Query\Term;

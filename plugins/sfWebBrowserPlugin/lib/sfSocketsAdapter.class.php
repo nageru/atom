@@ -124,7 +124,7 @@ class sfSocketsAdapter
       }
 
       // body starts after first blank line
-      else if ($start_body == false && $response_lines[$i] == '')
+      elseif ($start_body == false && $response_lines[$i] == '')
       {
         $start_body = true;
       }

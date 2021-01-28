@@ -114,7 +114,7 @@ EOF;
         $this->targetVersion = $options['target-version'];
       }
 
-      else if (!preg_match('/^\d+$/', $options['target-version']))
+      elseif (!preg_match('/^\d+$/', $options['target-version']))
       {
         $this->logBlock(sprintf('Invalid target version "%s".', $options['target-version']), 'ERROR');
 
@@ -280,7 +280,7 @@ EOF;
         {
           $currentVersion = $matches[0];
         }
-        else if (preg_match('/\d\.\d(\.\d)?/', $setting['value']['en'], $matches))
+        elseif (preg_match('/\d\.\d(\.\d)?/', $setting['value']['en'], $matches))
         {
           $currentVersion = $matches[0];
         }

@@ -206,7 +206,7 @@ class QubitMetadataRoute extends QubitRoute
 
     // Given the parent module (e.g. informationobject), find the best metadata
     // to be used
-    else if (isset($parameters['module']))
+    elseif (isset($parameters['module']))
     {
       switch ($parameters['module'])
       {

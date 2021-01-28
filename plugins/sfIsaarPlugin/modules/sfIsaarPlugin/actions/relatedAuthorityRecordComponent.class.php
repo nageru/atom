@@ -105,7 +105,7 @@ class sfIsaarPluginRelatedAuthorityRecordComponent extends RelationEditComponent
           {
             $this->relation->type = $params['_sf_route']->resource;
           }
-          else if (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($params['_sf_route']->resource->id, array('typeId' => QubitTerm::CONVERSE_TERM_ID))))
+          elseif (0 < count($converseTerms = QubitRelation::getBySubjectOrObjectId($params['_sf_route']->resource->id, array('typeId' => QubitTerm::CONVERSE_TERM_ID))))
           {
             $this->relation->type = $converseTerms[0]->getOpposedObject($params['_sf_route']->resource);
           }

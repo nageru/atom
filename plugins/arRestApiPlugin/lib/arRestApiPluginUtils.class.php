@@ -34,7 +34,7 @@ class arRestApiPluginUtils
     {
       $dt = $date;
     }
-    else if (is_int($date))
+    elseif (is_int($date))
     {
       $dt = new DateTime();
       $dt->setTimestamp($date);

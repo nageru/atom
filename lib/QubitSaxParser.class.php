@@ -144,7 +144,7 @@ class QubitSaxParser
     {
       $executeMethod = $tagMethod;
     }
-    else if (method_exists($this, $defaultHandlerMethod))
+    elseif (method_exists($this, $defaultHandlerMethod))
     {
       $executeMethod = $tag . $handlerMethodSuffix;
     }
@@ -503,7 +503,7 @@ class QubitSaxParser
     {
       return true;
     }
-    else if (substr($method, -strlen('Tag')) === 'Tag')
+    elseif (substr($method, -strlen('Tag')) === 'Tag')
     {
       return true;
     }

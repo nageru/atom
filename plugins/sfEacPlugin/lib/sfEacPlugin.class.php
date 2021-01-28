@@ -940,19 +940,19 @@ return;
         {
           return 'hierarchical-parent';
         }
-        else if ($typeName == 'is the subordinate of' || $typeName == 'is controlled by' || $typeName == 'is owned by')
+        elseif ($typeName == 'is the subordinate of' || $typeName == 'is controlled by' || $typeName == 'is owned by')
         {
           return 'hierarchical-child';
         }
-        else if ($typeName == 'is the predecessor of')
+        elseif ($typeName == 'is the predecessor of')
         {
           return 'temporal-earlier';
         }
-        else if ($typeName == 'is the successor of')
+        elseif ($typeName == 'is the successor of')
         {
           return 'temporal-later';
         }
-        else if ($type->parentId != QubitTerm::ROOT_ID)
+        elseif ($type->parentId != QubitTerm::ROOT_ID)
         {
           return self::toCpfRelationType($type->parentId);
         }
@@ -1068,14 +1068,14 @@ return;
         $dates[] = sfEacPlugin::parseDateRange($node);
       }
     }
-    else if ($fd->find('./eac:dateRange')->length)
+    elseif ($fd->find('./eac:dateRange')->length)
     {
       foreach($fd->find('./eac:dateRange') as $node)
       {
         $dates[] = sfEacPlugin::parseDateRange($node);
       }
     }
-    else if (0 < $fd->find('./eac:date')->length)
+    elseif (0 < $fd->find('./eac:date')->length)
     {
       $dates[] = array($fd->find('eac:date')->attr('standardDate'), null);
     }

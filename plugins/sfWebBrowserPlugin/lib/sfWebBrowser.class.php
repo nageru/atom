@@ -41,7 +41,7 @@ class sfWebBrowser
       {
         $adapterClass = 'sfCurlAdapter';
       }
-      else if(ini_get('allow_url_fopen') == 1)
+      elseif(ini_get('allow_url_fopen') == 1)
       {
         $adapterClass = 'sfFopenAdapter';
       }
@@ -190,7 +190,7 @@ class sfWebBrowser
     {
       $this->urlInfo['port'] = $urlInfo['port'];
     }
-    else if (!isset($this->urlInfo['port']))
+    elseif (!isset($this->urlInfo['port']))
     {
       $this->urlInfo['port'] = 80;
     }
@@ -200,7 +200,7 @@ class sfWebBrowser
       // relative link
       $uri = $this->urlInfo['scheme'].'://'.$this->urlInfo['host'].':'.$this->urlInfo['port'].'/'.$uri;
     }
-    else if($urlInfo['scheme'] != 'http' && $urlInfo['scheme'] != 'https')
+    elseif($urlInfo['scheme'] != 'http' && $urlInfo['scheme'] != 'https')
     {
       throw new Exception('sfWebBrowser handles only http and https requests'); 
     }
@@ -306,7 +306,7 @@ class sfWebBrowser
           $value = $element->getAttribute('value');
         }
       }
-      else if (
+      elseif (
         $nodeName == 'input'
         &&
         (($element->getAttribute('type') != 'submit' && $element->getAttribute('type') != 'button') || $element->getAttribute('value') == $name)
@@ -316,7 +316,7 @@ class sfWebBrowser
       {
         $value = $element->getAttribute('value');
       }
-      else if ($nodeName == 'textarea')
+      elseif ($nodeName == 'textarea')
       {
         $value = '';
         foreach ($element->childNodes as $el)
@@ -324,7 +324,7 @@ class sfWebBrowser
           $value .= $dom->saveXML($el);
         }
       }
-      else if ($nodeName == 'select')
+      elseif ($nodeName == 'select')
       {
         if ($multiple = $element->hasAttribute('multiple'))
         {

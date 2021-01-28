@@ -1118,7 +1118,7 @@ abstract class BaseTerm extends QubitObject implements ArrayAccess
 
       // Year and month only: one or more digits, plus separator, plus
       // one or more digits.  Convert to SQL zero special case
-      else if (preg_match('/^\d+[-\/]\d+$/', $value))
+      elseif (preg_match('/^\d+[-\/]\d+$/', $value))
       {
         $value .= '-0';
       }

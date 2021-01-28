@@ -69,7 +69,7 @@ class arCAS
     {
       phpCAS::setCasServerCACert($certPath);
     }
-    else if ($certPath === false)
+    elseif ($certPath === false)
     {
       phpCAS::setNoCasServerValidation();
     }

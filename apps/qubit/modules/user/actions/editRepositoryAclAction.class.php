@@ -91,7 +91,7 @@ class UserEditRepositoryAclAction extends DefaultEditAction
       }
 
       // Otherwise, update an existing permission
-      else if (null !== $aclPermission = QubitAclPermission::getById($key))
+      elseif (null !== $aclPermission = QubitAclPermission::getById($key))
       {
         if ($value == QubitAcl::INHERIT)
         {

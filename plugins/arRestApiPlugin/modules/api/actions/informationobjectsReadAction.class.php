@@ -356,13 +356,13 @@ class ApiInformationObjectsReadAction extends QubitApiAction
         $this->addItemToArray($rightData, 'copyright_jurisdiction', format_country($right->copyrightJurisdiction));
         $this->addItemToArray($rightData, 'copyright_note', $right->getCopyrightNote(array('cultureFallback' => true)));
       }
-      else if (QubitTerm::RIGHT_BASIS_LICENSE_ID == $right->basisId)
+      elseif (QubitTerm::RIGHT_BASIS_LICENSE_ID == $right->basisId)
       {
         $this->addItemToArray($rightData, 'license_identifier', $right->getIdentifierValue(array('cultureFallback' => true)));
         $this->addItemToArray($rightData, 'license_terms', $right->getLicenseTerms(array('cultureFallback' => true)));
         $this->addItemToArray($rightData, 'license_note', $right->getLicenseNote(array('cultureFallback' => true)));
       }
-      else if (QubitTerm::RIGHT_BASIS_STATUTE_ID == $right->basisId)
+      elseif (QubitTerm::RIGHT_BASIS_STATUTE_ID == $right->basisId)
       {
         $this->addItemToArray($rightData, 'statute_jurisdiction', $right->getStatuteJurisdiction(array('cultureFallback' => true)));
 
@@ -439,7 +439,7 @@ class ApiInformationObjectsReadAction extends QubitApiAction
         {
           $this->addItemToArray($doData, 'url', $digitalObject->getFullPath());
         }
-        else if (QubitTerm::OFFLINE_ID != $digitalObject->usageId)
+        elseif (QubitTerm::OFFLINE_ID != $digitalObject->usageId)
         {
           $this->addItemToArray($doData, 'url', $this->siteBaseUrl . $digitalObject->getFullPath());
         }

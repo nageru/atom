@@ -257,11 +257,11 @@ class QubitQuery implements ArrayAccess, Countable, Iterator
       {
         $count = $this->parent->getCount($leaf);
       }
-      else if (isset($this->count))
+      elseif (isset($this->count))
       {
         $count = $this->count;
       }
-      else if (isset($this->criteria))
+      elseif (isset($this->criteria))
       {
         $countCriteria = clone $this->criteria;
         $this->count = intval(BasePeer::doCount($countCriteria)->fetchColumn(0));

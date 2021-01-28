@@ -155,7 +155,7 @@ class QubitMigrate
       $row = $this->data[$classname][$keyOrId];
       $row['_key'] = $keyOrId;
     }
-    else if ($key = $this->getRowKey($this->data[$classname], 'id', $keyOrId))
+    elseif ($key = $this->getRowKey($this->data[$classname], 'id', $keyOrId))
     {
       $row = $this->data[$classname][$key];
       $row['_key'] = $key;
@@ -194,7 +194,7 @@ class QubitMigrate
           return $key;
         }
       }
-      else if (isset($columns[$searchColumn]) && $columns[$searchColumn] == $searchValue)
+      elseif (isset($columns[$searchColumn]) && $columns[$searchColumn] == $searchValue)
       {
         return $key;
       }
@@ -635,11 +635,11 @@ class QubitMigrate
     {
       $sql .= " AFTER $options[after]";
     }
-    else if (isset($options['before']))
+    elseif (isset($options['before']))
     {
       $sql .= " BEFORE $options[before]";
     }
-    else if (isset($options['first']))
+    elseif (isset($options['first']))
     {
       $sql .= " FIRST";
     }

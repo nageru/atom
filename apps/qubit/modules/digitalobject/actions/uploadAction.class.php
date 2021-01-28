@@ -101,7 +101,7 @@ class DigitalObjectUploadAction extends sfAction
         {
           $resizedObject = QubitDigitalObject::resizeImage($tmpFilePath, 150, 150);
         }
-        else if (QubitDigitalObject::isVideoFile($tmpFilePath))
+        elseif (QubitDigitalObject::isVideoFile($tmpFilePath))
         {
           $resizedObject = QubitDigitalObject::createThumbnailFromVideo($tmpFilePath, 150, 150);
         }

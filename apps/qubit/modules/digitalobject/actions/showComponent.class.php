@@ -125,7 +125,7 @@ class DigitalObjectShowComponent extends sfComponent
         {
           $this->showComponent = 'showCompound';
         }
-        else if ($this->resource->isWebCompatibleImageFormat())
+        elseif ($this->resource->isWebCompatibleImageFormat())
         {
           $this->showComponent = 'showImage';
         }

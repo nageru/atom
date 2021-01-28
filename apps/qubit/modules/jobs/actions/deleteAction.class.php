@@ -50,7 +50,7 @@ class JobsDeleteAction extends sfAction
 
       $this->redirect($request->getReferer());
     }
-    else if ($this->context->user->isAuthenticated() && !$token)
+    elseif ($this->context->user->isAuthenticated() && !$token)
     {
       // Handle bulk deletion of jobs associated with an authenticated user
       $jobs = QubitJob::getJobsByUser($this->context->user);

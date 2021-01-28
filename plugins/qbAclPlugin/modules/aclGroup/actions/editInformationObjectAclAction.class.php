@@ -55,7 +55,7 @@ class AclGroupEditInformationObjectAclAction extends AclGroupEditDefaultAclActio
           {
             $this->repositories[$repository][$p->action] = $p;
           }
-          else if (null != $p->objectId && QubitInformationObject::ROOT_ID != $p->objectId)
+          elseif (null != $p->objectId && QubitInformationObject::ROOT_ID != $p->objectId)
           {
             $this->informationObjects[$p->objectId][$p->action] = $p;
           }

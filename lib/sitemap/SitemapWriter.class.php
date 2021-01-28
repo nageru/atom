@@ -131,7 +131,7 @@ class SitemapWriter
     {
       $this->addSitemap();
     }
-    else if ($this->sitemap->isFull())
+    elseif ($this->sitemap->isFull())
     {
       $this->sitemap->end();
       $this->addSitemap();
