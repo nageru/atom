@@ -94,7 +94,7 @@ function render_show($label, $value, $options = array())
   // Optional labels in the div class containing this field, to help with data mining.
   $fieldLabel = isset($options['fieldLabel']) ? ' class="'.$options['fieldLabel'].'"' : '';
 
-  $result = <<<contents
+  return <<<contents
 <div class="field">
   <h3>$label</h3>
   <div$fieldLabel>
@@ -103,8 +103,6 @@ function render_show($label, $value, $options = array())
 </div>
 
 contents;
-
-  return $result;
 }
 
 function render_show_repository($label, $resource)
@@ -147,9 +145,7 @@ function render_value_inline($value)
 {
   // Parse using Parsedown's inline method in safe mode
   $options = array('inline' => true);
-  $value = QubitMarkdown::getInstance()->parse($value, $options);
-
-  return $value;
+  return QubitMarkdown::getInstance()->parse($value, $options);
 }
 
 function render_value_html($value)
@@ -171,9 +167,7 @@ function add_paragraphs_and_linebreaks($value)
   }
 
   // Maintain linebreaks not surrounded by tags
-  $value = preg_replace('/(?!>)\r?\n(?!<)/', '<br/>', $value);
-
-  return $value;
+  return preg_replace('/(?!>)\r?\n(?!<)/', '<br/>', $value);
 }
 
 function strip_markdown($value)

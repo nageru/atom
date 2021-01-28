@@ -84,9 +84,7 @@ class sfModsPlugin implements ArrayAccess
   protected function baseUrl()
   {
     $baseUrl = QubitSetting::getByName('siteBaseUrl');
-    $baseUrl = ($baseUrl == null) ? 'http://'. gethostname() : $baseUrl;
-
-    return $baseUrl;
+    return ($baseUrl == null) ? 'http://'. gethostname() : $baseUrl;
   }
 
   public function getDateTagNameForEventType($typeId)

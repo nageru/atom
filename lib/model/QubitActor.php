@@ -467,9 +467,7 @@ class QubitActor extends BaseActor
     $criteria = new Criteria;
     $criteria->add(QubitContactInformation::ACTOR_ID, $this->id);
     $criteria->addDescendingOrderByColumn(QubitContactInformation::PRIMARY_CONTACT);
-    $contactInformation = QubitContactInformation::get($criteria);
-
-    return $contactInformation;
+    return QubitContactInformation::get($criteria);
   }
 
   public function getPrimaryContact()

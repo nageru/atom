@@ -483,8 +483,6 @@ class sfImageMagickAdapter
       $n--;
     }
 
-    $extract = '['.escapeshellarg($n).'] ';
-
-    return $extract;
+    return '['.escapeshellarg($n).'] ';
   }
 }

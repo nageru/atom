@@ -131,8 +131,7 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
 
   public function authenticate($username, $password)
   {
-    $authenticated = $this->authenticateWithBasicAuth($username, $password);
-    return $authenticated;
+    return $this->authenticateWithBasicAuth($username, $password);
   }
 
   // This method is is intended to be overridable in user classes that inherit

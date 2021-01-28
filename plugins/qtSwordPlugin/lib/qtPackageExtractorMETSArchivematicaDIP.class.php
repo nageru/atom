@@ -222,9 +222,7 @@ class qtPackageExtractorMETSArchivematicaDIP extends qtPackageExtractorBase
     $this->addPreservationSystemMetadata($io, $fileId, $options);
 
     // Add a relation between this $io and the AIP record
-    $io = $this->addAipRelation($io, $this->aip);
-
-    return $io;
+    return $this->addAipRelation($io, $this->aip);
   }
 
   /**

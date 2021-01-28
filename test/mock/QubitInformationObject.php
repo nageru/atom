@@ -61,9 +61,7 @@ class QubitInformationObject
 
   public static function getLevelOfDescription()
   {
-    $term = new QubitTerm();
-
-    return $term;
+    return new QubitTerm();
   }
 
   public static function getSlug()

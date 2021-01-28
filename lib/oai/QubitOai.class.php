@@ -192,12 +192,10 @@ class QubitOai
    */
   public static function getMetadataFormats()
   {
-    $metadataFormats = array(
+    return array(
       array('prefix' => 'oai_dc', 'namespace' => 'http://www.openarchives.org/OAI/2.0/oai_dc/', 'schema' => 'http://www.openarchives.org/OAI/2.0/oai_dc.xsd'),
       array('prefix' => 'oai_ead', 'namespace' => 'urn:isbn:1-931666-22-9', 'schema' => 'http://www.loc.gov/ead/ead.xsd')
     );
-
-    return $metadataFormats;
   }
 
   /**
@@ -297,9 +295,7 @@ class QubitOai
   public static function getOaiNamespaceIdentifier()
   {
     $siteBaseUrl = QubitSetting::getByName('siteBaseUrl')->getValue(array('cultureFallback' => true));
-    $oaiNamespaceIdentifier = QubitOai::parseUrlHost($siteBaseUrl);
-
-    return $oaiNamespaceIdentifier;
+    return QubitOai::parseUrlHost($siteBaseUrl);
   }
 
   public static function getRepositoryIdentifier()
@@ -316,9 +312,7 @@ class QubitOai
 
   public static function getOaiSampleIdentifier()
   {
-    $sampleIdentifier = 'oai:'.QubitOai::getRepositoryIdentifier().'_100002';
-
-    return $sampleIdentifier;
+    return 'oai:'.QubitOai::getRepositoryIdentifier().'_100002';
   }
 
   /**

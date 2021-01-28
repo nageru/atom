@@ -90,8 +90,6 @@ class RepositoryHoldingsAction extends sfAction
     $title = sprintf('i18n.%s.title.alphasort', sfContext::getInstance()->user->getCulture());
     $query->setSort(array($title => 'asc'));
 
-    $resultSet = QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($query);
-
-    return $resultSet;
+    return QubitSearch::getInstance()->index->getType('QubitInformationObject')->search($query);
   }
 }

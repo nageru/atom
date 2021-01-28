@@ -122,9 +122,7 @@ class Qubit
 
     // Format to pad with leading zeros
     $date = new DateTime($dateString);
-    $formattedDate = $date->format('Y-m-d');
-
-    return $formattedDate;
+    return $date->format('Y-m-d');
   }
 
   public static function saveTemporaryFile($name, $contents)

@@ -98,9 +98,7 @@ class QubitMarkdown
     }
 
     $this->parsedown->setSafeMode($safeMode);
-    $content = $this->parsedown->$method($content);
-
-    return $content;
+    return $this->parsedown->$method($content);
   }
 
   /**
@@ -137,9 +135,7 @@ class QubitMarkdown
     $content = $this->parsedown->text($content);
 
     // Remove all tags
-    $content = strip_tags($content);
-
-    return $content;
+    return strip_tags($content);
   }
 
   /**

@@ -102,9 +102,7 @@ class QubitSlug extends BaseSlug
 
     $slug = "-$slug-";
 
-    $slug = trim($slug, '-');
-
-    return $slug;
+    return trim($slug, '-');
   }
 
   public static function getUnique($connection = null)

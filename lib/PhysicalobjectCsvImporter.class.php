@@ -853,11 +853,9 @@ EOQ;
     $values = array_map('trim', $values);
 
     // Remove empty strings from array
-    $values = array_filter($values, function ($val) {
+    return array_filter($values, function ($val) {
       return null !== $val && '' !== $val;
     });
-
-    return $values;
   }
 
   protected function lookupTypeId($name, $culture)

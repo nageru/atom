@@ -1088,9 +1088,7 @@ return;
     $fd = FluentDOM($node)
       ->namespaces(array('eac' => 'urn:isbn:1-931666-33-4'));
 
-    $range = array($fd->find('eac:fromDate')->attr('standardDate'), $fd->find('eac:toDate')->attr('standardDate'));
-
-    return $range;
+    return array($fd->find('eac:fromDate')->attr('standardDate'), $fd->find('eac:toDate')->attr('standardDate'));
   }
 
   public static function renderDates($item)
