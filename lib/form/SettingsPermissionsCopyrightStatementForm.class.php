@@ -33,10 +33,10 @@ class SettingsPermissionsCopyrightStatementForm extends sfForm
       $value = $setting->getValue(array('sourceCulture' => true));
       if (!empty($value))
       {
-        $default = $value;  
+        $default = $value;
       }
     }
-    $this->setDefault('copyrightStatementEnabled', $default); 
+    $this->setDefault('copyrightStatementEnabled', $default);
 
     $this->setWidget('copyrightStatement', new sfWidgetFormTextArea(array(), array('rows' => 4)));
     $this->setValidator('copyrightStatement', new sfValidatorString);

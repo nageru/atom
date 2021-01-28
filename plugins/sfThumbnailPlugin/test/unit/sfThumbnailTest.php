@@ -5,7 +5,7 @@ require_once(dirname(__FILE__).'/../../lib/sfThumbnail.class.php');
 require_once(dirname(__FILE__).'/../../lib/sfGDAdapter.class.php');
 require_once(dirname(__FILE__).'/../../lib/sfImageMagickAdapter.class.php');
 
-// These tests require you have both [http://php.net/gd GD] 
+// These tests require you have both [http://php.net/gd GD]
 // and [http://www.imagemagick.org ImageMagick] installed
 $adapters = array('sfGDAdapter', 'sfImageMagickAdapter');
 
@@ -31,7 +31,7 @@ function getResultPath()
   return $result = dirname(__FILE__).'/../data/result';
 }
 
-class my_lime_test extends lime_test 
+class my_lime_test extends lime_test
 {
   function diag($message, $adapter = '')
   {

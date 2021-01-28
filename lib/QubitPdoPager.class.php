@@ -74,7 +74,7 @@ class QubitPdoPager extends sfPager
   public function getResults()
   {
     $this->setNbResults(QubitPdo::fetchColumn($this->countSql, $this->countSqlParams));
-    $this->rows = QubitPdo::fetchAll($this->limitMainSql(), $this->sqlParams);    
+    $this->rows = QubitPdo::fetchAll($this->limitMainSql(), $this->sqlParams);
 
     $this->init();
 

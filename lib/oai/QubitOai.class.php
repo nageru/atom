@@ -299,7 +299,7 @@ class QubitOai
     $siteBaseUrl = QubitSetting::getByName('siteBaseUrl')->getValue(array('cultureFallback' => true));
     $oaiNamespaceIdentifier = QubitOai::parseUrlHost($siteBaseUrl);
     
-    return $oaiNamespaceIdentifier; 
+    return $oaiNamespaceIdentifier;
   }
 
   public static function getRepositoryIdentifier()

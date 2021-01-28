@@ -980,7 +980,7 @@ withTransaction(function ($conn) use ($t, $vocabSimple)
       $search->index->getType('QubitTerm')->getDocument($item->id);
       $t->pass("Term ${key} is indexed");
     }
-    catch (Elastica\Exception\NotFoundException $e) 
+    catch (Elastica\Exception\NotFoundException $e)
     {
       $t->fail("Term ${key} was not indexed");
     }

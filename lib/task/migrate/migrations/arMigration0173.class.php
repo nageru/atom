@@ -58,7 +58,7 @@ class arMigration0173
         $setting->setName($settingName);
         $setting->setScope('element_visibility');
         $setting->setEditable(1);
-        $setting->setDeleteable(0);      
+        $setting->setDeleteable(0);
         $setting->setSourceCulture('en');
         $setting->setCulture('en');
         $setting->setValue('1');

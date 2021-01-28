@@ -34,7 +34,7 @@ class QubitArrayPager extends sfPager
 
   public function __get($name)
   {
-    if ('hits' == $name) 
+    if ('hits' == $name)
     {
       return $this->hits;
     }
@@ -46,7 +46,7 @@ class QubitArrayPager extends sfPager
 
   public function __set($name, $val)
   {
-    if ('hits' == $name) 
+    if ('hits' == $name)
     {
       $this->hits = $val;
 

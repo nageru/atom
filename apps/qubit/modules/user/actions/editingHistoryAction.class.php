@@ -84,7 +84,7 @@ class UserEditingHistoryAction extends sfAction
         'actionType' => QubitTerm::getById($modification->actionTypeId)->name
       );
 
-      array_push($results, $result);    
+      array_push($results, $result);
     }
 
     return $results;

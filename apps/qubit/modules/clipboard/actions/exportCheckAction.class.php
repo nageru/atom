@@ -55,7 +55,7 @@ class ClipboardExportCheckAction extends sfAction
       }
 
       // Assemble job description
-      $message = $this->context->i18n->__('%1% (started: %2%, status: %3%).', 
+      $message = $this->context->i18n->__('%1% (started: %2%, status: %3%).',
         array(
           '%1%' => (string)$job,
           '%2%' => $job->getCreationDateString(),
@@ -66,7 +66,7 @@ class ClipboardExportCheckAction extends sfAction
       // Add download path if applicable
       if (isset($job->downloadPath) && $job->statusId == QubitTerm::JOB_STATUS_COMPLETED_ID)
       {
-        $message .= $this->context->i18n->__(' %1%Download%2% (%3% b)', 
+        $message .= $this->context->i18n->__(' %1%Download%2% (%3% b)',
           array(
             '%1%' => sprintf('<a href="%s">', sfConfig::get('app_siteBaseUrl') .'/'. $job->downloadPath),
             '%2%' => '</a>',
@@ -76,7 +76,7 @@ class ClipboardExportCheckAction extends sfAction
       }
       else
       {
-        $message .= ' ' . $this->context->i18n->__('%1%Refresh the page%2% for progress updates.', 
+        $message .= ' ' . $this->context->i18n->__('%1%Refresh the page%2% for progress updates.',
           array(
             '%1%' => '<a href="javascript:location.reload();">',
             '%2%' => '</a>'

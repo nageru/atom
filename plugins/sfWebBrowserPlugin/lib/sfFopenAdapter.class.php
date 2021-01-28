@@ -17,7 +17,7 @@
  * @version    0.9
  */
 class sfFopenAdapter
-{ 
+{
   protected
     $options             = array(),
     $adapterErrorMessage = null,
@@ -25,7 +25,7 @@ class sfFopenAdapter
     
   public function __construct($options = array())
   {
-    $this->options = $options;     
+    $this->options = $options;
   }
     
   /**
@@ -38,17 +38,17 @@ class sfFopenAdapter
    * @param boolean To specify is the request changes the browser history
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function call($browser, $uri, $method = 'GET', $parameters = array(), $headers = array())
-  {    
+  {
     $m_headers = array_merge(array('Content-Type' => 'application/x-www-form-urlencoded'), $browser->getDefaultRequestHeaders(), $browser->initializeRequestHeaders($headers));
     $request_headers = $browser->prepareHeaders($m_headers);
     
     // Read the response from the server
     // FIXME: use sockets to avoid depending on allow_url_fopen
     $context = stream_context_create(array('http' => array_merge(
-      $this->options, 
-      array('method' => $method), 
+      $this->options,
+      array('method' => $method),
       array('content' => is_array($parameters) ? http_build_query($parameters) : $parameters),
       array('header' => $request_headers)
     )));

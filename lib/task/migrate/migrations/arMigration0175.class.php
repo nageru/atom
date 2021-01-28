@@ -40,7 +40,7 @@ class arMigration0175
     $sql = "ALTER TABLE `user` CHANGE COLUMN `sha1_password` `password_hash` VARCHAR(255) DEFAULT NULL";
     QubitPdo::modify($sql);
 
-    // Cycle through each user and re-hash stored SHA-1 hash (and salt)  
+    // Cycle through each user and re-hash stored SHA-1 hash (and salt)
     foreach(QubitUser::getAll() as $user)
     {
       $user->passwordHash = QubitUser::generatePasswordHash($user->passwordHash);

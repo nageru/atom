@@ -94,14 +94,14 @@ class arStorageServiceExtractFileAction extends sfAction
 
     if (null === $aip = QubitAip::getByUuid($aipUUID))
     {
-      // Check object properties if QubitAip not found. This will occur for 
+      // Check object properties if QubitAip not found. This will occur for
       // metadata-only dip upload digital objects.
       if (null === $aipFileName = $this->resource->object->aipName)
       {
         throw new QubitApiBadRequestException('Missing object property: aipName');
       }
     }
-    else 
+    else
     {
       $aipFileName = $aip->filename;
     }

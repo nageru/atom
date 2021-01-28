@@ -45,7 +45,7 @@ EOF;
     $conn = $databaseManager->getDatabase('propel')->getConnection();
 
     $sqlQuery =  "SELECT s.object_id FROM information_object i JOIN status s ON i.id = s.object_id " .
-                 "WHERE s.type_id = " . QubitTerm::STATUS_TYPE_PUBLICATION_ID . 
+                 "WHERE s.type_id = " . QubitTerm::STATUS_TYPE_PUBLICATION_ID .
                  " AND s.status_id = " . QubitTerm::PUBLICATION_STATUS_DRAFT_ID .
                  " AND i.id <> 1"; // Don't delete root node!
 

@@ -86,7 +86,7 @@ class InformationObjectUpdatePublicationStatusAction extends DefaultEditAction
       $this->form->bind($request->getPostParameters());
 
       if ($this->form->isValid())
-      { 
+      {
         // Update resource synchronously
         $publicationStatusId = $this->form->getValue('publicationStatus');
         $this->resource->setPublicationStatus($publicationStatusId);

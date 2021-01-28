@@ -28,7 +28,7 @@ class arCAS
    * Initialize the phpCAS library
    */
   public static function initializePhpCAS()
-  {  
+  {
     // Return if phpCAS is already initialized
     if (self::$phpCASIsInitialized) {
       return;
@@ -78,6 +78,6 @@ class arCAS
       throw new Exception("Invalid SSL certificate settings. Please review the app_cas_server_cert parameter in plugin app.yml.");
     }
 
-    self::$phpCASIsInitialized = true;   
+    self::$phpCASIsInitialized = true;
   }
 }

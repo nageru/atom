@@ -62,7 +62,7 @@ class sfWebBrowser
    * @param array default browser options
    *
    * @return sfWebBrowser The current browser object
-   */    
+   */
   public function restart($defaultHeaders = array())
   {
     $this->defaultHeaders = $this->fixHeaders($defaultHeaders);
@@ -80,7 +80,7 @@ class sfWebBrowser
    * @param string agent name
    *
    * @return sfWebBrowser The current browser object
-   */    
+   */
   public function setUserAgent($agent)
   {
     $this->defaultHeaders['User-Agent'] = $agent;
@@ -92,7 +92,7 @@ class sfWebBrowser
    * Gets the browser user agent name
    *
    * @return string agent name
-   */    
+   */
   public function getUserAgent()
   {
     return isset($this->defaultHeaders['User-Agent']) ? $this->defaultHeaders['User-Agent'] : '';
@@ -133,7 +133,7 @@ class sfWebBrowser
    * @param array  The request headers (associative array)
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function post($uri, $parameters = array(), $headers = array())
   {
     return $this->call($uri, 'POST', $parameters, $headers);
@@ -147,7 +147,7 @@ class sfWebBrowser
    * @param array  The request headers (associative array)
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function put($uri, $parameters = array(), $headers = array())
   {
     return $this->call($uri, 'PUT', $parameters, $headers);
@@ -161,7 +161,7 @@ class sfWebBrowser
    * @param array  The request headers (associative array)
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function delete($uri, $parameters = array(), $headers = array())
   {
     return $this->call($uri, 'DELETE', $parameters, $headers);
@@ -177,7 +177,7 @@ class sfWebBrowser
    * @param boolean To specify is the request changes the browser history
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function call($uri, $method = 'GET', $parameters = array(), $headers = array(), $changeStack = true)
   {
     $urlInfo = parse_url($uri);
@@ -202,7 +202,7 @@ class sfWebBrowser
     }
     elseif($urlInfo['scheme'] != 'http' && $urlInfo['scheme'] != 'https')
     {
-      throw new Exception('sfWebBrowser handles only http and https requests'); 
+      throw new Exception('sfWebBrowser handles only http and https requests');
     }
 
     $this->urlInfo = parse_url($uri);
@@ -232,7 +232,7 @@ class sfWebBrowser
    * @param string field value
    *
    * @return sfWebBrowser The current browser object
-   */ 
+   */
   public function setField($name, $value)
   {
     // as we don't know yet the form, just store name/value pairs
@@ -248,7 +248,7 @@ class sfWebBrowser
    * @param array request parameters (associative array)
    *
    * @return sfWebBrowser The current browser object
-   */ 
+   */
   public function click($name, $arguments = array())
   {
     if (!$dom = $this->getResponseDom())
@@ -271,7 +271,7 @@ class sfWebBrowser
       {
         if(preg_replace(array('/\s{2,}/', '/\\r\\n|\\n|\\r/'), array(' ', ''), $link->nodeValue) == $name)
         {
-          return $this->get($link->getAttribute('href'));  
+          return $this->get($link->getAttribute('href'));
         }
       }
     }
@@ -416,7 +416,7 @@ class sfWebBrowser
    * @param array   The request headers (associative array)
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function addToStack($uri, $method, $parameters, $headers)
   {
     $this->stack = array_slice($this->stack, 0, $this->stackPosition + 1);
@@ -435,7 +435,7 @@ class sfWebBrowser
    * Submits the previous request in history again
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function back()
   {
     if ($this->stackPosition < 1)
@@ -444,9 +444,9 @@ class sfWebBrowser
     }
 
     --$this->stackPosition;
-    return $this->call($this->stack[$this->stackPosition]['uri'], 
-                       $this->stack[$this->stackPosition]['method'], 
-                       $this->stack[$this->stackPosition]['parameters'], 
+    return $this->call($this->stack[$this->stackPosition]['uri'],
+                       $this->stack[$this->stackPosition]['method'],
+                       $this->stack[$this->stackPosition]['parameters'],
                        $this->stack[$this->stackPosition]['headers'],
                        false);
   }
@@ -455,7 +455,7 @@ class sfWebBrowser
    * Submits the next request in history again
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function forward()
   {
     if ($this->stackPosition > count($this->stack) - 2)
@@ -464,9 +464,9 @@ class sfWebBrowser
     }
 
     ++$this->stackPosition;
-    return $this->call($this->stack[$this->stackPosition]['uri'], 
-                       $this->stack[$this->stackPosition]['method'], 
-                       $this->stack[$this->stackPosition]['parameters'], 
+    return $this->call($this->stack[$this->stackPosition]['uri'],
+                       $this->stack[$this->stackPosition]['method'],
+                       $this->stack[$this->stackPosition]['parameters'],
                        $this->stack[$this->stackPosition]['headers'],
                        false);
   }
@@ -475,7 +475,7 @@ class sfWebBrowser
    * Submits the current request again
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function reload()
   {
     if (-1 == $this->stackPosition)
@@ -483,9 +483,9 @@ class sfWebBrowser
       throw new Exception('No page to reload.');
     }
 
-    return $this->call($this->stack[$this->stackPosition]['uri'], 
-                       $this->stack[$this->stackPosition]['method'], 
-                       $this->stack[$this->stackPosition]['parameters'], 
+    return $this->call($this->stack[$this->stackPosition]['uri'],
+                       $this->stack[$this->stackPosition]['method'],
+                       $this->stack[$this->stackPosition]['parameters'],
                        $this->stack[$this->stackPosition]['headers'],
                        false);
   }
@@ -511,7 +511,7 @@ class sfWebBrowser
 
   /**
    * Initializes the response and erases all content from prior requests
-   */  
+   */
   public function initializeResponse()
   {
     $this->responseHeaders        = array();
@@ -529,13 +529,13 @@ class sfWebBrowser
    * @param array The response headers as an array of strings shaped like "key: value"
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function setResponseHeaders($headers = array())
   {
     $header_array = array();
     foreach($headers as $header)
     {
-      $arr = explode(': ', $header); 
+      $arr = explode(': ', $header);
       if(isset($arr[1]))
       {
         $header_array[$this->normalizeHeaderName($arr[0])] = trim($arr[1]);
@@ -553,7 +553,7 @@ class sfWebBrowser
    * @param string The first line of the response
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function setResponseCode($firstLine)
   {
     preg_match('/\d{3}/', $firstLine, $matches);
@@ -567,7 +567,7 @@ class sfWebBrowser
     }
     
     return $this;
-  }  
+  }
 
   /**
    * Set the response contents
@@ -575,7 +575,7 @@ class sfWebBrowser
    * @param string The response contents
    *
    * @return sfWebBrowser The current browser object
-   */  
+   */
   public function setResponseText($res)
   {
     $this->responseText = $res;
@@ -698,7 +698,7 @@ class sfWebBrowser
    */
   public function responseIsError()
   {
-    return in_array((int)($this->getResponseCode() / 100), array(4, 5)); 
+    return in_array((int)($this->getResponseCode() / 100), array(4, 5));
   }
 
   /**
@@ -709,7 +709,7 @@ class sfWebBrowser
   public function getResponseHeaders()
   {
     return $this->responseHeaders;
-  }  
+  }
 
   /**
    * Get a response header
@@ -722,7 +722,7 @@ class sfWebBrowser
   {
     $normalized_key = $this->normalizeHeaderName($key);
     return (isset($this->responseHeaders[$normalized_key])) ? $this->responseHeaders[$normalized_key] : '';
-  }  
+  }
   
   /**
    * Decodes gzip-encoded content ("content-encoding: gzip" response header).
@@ -740,7 +740,7 @@ class sfWebBrowser
    * 
    * @param       stream     $deflate_text
    * @return      string     
-   */  
+   */
   protected function decodeDeflate($deflate_text)
   {
     return gzuncompress($deflate_text);
@@ -753,7 +753,7 @@ class sfWebBrowser
    */
   public function getResponseCode()
   {
-    return $this->responseCode; 
+    return $this->responseCode;
   }
   
   /**
@@ -763,7 +763,7 @@ class sfWebBrowser
    */
   public function getResponseMessage()
   {
-    return $this->responseMessage;    
+    return $this->responseMessage;
   }
   
   /**
@@ -778,7 +778,7 @@ class sfWebBrowser
   
   public function getUrlInfo()
   {
-    return $this->urlInfo; 
+    return $this->urlInfo;
   }
   
   public function getDefaultRequestHeaders()

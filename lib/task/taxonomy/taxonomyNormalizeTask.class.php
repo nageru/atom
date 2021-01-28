@@ -178,7 +178,7 @@ EOF;
   protected function reindexAffectedObjects($affectedObjects)
   {
     $search = QubitSearch::getInstance();
-    foreach ($affectedObjects as $id) 
+    foreach ($affectedObjects as $id)
     {
       $o = QubitInformationObject::getById($id);
       $search->update($o);

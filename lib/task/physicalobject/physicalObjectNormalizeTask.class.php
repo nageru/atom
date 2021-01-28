@@ -238,7 +238,7 @@ EOF;
 
   private function checkPhysicalObjectsWithoutLocationsAndNormalizeRelations($dryRun)
   {
-    // Get physical objects without locations 
+    // Get physical objects without locations
     $sql = $this->sqlForPhysicalObjectsBySourceCulture();
     $sql .= ' WHERE pi.name IS NOT NULL AND pi.location IS NULL';
 
@@ -281,7 +281,7 @@ EOF;
 
       foreach ($relations as $relation)
       {
-        if (!$dryRun) 
+        if (!$dryRun)
         {
           // Update relation to use current physical object
           $relation->indexOnSave = false;

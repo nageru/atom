@@ -56,7 +56,7 @@ class JobsDeleteAction extends sfAction
       $jobs = QubitJob::getJobsByUser($this->context->user);
       $this->deleteJobsNotInProgress($jobs);
 
-      // Handle bulk deletion of CLI-created job, if user is an administrator 
+      // Handle bulk deletion of CLI-created job, if user is an administrator
       if ($this->context->user->isAdministrator())
       {
         $criteria = new Criteria;
