@@ -85,12 +85,12 @@ EOL;
     ));
   }
 
-  public function execute($args = array(), $opts = array())
+  public function execute($args = array(), $options = array())
   {
     /**
      * @see arBaseTask
      */
-    parent::execute($args, $opts);
+    parent::execute($args, $options);
 
     $resource = QubitInformationObject::getBySlug($args['slug']);
 
@@ -101,17 +101,17 @@ EOL;
       die(1);
     }
 
-    $opts['logger'] = $this->getLogger($opts);
+    $options['logger'] = $this->getLogger($options);
 
-    $writer = new QubitFindingAidWriter($resource, $opts);
+    $writer = new QubitFindingAidWriter($resource, $options);
     $writer->generate();
   }
 
-  private function getLogger($opts)
+  private function getLogger($options)
   {
     $logger = new sfConsoleLogger($this->dispatcher);
 
-    if (!empty($opts['verbose']))
+    if (!empty($options['verbose']))
     {
       $logger->setLogLevel(sfLogger::DEBUG);
     }
