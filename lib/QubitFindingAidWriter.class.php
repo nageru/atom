@@ -68,7 +68,7 @@ class QubitFindingAidWriter
   }
 
   /**
-   * Set the parent resource used to generated the finding aid
+   * Set the finding aid's primary (top-level) information object
    */
   public function setResource(QubitInformationObject $resource): void
   {
@@ -87,6 +87,14 @@ class QubitFindingAidWriter
   }
 
   /**
+   * Get the finding aid's primary information object
+   */
+  public function getResource(): QubitInformationObject
+  {
+    return $this->resource;
+  }
+
+  /**
    * Set the application root directory, or use symfony's sf_root_dir value
    */
   public function setAppRoot(?string $appRoot): void
@@ -100,6 +108,14 @@ class QubitFindingAidWriter
 
     // Use the symfony sf_root_dir config setting
     $this->appRoot = rtrim(sfConfig::get('sf_root_dir'), '/');
+  }
+
+  /**
+   * Get the application root directory
+   */
+  public function getAppRoot(): string
+  {
+    return $this->appRoot;
   }
 
   /**
@@ -120,7 +136,15 @@ class QubitFindingAidWriter
   }
 
   /**
-   * Set a finding aid model
+   * Get the current logger
+   */
+  public function getLogger(): ?sfLogger
+  {
+    return $this->logger;
+  }
+
+  /**
+   * Set the finding aid model
    */
   public function setModel(string $model): void
   {
@@ -130,6 +154,14 @@ class QubitFindingAidWriter
     }
 
     $this->model = $model;
+  }
+
+  /**
+   * Get the finding aid model
+   */
+  public function getModel(): string
+  {
+    return $this->model;
   }
 
   /**
@@ -149,8 +181,6 @@ class QubitFindingAidWriter
     {
       $eadFilePath = $this->generateEadFile();
     }
-
-    $this->logger->info(sprintf('Generated EAD file "%s"', $eadFilePath));
 
     // DEBUGGING
     return;
@@ -255,6 +285,9 @@ class QubitFindingAidWriter
         sprintf('ERROR (EAD-EXPORT): Couldn\'t write file: "%s"', $filepath)
       );
     }
+
+    // Log successful EAD generation
+    $this->logger->info(sprintf('Generated EAD file "%s"', $eadFilePath));
 
     return $filepath;
   }
