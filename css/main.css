@@ -105,7 +105,7 @@ body,
 
 #l10n-client
 {
-  border-top: 2px solid #000;
+  border-top: 2px solid #270c3f;
 }
 
 #l10n-client .label
@@ -126,7 +126,7 @@ body,
 {
   background: transparent;
   border-bottom-color: #ddd;
-  color: #000;
+  color: #270c3f
 }
 
 #l10n-client .string-list li.translated:hover
@@ -143,7 +143,7 @@ body,
 {
   background: #ffd;
   border-bottom-color: #fd0;
-  color: #000;
+  color: #270c3f;
 }
 
 #l10n-client .string-list li.untranslated:hover
@@ -160,7 +160,7 @@ body,
 {
   background: #ffd;
   border: 1px dashed #fd0;
-  color: #000;
+  color: #270c3f;
 }
 
 /* Lowercase menus */
