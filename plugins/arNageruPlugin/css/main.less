@@ -47,32 +47,55 @@
 
 // Local tweaks
 
-@green: #d4ff00;
+@green: #f4f5f3;
 
 body {
-  background-color: #999;
+  background-color: rgb(150, 143, 143);
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
+
+header {
+    background: red;
+    height: 100px;
+    width: 100%;
+    text-align: left;
+    color: rgb(238, 231, 231);
+}
+
+nav ul li {
+    float: right;
+}
+
 
 h1, h2, h3, h5, h6 {
-  color: #333;
+  color: rgb(238, 231, 231);
+  font-size: 25px;
+}
+
+p{
+  color: #f4f5f3;
+  font-size: 15px;
 }
 
 .fieldset-wrapper,
 #content {
-  background-color: #777;
+  background-color: rgb(180, 175, 175);
 }
 
 .fieldset-wrapper,
 #content {
-  border-color: #666;
+  border-color: rgb(126, 123, 123);
+  float: right;
 }
 
 #site-slogan {
-  border-bottom: 1px solid @green;
+  border-bottom: 1px solid @red;
+  background-image: "../../images/logo.png";
+  text-align: left;
 }
 
 .c-btn {
-  border-color: @green;
+  border-color: @red;
 }
 
 a,
@@ -81,9 +104,16 @@ a,
 #top-bar nav button,
 #top-bar nav button:before,
 .form-item label {
-  color: @green;
+  color: @red;
 }
 
 .top-dropdown-container .top-dropdown-body {
-  background-color: #333333;
+  background-color: #bd0d0d;
+}
+
+footer {
+  background: red;
+  text-align: 50px;
+  height: 50px;
+  line-height: 50px;
 }
