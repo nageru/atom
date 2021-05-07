@@ -53,10 +53,10 @@ body {
   background-color: rgb(179, 176, 176);
   font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 15px;
   line-height: 20px;
   display: block;
-  color: #0f0f0f;
+  color: #000000;
 }
 
 header {
@@ -66,40 +66,47 @@ header {
     text-align: right;
     color: rgb(238, 231, 231);
     padding-top: 15px
+    padding-left: 15px
 }
 
+.header, 
+#top-bar {
+  background-color: rgb(192,0,0);
+
 nav ul li {
-    float: left;
-    margin-right: 15%;
+    margin-right: 30%;
     display: inline-block;
-    color: rgb(243, 239, 239);
+    color: rgb(7, 7, 7);
     height: 50px;
+    background-color: rgb(238, 231, 231);
 }
 
 h1, h2, h3, h5, h6 {
-  color: rgb(238, 231, 231);
+  color: rgb(15, 15, 15);
   font-size: 35px;
 }
 
 p{
-  color: #f4f5f3;
+  color: #0a0a0a;
   font-size: 20px;
 }
 
 .fieldset-wrapper,
 #content {
-  background-color: rgb(180, 175, 175);
+  background-color: rgb(221, 215, 215);
+  background-position: center;
 }
 
 .fieldset-wrapper,
 #content {
-  border-color: rgb(177, 177, 177);
+  border-color: rgb(3, 3, 3);
   float: right;
 }
 
 #site-slogan {
   border-bottom: 1px solid @red;
-  background-color: rgb(192,0,0);
+  background-color: rgb(214, 63, 63);
+  text-align: right;
 }
 
 .c-btn {
@@ -112,7 +119,7 @@ a,
 #top-bar nav button,
 #top-bar nav button:before,
 .form-item label {
-  color: @red;
+  color: @white;
 }
 
 .top-dropdown-container .top-dropdown-body {
@@ -123,8 +130,8 @@ main {
   align-items: center;
   font-size: 30px;
   color: #181817;
-  padding-left: 50%;
-  padding-right: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 aside {
