@@ -50,87 +50,47 @@
 @green: #f4f5f3;
 
 body {
-  background-color: rgb(148, 144, 144);
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-weight: bold;
-  font-size: 13px;
-  line-height: 20px;
-  display: block;
-  color: #000000;
-  text-align: center;
-  margin: 0%;
-  background-color: #f4f5f3;
+  background-color: rgb(150, 143, 143);
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 header {
-    background-color:rgb(192,0,0);
-    height: 75px;
+    background: red;
+    height: 100px;
     width: 100%;
-    text-align: right;
+    text-align: left;
     color: rgb(238, 231, 231);
-    padding-top: 25px;
-    padding-right: 15px;
-    border-bottom: 1px solid, black;
-}
-
-#logo {
-  background: url(images/logo.png);
-}
-
-div {
-  color: #fcf7f7;
-  background: rgb(180, 180, 180);
-}
-
-#top-bar {
-  background-color: rgb(192,0,0);
-  color: #f4f5f3;
 }
 
 nav ul li {
-    margin-right: 40%;
-    display: inline-block;
-    color: rgb(7, 7, 7);
-    height: 50px;
-    background: rgb(238, 231, 231);
+    float: right;
 }
 
+
 h1, h2, h3, h5, h6 {
-  color:#f4f5f3;
-  font-size: 30px;
+  color: rgb(238, 231, 231);
+  font-size: 25px;
 }
 
 p{
-  color: #faf6f6;
-  font-size: 13px;
+  color: #f4f5f3;
+  font-size: 15px;
 }
 
 .fieldset-wrapper,
 #content {
-  background-position: center;
-  color: #000000;
+  background-color: rgb(180, 175, 175);
 }
 
 .fieldset-wrapper,
 #content {
-  border-color: rgb(3, 3, 3);
-  float: inherit;
-  color: black;
-  margin-top: 50px;
-  margin-bottom: 5px;
-  margin-left: 5px;
-  margin-right: 5px;
-  border: 1px;
+  border-color: rgb(126, 123, 123);
+  float: right;
 }
 
 #site-slogan {
   border-bottom: 1px solid @red;
-  background: rgb(148, 5, 5);
-  height: 20px;
-  width: 100%;
-  color: #f4f5f3;
-  font-size: 15px;
-  margin-left: 15px;
+  img src="Logo.png"
   text-align: left;
 }
 
@@ -144,30 +104,17 @@ a,
 #top-bar nav button,
 #top-bar nav button:before,
 .form-item label {
-color: @green;
-}
-
-#search-bar {
-  color: #030303;
-  background-color: rgb(238, 231, 231);
-  float: inline-start;
-  border-radius: 4px;
+  color: @red;
 }
 
 .top-dropdown-container .top-dropdown-body {
-  background-color: #585757;
-  color: #000000;
+  background-color: #bd0d0d;
 }
 
-.main {
-  align-items: center;
-  font-size: 25px;
-  color: #181817;
-}
-
-.aside {
-  background-color: rgb(175, 173, 173);
-  color: #000000;
-  margin-left: 10%;
-  padding-top: 10%; 
+footer {
+  background: red;
+  <p>Ajuntament Històric Municipal de Mollet del Vallès</p>
+  text-align: 50px;
+  height: 50px;
+  line-height: 50px;
 }
