@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ../docker/docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: gearmand
+  name: gearmand
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: gearmand
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ../docker/docker-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: gearmand
+    spec:
+      containers:
+      - image: artefactual/gearmand
+        imagePullPolicy: ""
+        name: gearmand
+        ports:
+        - containerPort: 4730
+          hostIP: 127.0.0.1
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

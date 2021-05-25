@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ../docker/docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: percona
+  name: percona
+spec:
+  ports:
+  - name: "63003"
+    port: 63003
+    targetPort: 3306
+  selector:
+    io.kompose.service: percona
+status:
+  loadBalancer: {}

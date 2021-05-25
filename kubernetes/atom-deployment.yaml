@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ../docker/docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: atom
+  name: atom
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: atom
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ../docker/docker-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: atom
+    spec:
+      containers:
+      - env:
+        - name: ATOM_DEBUG_IP
+          value: 172.22.0.1
+        - name: ATOM_DEVELOPMENT_MODE
+          value: on
+        - name: ATOM_ELASTICSEARCH_HOST
+          value: elasticsearch
+        - name: ATOM_GEARMAND_HOST
+          value: gearmand
+        - name: ATOM_MEMCACHED_HOST
+          value: memcached
+        - name: ATOM_MYSQL_DSN
+          value: mysql:host=percona;port=3306;dbname=atom;charset=utf8mb4
+        - name: ATOM_MYSQL_PASSWORD
+          value: atom_12345
+        - name: ATOM_MYSQL_USERNAME
+          value: atom
+        - name: ES_JAVA_OPTS
+          value: -Xms640m -Xmx640m
+        - name: MYSQL_DATABASE
+          value: atom
+        - name: MYSQL_PASSWORD
+          value: atom_12345
+        - name: MYSQL_ROOT_PASSWORD
+          value: my-secret-pw
+        - name: MYSQL_USER
+          value: atom
+        - name: bootstrap.memory_lock
+          value: "true"
+        - name: cluster.routing.allocation.disk.threshold_enabled
+          value: "false"
+        - name: xpack.security.enabled
+          value: "false"
+        image: atom
+        imagePullPolicy: ""
+        name: atom
+        resources: {}
+        volumeMounts:
+        - mountPath: /atom/src/vendor/composer
+          name: composer-deps
+        - mountPath: /atom/src
+          name: ..
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: composer-deps
+        persistentVolumeClaim:
+          claimName: composer-deps
+      - name: ..
+        persistentVolumeClaim:
+          claimName: ..
+status: {}

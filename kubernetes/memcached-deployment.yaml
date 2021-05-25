@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ../docker/docker-compose.yml
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: memcached
+  name: memcached
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: memcached
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ../docker/docker-compose.yml
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: memcached
+    spec:
+      containers:
+      - args:
+        - -p
+        - "11211"
+        - -m
+        - "128"
+        - -u
+        - memcache
+        image: memcached
+        imagePullPolicy: ""
+        name: memcached
+        ports:
+        - containerPort: 11211
+          hostIP: 127.0.0.1
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
