@@ -112,6 +112,7 @@ docker run -d --network atom-network \
 	--env ATOM_DEBUG_IP=172.22.0.1 \
         --mount type=volume,source=atom-composer-deps,target=/atom/src/vendor/composer \
 	--mount type=volume,source=atom-src,target=/atom/src \
+	--mount type=volume,source=atom-data,target=/atom/src/uploads \
 	--name atom-worker \
 	--restart on-failure \
 	--link atom-mysql \
@@ -133,6 +134,7 @@ docker run -d --network atom-network \
 	--env ATOM_DEBUG_IP=172.22.0.1 \
         --mount type=volume,source=atom-composer-deps,target=/atom/src/vendor/composer \
 	--mount type=volume,source=atom-src,target=/atom/src \
+	--mount type=volume,source=atom-data,target=/atom/src/uploads \
 	--name atom \
 	--link atom-mysql \
         nageru/atom:1.0

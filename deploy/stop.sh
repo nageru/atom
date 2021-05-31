@@ -2,7 +2,7 @@
 
 docker container stop atom-gearmand
 
-docker container stop atom-memcached
+docker container stop memcached
 
 docker container stop atom-elasticsearch
 

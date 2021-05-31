@@ -3,7 +3,7 @@ docker container start atom-mysql
 
 docker container start atom-gearmand
 
-docker container start atom-memcached
+docker container start memcached
 
 docker container start atom-elasticsearch
 
