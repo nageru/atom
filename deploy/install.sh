@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ $# != 16 ]; then
+if [ $# != 4 ]; then
    echo "Incorrect parameters"
    echo "Usage: $0 --mariadb_ip <ip> --mariadb_port <port>"
    exit
@@ -20,8 +20,8 @@ echo "Return to continue"
 read p
 
 HOME=/home/nageru/atom
-MARIADB_DATA=/mnt/data/mysql
-MARIADB_CFG=/mnt/data/mysql/conf
+MARIADB_DATA=/mnt/data/mysql-data
+MARIADB_CFG=/mnt/data/mysql
 NGINX_CFG=/mnt/data/nginx
 ELASTICSEARCH_DATA=/mnt/data/elasticseach
 ATOM_SRC=/mnt/data/atom/src
@@ -46,16 +46,14 @@ docker run -d --env MYSQL_ROOT_PASSWORD="ca62d5332ed24d2f04198178b7e450cd" \
 	--env MYSQL_USER=atom \
 	--env MYSQL_PASSWORD=AeJua4xe \
         --name atom-mysql \
-	--user root \
 	-p ${MARIADB_PORT}:3306/tcp \
 	-e "TZ=Europe/Madrid" \
 	--volume atom-mysql:/var/lib/mysql \
-	--mount type=bind,source=${MARIADB_CFG}/etc/mysql/mysqld.cnf,target=/etc/my.cnf.d/mysqld.cnf readonly=true \
+	--mount type=bind,source=${MARIADB_CFG}/etc/mysql/mysqld.cnf,target=/etc/my.cnf.d/mysqld.cnf,readonly=true \
         --network atom-network \
 	percona:8.0
 echo done
-echo "Return to continue"
-read p
+
 value=$(docker exec -t atom-mysql mysql --silent -h $MARIADB_SERVER_IP --port ${MARIADB_PORT} -uroot -pca62d5332ed24d2f04198178b7e450cd -e "SHOW DATABASES;" |grep -c ERROR)
 while [ "$value" != "0" ]; 
 do 
@@ -64,27 +62,21 @@ do
    value=$(docker exec -t atom-mysql mysql --silent -h $MARIADB_SERVER_IP --port ${MARIADB_PORT} -uroot -pca62d5332ed24d2f04198178b7e450cd -e "SHOW DATABASES;" |grep -c ERROR)
 done
 echo done
-echo "Return to continue"
-read p
 
 echo -n "Creating gearman..."
-docker run -d -p 63005:4730/tcp --network arkhive-network \
+docker run -d -p 63005:4730/tcp --network atom-network \
 	-e "TZ=Europe/Madrid" \
 	--user gearman \
 	--name atom-gearmand  \
 	artefactual/gearmand
 echo done
-echo "Return to continue"
-read p
 
 echo -n "Creating memcached..."
-docker run -d -p 63004:11211/tcp --network arkhive-network \
+docker run -d -p 63004:11211/tcp --network atom-network \
 	-e "TZ=Europe/Madrid" \
-	--name atom-memcached  \
+	--name memcached  \
 	memcached -p 11211 -m 128 -u memcache
 echo done
-echo "Return to continue"
-read p
 
 echo -n "Creating elasticsearch..."
 docker run -d -p 63002:9200/tcp\
@@ -100,59 +92,59 @@ docker run -d -p 63002:9200/tcp\
         --ulimit memlock=-1:-1 \
 	--volume elasticsearch-data:/usr/share/elasticsearch/data \
         -p 62002:9200/tcp \
-	--network arkhive-network \
+	--network atom-network \
 	docker.elastic.co/elasticsearch/elasticsearch:5.6.16
 echo done
-echo "Return to continue"
-read p
+
+##docker exec --privileged -t atom-elasticsearch /bin/bash -c "echo 'sysctl -w vm.max_map_count=262144'>/etc/rc.local && sysctl -w vm.max_map_count=262144 && sysctl -p && sysctl vm.max_map_count"
+
+
+echo -n "Creating atom-worker..."
+docker run -d --network atom-network \
+	-e "TZ=Europe/Madrid" \
+        --env ATOM_DEVELOPMENT_MODE=off \
+        --env ATOM_ELASTICSEARCH_HOST=atom-elasticsearch \
+        --env ATOM_MEMCACHED_HOST=memcached \
+        --env ATOM_GEARMAND_HOST=atom-gearmand \
+        --env ATOM_MYSQL_DSN="mysql:host=atom-mysql;port=3306;dbname=atom;charset=utf8mb4" \
+        --env ATOM_MYSQL_USERNAME=atom \
+        --env ATOM_MYSQL_PASSWORD=AeJua4xe \
+	--env ATOM_DEBUG_IP=172.22.0.1 \
+        --mount type=volume,source=atom-composer-deps,target=/atom/src/vendor/composer \
+	--mount type=volume,source=atom-src,target=/atom/src \
+	--name atom-worker \
+	--restart on-failure \
+	--link atom-mysql \
+	--link atom-gearmand \
+        nageru/atom:1.0 worker
+
+echo done
+
+echo -n "Creating atom..."
+docker run -d --network atom-network \
+	-e "TZ=Europe/Madrid" \
+        --env ATOM_DEVELOPMENT_MODE=off \
+        --env ATOM_ELASTICSEARCH_HOST=atom-elasticsearch \
+        --env ATOM_MEMCACHED_HOST=memcached \
+        --env ATOM_GEARMAND_HOST=atom-gearmand \
+        --env ATOM_MYSQL_DSN="mysql:host=atom-mysql;port=3306;dbname=atom;charset=utf8mb4" \
+        --env ATOM_MYSQL_USERNAME=atom \
+        --env ATOM_MYSQL_PASSWORD=AeJua4xe \
+	--env ATOM_DEBUG_IP=172.22.0.1 \
+        --mount type=volume,source=atom-composer-deps,target=/atom/src/vendor/composer \
+	--mount type=volume,source=atom-src,target=/atom/src \
+	--name atom \
+	--link atom-mysql \
+        nageru/atom:1.0
+echo done
+
 
 echo -n "Creating nginx..."
-docker run -d -p 63001:80/tcp --network arkhive-network \
+docker run -d -p 63001:80/tcp --network atom-network \
 	-e "TZ=Europe/Madrid" \
-	--mount type=volume src=atom-src dest=/atom/src readonly=true\
-	--mount type=bind,source=${NGINX_CFG}/etc/nginx/nginx.conf,target=/etc/nginx/nginx.conf readonly=true\
+	--mount type=volume,source=atom-src,target=/atom/src,readonly=true \
+	--mount type=bind,source=${NGINX_CFG}/etc/nginx/nginx.conf,target=/etc/nginx/nginx.conf,readonly=true\
+	--restart on-failure \
 	--name atom-nginx \
         nginx:latest
 echo done
-echo "Return to continue"
-read p
-
-echo -n "Creating atom-worker..."
-docker run -d --network arkhive-network \
-	-e "TZ=Europe/Madrid" \
-        --env ATOM_DEVELOPMENT_MODE=off \
-        --env ATOM_ELASTICSEARCH_HOST=atom-elasticsearch \
-        --env ATOM_MEMCACHED_HOST=atom-memcached \
-        --env ATOM_GEARMAND_HOST=atom-gearmand \
-        --env ATOM_MYSQL_DSN=mysql:host=atom-mysql;port=3306;dbname=atom;charset=utf8mb4 \
-        --env ATOM_MYSQL_USERNAME=atom \
-        --env ATOM_MYSQL_PASSWORD=AeJua4xe \ 
-	--mount type=volume src=atom-src dest=/atom/src \ 
-        --mount type=volume src=atom-composer-deps dest=/atom/src/vendor/composer \
-	--name atom-worker \
-	--link atom-mysql \
-	--link atom-gearmand \
-        nageru:atom:1.0 worker
-echo done
-echo "Return to continue"
-read p
-
-echo -n "Creating atom..."
-docker run -d --network arkhive-network \
-	-e "TZ=Europe/Madrid" \
-        --env ATOM_DEVELOPMENT_MODE=off \
-        --env ATOM_ELASTICSEARCH_HOST=atom-elasticsearch \
-        --env ATOM_MEMCACHED_HOST=atom-memcached \
-        --env ATOM_GEARMAND_HOST=atom-gearmand \
-        --env ATOM_MYSQL_DSN=mysql:host=atom-mysql;port=3306;dbname=atom;charset=utf8mb4 \
-        --env ATOM_MYSQL_USERNAME=atom \
-        --env ATOM_MYSQL_PASSWORD=AeJua4xe \ 
-	--mount type=volume src=atom-src dest=/atom/src \ 
-        --mount type=volume src=atom-composer-deps dest=/atom/src/vendor/composer \
-	--name atom \
-	--link atom-mysql \
-        nageru:atom:1.0
-echo done
-
-
-

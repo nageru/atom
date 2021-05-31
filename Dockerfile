@@ -49,6 +49,7 @@ RUN set -xe \
 		&& curl -Ls https://archive.apache.org/dist/xmlgraphics/fop/binaries/fop-2.1-bin.tar.gz | tar xz -C /usr/share \
 		&& ln -sf /usr/share/fop-2.1/fop /usr/local/bin/fop \
 		&& make -C /atom/src/plugins/arDominionPlugin \
+		&& make -C /atom/src/plugins/arNageruPlugin \
 		&& make -C /atom/src/plugins/arArchivesCanadaPlugin \
 		&& composer install -d /atom/src
 

@@ -12,7 +12,7 @@ class arNageruPluginConfiguration extends sfPluginConfiguration
   {
     // Here we are including the CSS stylesheet build in our pages.
     $context = $event->getSubject();
-    $context->response->addStylesheet('/plugins/arNageruPlugin/css/min.css', 'last', array('media' => 'all'));
+    $context->response->addStylesheet('/plugins/arNageruPlugin/css/main.css', 'last', array('media' => 'all'));
   }
 
   public function initialize()
