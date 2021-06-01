@@ -530,6 +530,34 @@
         <source>&lt;strong&gt;Type:&lt;/strong&gt; Enter a name for the alternative identifier field that indicates its purpose and usage.&lt;br/&gt;&lt;strong&gt;Identifier:&lt;/strong&gt; Enter a legacy reference code, alternative identifier, or any other alpha-numeric string associated with the record.</source>
         <target/>
       </trans-unit>
+      <trans-unit id="145">
+        <source>Events(s)</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="146">
+        <source>Agent</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="147">
+        <source>%1%Type:%2% Select the type of the event.%3%</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="148">
+        <source>%1%Date:%2% Enter the date of the event.%3%</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="149">
+        <source>%1%Agent:%2% Enter the agent associated with the event.%3%</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="150">
+        <source>%1%Note:%2% Enter notes associated with the event.%3%</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="151">
+        <source>Event(s)</source>
+        <target/>
+      </trans-unit>
     </body>
   </file>
 </xliff>

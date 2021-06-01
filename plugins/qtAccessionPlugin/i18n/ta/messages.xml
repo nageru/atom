@@ -528,6 +528,34 @@
         <source>This identifer is already in use.</source>
         <target/>
       </trans-unit>
+      <trans-unit id="132">
+        <source>Events(s)</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="133">
+        <source>Agent</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="134">
+        <source>%1%Type:%2% Select the type of the event.%3%</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="135">
+        <source>%1%Date:%2% Enter the date of the event.%3%</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="136">
+        <source>%1%Agent:%2% Enter the agent associated with the event.%3%</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="137">
+        <source>%1%Note:%2% Enter notes associated with the event.%3%</source>
+        <target/>
+      </trans-unit>
+      <trans-unit id="138">
+        <source>Event(s)</source>
+        <target/>
+      </trans-unit>
     </body>
   </file>
 </xliff>
