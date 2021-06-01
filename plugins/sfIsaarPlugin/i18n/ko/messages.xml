@@ -481,6 +481,10 @@
         <source>Link %1%</source>
         <target>%1%를 링크시키라</target>
       </trans-unit>
+      <trans-unit id="125">
+        <source>%1%Authority record identifier%2% - value not unique.</source>
+        <target/>
+      </trans-unit>
     </body>
   </file>
 </xliff>

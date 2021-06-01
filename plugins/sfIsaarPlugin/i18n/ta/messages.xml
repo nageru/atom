@@ -476,6 +476,10 @@
         <source>"Record when relevant the commencement date of the relationship or succession date and, when relevant, the cessation date of the relationship." (ISAAR 5.3.4) Enter the date as you would like it to appear in the show page for the authority record, using qualifiers and/or typographical symbols to express uncertainty if desired.</source>
         <target/>
       </trans-unit>
+      <trans-unit id="119">
+        <source>%1%Authority record identifier%2% - value not unique.</source>
+        <target/>
+      </trans-unit>
     </body>
   </file>
 </xliff>

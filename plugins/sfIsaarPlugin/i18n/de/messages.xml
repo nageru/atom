@@ -480,6 +480,10 @@ Regel: Die Namen und, soweit dies nützlich ist, die Ausgabe oder die Daten der 
         <source>Link %1%</source>
         <target>Link %1%</target>
       </trans-unit>
+      <trans-unit id="125">
+        <source>%1%Authority record identifier%2% - value not unique.</source>
+        <target/>
+      </trans-unit>
     </body>
   </file>
 </xliff>

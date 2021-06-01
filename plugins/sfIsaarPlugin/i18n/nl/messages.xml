@@ -478,6 +478,10 @@ Beschrijf de genealogie van een familie (bijvoorbeeld door middel van een stambo
         <source>Link %1%</source>
         <target/>
       </trans-unit>
+      <trans-unit id="125">
+        <source>%1%Authority record identifier%2% - value not unique.</source>
+        <target/>
+      </trans-unit>
     </body>
   </file>
 </xliff>
