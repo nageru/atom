@@ -3,7 +3,7 @@ QubitSetting:
     name: version
     editable: 0
     deleteable: 0
-    value: 184
+    value: 189
   milestone:
     name: milestone
     editable: 0
@@ -1148,6 +1148,106 @@ QubitSetting:
     name: digital_object_uploaded
     scope: element_visibility
     value: 1
+  Qubit_Settings_visibleElements_digitalObjectPermissions:
+    name: digital_object_permissions
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectReferenceFileName:
+    name: digital_object_reference_file_name
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectReferenceMediaType:
+    name: digital_object_reference_media_type
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectReferenceMimeType:
+    name: digital_object_reference_mime_type
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectReferenceFilesize:
+    name: digital_object_reference_file_size
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectReferenceUploaded:
+    name: digital_object_reference_uploaded
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectReferencePermissions:
+    name: digital_object_reference_permissions
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectThumbnailFileName:
+    name: digital_object_thumbnail_file_name
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectThumbnailMediaType:
+    name: digital_object_thumbnail_media_type
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectThumbnailMimeType:
+    name: digital_object_thumbnail_mime_type
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectThumbnailFilesize:
+    name: digital_object_thumbnail_file_size
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectThumbnailUploaded:
+    name: digital_object_thumbnail_uploaded
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectThumbnailPermissions:
+    name: digital_object_thumbnail_permissions
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemOriginalFileName:
+    name: digital_object_preservation_system_original_file_name
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemOriginalFormatName:
+    name: digital_object_preservation_system_original_format_name
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemOriginalFormatVersion:
+    name: digital_object_preservation_system_original_format_version
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemOriginalFormatRegistryKey:
+    name: digital_object_preservation_system_original_format_registry_key
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemOriginalFormatRegistryName:
+    name: digital_object_preservation_system_original_format_registry_name
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemOriginalFilesize:
+    name: digital_object_preservation_system_original_file_size
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemOriginalIngested:
+    name: digital_object_preservation_system_original_ingested
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemOriginalPermission:
+    name: digital_object_preservation_system_original_permissions
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemPreservationFileName:
+    name: digital_object_preservation_system_preservation_file_name
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemPreservationFilesize:
+    name: digital_object_preservation_system_preservation_file_size
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemPreservationNormalized:
+    name: digital_object_preservation_system_preservation_normalized
+    scope: element_visibility
+    value: 1
+  Qubit_Settings_visibleElements_digitalObjectPreservationSystemPreservationPermission:
+    name: digital_object_preservation_system_preservation_permissions
+    scope: element_visibility
+    value: 1
   Qubit_Settings_visibleElements_physicalStorage:
     name: physical_storage
     scope: element_visibility
@@ -1323,7 +1423,7 @@ QubitSetting:
     deleteable: 0
     source_culture: en
     value:
-      en: 'a:2:{s:6:"byName";a:16:{i:0;s:10:"accessions";i:1;s:17:"browseInstitution";i:2;s:9:"clipboard";i:3;s:13:"globalReplace";i:4;s:6:"groups";i:5;s:10:"importSkos";i:6;s:4:"jobs";i:7;s:5:"login";i:8;s:6:"logout";i:9;s:9:"myProfile";i:10;s:7:"plugins";i:11;s:7:"privacy";i:12;s:8:"settings";i:13;s:15:"staticPagesMenu";i:14;s:10:"taxonomies";i:15;s:5:"users";}s:4:"byId";a:8:{i:0;i:1;i:1;i:4;i:2;i:7;i:3;i:2;i:4;i:10;i:5;i:3;i:6;i:5;i:7;i:9;}}'
+      en: 'a:2:{s:6:"byName";a:15:{i:0;s:10:"accessions";i:1;s:17:"browseInstitution";i:2;s:9:"clipboard";i:3;s:13:"globalReplace";i:4;s:6:"groups";i:5;s:10:"importSkos";i:6;s:4:"jobs";i:7;s:5:"login";i:8;s:6:"logout";i:9;s:9:"myProfile";i:10;s:7:"plugins";i:12;s:8:"settings";i:13;s:15:"staticPagesMenu";i:14;s:10:"taxonomies";i:15;s:5:"users";}s:4:"byId";a:8:{i:0;i:1;i:1;i:4;i:2;i:7;i:3;i:2;i:4;i:10;i:5;i:3;i:6;i:5;i:7;i:9;}}'
   Qubit_Settings_visibleElements_DacsPhysicalAccess:
     name: dacs_physical_access
     scope: element_visibility

@@ -13,9 +13,11 @@
     <?php endif; ?>
 
       <a href="<?php echo url_for(array('module' => 'informationobject', 'slug' => $doc['slug'])) ?>">
-        <?php if (isset($doc['digitalObject']) && !empty($doc['digitalObject']['thumbnailPath'])
+        <?php if (
+          isset($doc['digitalObject'])
+          && !empty($doc['digitalObject']['thumbnailPath'])
           && QubitAcl::check(QubitInformationObject::getById($hit->getId()), 'readThumbnail')
-          && QubitGrantedRight::checkPremis($hit->getId(), 'readThumb')): ?>
+        ): ?>
 
           <?php echo link_to(image_tag($doc['digitalObject']['thumbnailPath'],
             array('alt' => isset($doc['digitalObject']['digitalObjectAltText']) ? $doc['digitalObject']['digitalObjectAltText'] : truncate_text(strip_markdown($title), 100))),
@@ -35,7 +37,7 @@
       </a>
 
       <div class="bottom">
-        <?php echo get_component('object', 'clipboardButton', array('slug' => $doc['slug'], 'wide' => false, 'repositoryOrDigitalObjBrowse' => true)) ?><?php echo render_title($title) ?>
+        <?php echo get_component('clipboard', 'button', array('slug' => $doc['slug'], 'wide' => false, 'repositoryOrDigitalObjBrowse' => true, 'type' => 'informationObject')) ?><?php echo render_title($title) ?>
       </div>
     </div>
   <?php endforeach; ?>

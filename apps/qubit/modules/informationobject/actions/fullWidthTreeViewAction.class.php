@@ -46,12 +46,10 @@ class InformationObjectFullWidthTreeViewAction extends DefaultFullTreeViewAction
 
     // Impose limit to what nodeLimit parameter can be set to
     $maxItemsPerPage = sfConfig::get('app_treeview_items_per_page_max', 10000);
-    if (!ctype_digit($request->nodeLimit) || $request->nodeLimit > $maxItemsPerPage)
+    if (!intval($request->nodeLimit) || $request->nodeLimit < 1 || $request->nodeLimit > $maxItemsPerPage)
     {
       $request->nodeLimit = $maxItemsPerPage;
     }
-
-    $baseReferenceCode = '';
 
     // Allow the ability to page through children
     $options = array(
@@ -59,33 +57,18 @@ class InformationObjectFullWidthTreeViewAction extends DefaultFullTreeViewAction
       'limit' => $request->nodeLimit
     );
 
-    // On first load, retrieve the ancestors of the selected resource, the resource
-    // and its children, otherwise get only the resource's children
-    if (filter_var($request->getParameter('firstLoad', false), FILTER_VALIDATE_BOOLEAN)
-      && null !== $collectionRoot = $this->resource->getCollectionRoot())
+    // On first load, retrieve the ancestors of the selected resource, the
+    // resource and its siblings, otherwise get only the resource's siblings
+    if (filter_var(
+      $request->getParameter('firstLoad', false),
+      FILTER_VALIDATE_BOOLEAN
+    ))
     {
-      if ($this->showIdentifier === 'referenceCode')
-      {
-        // On first load, get the base reference code from the ORM
-        $baseReferenceCode = render_value_inline($collectionRoot->getInheritedReferenceCode());
-      }
-
-      $data = $this->getNodeOrChildrenNodes($collectionRoot->id, $baseReferenceCode, $children = false, $options);
+      $data = $this->getAncestorsAndSiblings($options);
     }
     else
     {
-      if ($this->showIdentifier === 'referenceCode')
-      {
-        // Try to get the resource's reference code from the request
-        $baseReferenceCode = $request->getParameter('referenceCode');
-        if (empty($baseReferenceCode))
-        {
-          // Or get it from the ORM
-          $baseReferenceCode = render_value_inline($this->resource->getInheritedReferenceCode());
-        }
-      }
-
-      $data = $this->getNodeOrChildrenNodes($this->resource->id, $baseReferenceCode, $children = true, $options);
+      $data = $this->getChildren($this->resource->id, $options);
     }
 
     return $this->renderText(json_encode($data));

@@ -204,7 +204,7 @@
         // Update clipboard buttons
         if (jQuery('#clipboard-menu').data('clipboard') !== undefined)
         {
-          jQuery('#clipboard-menu').data('clipboard').updateAll();
+          jQuery('#clipboard-menu').data('clipboard').updateAllButtons();
         }
 
         // Update the url, TODO save the state
@@ -245,7 +245,7 @@
         return;
       }
 
-      var moveResponse = $.parseJSON($.ajax({
+      var moveResponse = JSON.parse($.ajax({
         url: data.node.a_attr.href + '/informationobject/fullWidthTreeViewMove',
         type: 'POST',
         async: false,

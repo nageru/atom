@@ -50,10 +50,8 @@ class arBaseJob extends Net_Gearman_Job_Common
    */
   protected $avoidParallelExecutionJobs = array('arObjectMoveJob', 'arFileImportJob');
   protected $waitForRetryTime = 10;
-  Protected $maxRetries = 10;
-
+  protected $maxRetries = 10;
   protected $dispatcher = null;
-  protected $downloadFileExtension = null; // Child class should set if creating user downloads
 
   public function run($parameters)
   {
@@ -113,8 +111,6 @@ class arBaseJob extends Net_Gearman_Job_Common
       {
         $this->deleteOldUnauthenticatedJobs();
       }
-
-      $this->createJobsDownloadsDirectory();
 
       $this->runJob($parameters);
 
@@ -189,132 +185,6 @@ class arBaseJob extends Net_Gearman_Job_Common
   }
 
   /**
-   * Return the job's download file path (or null if job doesn't create
-   * a download).
-   *
-   * @return string  file path
-   */
-  public function getDownloadFilePath()
-  {
-    $downloadFilePath = null;
-
-    if (!is_null($this->downloadFileExtension))
-    {
-      $downloadFilePath = $this->getJobsDownloadDirectory() . DIRECTORY_SEPARATOR . $this->getJobDownloadFilename();
-    }
-
-    return $downloadFilePath;
-  }
-
-  /**
-   * Return the job's download file's relative path (or null if job doesn't
-   * create a download).
-   *
-   * @return string  file path
-   */
-  public function getDownloadRelativeFilePath()
-  {
-    $downloadRelativeFilePath = null;
-
-    if (!is_null($this->downloadFileExtension))
-    {
-      $relativeBaseDir = 'downloads' . DIRECTORY_SEPARATOR . 'jobs';
-      $downloadRelativeFilePath = $relativeBaseDir . DIRECTORY_SEPARATOR . $this->getJobDownloadFilename();
-    }
-
-    return $downloadRelativeFilePath;
-  }
-
-  /**
-   * Get the jobs download directory, a subdirectory of main AtoM downloads directory
-   *
-   * @return string  directory path
-   */
-  public function getJobsDownloadDirectory()
-  {
-    $downloadsPath = sfConfig::get('sf_web_dir') . DIRECTORY_SEPARATOR . 'downloads';
-    return $downloadsPath . DIRECTORY_SEPARATOR . 'jobs';
-  }
-
-  private function getJobDownloadFilename()
-  {
-    return md5($this->job->id) .'.'. $this->downloadFileExtension;
-  }
-
-  /**
-   * Create job temporary directory where the files will be added before
-   * they are compressed and added to the downloads folder. Use a MD5 hash
-   * created from instance info, job id and the current Epoch time to avoid
-   * collisions when multiple AtoM instances are available on the same machine
-   * and in instances where the database is regenerated from another dump (like
-   * it's done in sites with public and private instances), where the job id
-   * could be repeated, adding the export results to an existing export folder.
-   *
-   * @return string  Temporary directory path
-   */
-  protected function createJobTempDir()
-  {
-    $name = md5(
-      sfConfig::get('sf_root_dir') .
-      sfConfig::get('app_workers_key', '') .
-      $this->job->id .
-      date_timestamp_get()
-    );
-    $path = sys_get_temp_dir() . DIRECTORY_SEPARATOR . $name;
-    mkdir($path);
-
-    return $path;
-  }
-
-  /**
-   * Create jobs download directory, a subdirectory of main AtoM downloads
-   * directory, if it doesn't already exist.
-   *
-   * @return void
-   */
-  private function createJobsDownloadsDirectory()
-  {
-    if (!is_null($this->downloadFileExtension) && !is_dir($this->getJobsDownloadDirectory()))
-    {
-      mkdir($this->getJobsDownloadDirectory(), 0755, true);
-    }
-  }
-
-  /**
-   * Create ZIP file from results
-   *
-   * @param string  Path of file to write CSV data to
-   *
-   * @return int  success bool
-   */
-  protected function createZipForDownload($path)
-  {
-    if (!is_writable($this->getJobsDownloadDirectory()))
-    {
-      return false;
-    }
-
-    $zip = new ZipArchive();
-
-    $success = $zip->open($this->getDownloadFilePath(), ZipArchive::CREATE | ZipArchive::OVERWRITE);
-
-    if ($success == true)
-    {
-      foreach(scandir($path) as $file)
-      {
-        if (!is_dir($file))
-        {
-          $zip->addFile($path . DIRECTORY_SEPARATOR . $file, $file);
-        }
-      }
-
-      $zip->close();
-    }
-
-    return $success;
-  }
-
-  /**
    * Set job owner in user Context. ACL checks require this to be set.
    * Job owner's user is grabbed from the QubitJob instance.
    *
@@ -322,7 +192,7 @@ class arBaseJob extends Net_Gearman_Job_Common
    */
   protected function signIn()
   {
-    // Unauthenticated jobs were introduced in 2.4.x. If getById()is called
+    // Unauthenticated jobs were introduced in 2.4.x. If getById() is called
     // on an unauthenticated job it will return null since it will not have
     // a valid user associated with it. Only run signIn() for valid users.
     if (null !== $user = QubitUser::getById($this->job->userId))

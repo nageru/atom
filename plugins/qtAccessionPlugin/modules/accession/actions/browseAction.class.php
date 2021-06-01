@@ -31,14 +31,21 @@ class AccessionBrowseAction extends sfAction
       $request->page = 1;
     }
 
-    // Avoid pagination over 10000 records
-    if ((int)$request->limit * (int)$request->page > 10000)
+    // Avoid pagination over ES' max result window config (default: 10000)
+    $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
+
+    if ((int)$request->limit * (int)$request->page > $maxResultWindow)
     {
       // Show alert
-      $message = $this->context->i18n->__("We've redirected you to the first page of results. To avoid using vast amounts of memory, AtoM limits pagination to 10,000 records. To view the last records in the current result set, try changing the sort direction.");
+      $message = $this->context->i18n->__(
+        "We've redirected you to the first page of results." .
+        " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
+        " To view the last records in the current result set, try changing the sort direction.",
+        array('%1%' => $maxResultWindow)
+      );
       $this->getUser()->setFlash('notice', $message);
 
-      // Redirect to fist page
+      // Redirect to first page
       $params = $request->getParameterHolder()->getAll();
       unset($params['page']);
       $this->redirect($params);
@@ -105,24 +112,33 @@ class AccessionBrowseAction extends sfAction
         'i18n.%s.sourceOfAcquisition' => 5,
         'i18n.%s.archivalHistory' => 5);
 
-      $fields = arElasticSearchPluginUtil::getI18nFieldNames(array(
-        'donors.i18n.%s.authorizedFormOfName',
-        'i18n.%s.title',
-        'i18n.%s.scopeAndContent',
-        'i18n.%s.locationInformation',
-        'i18n.%s.processingNotes',
-        'i18n.%s.sourceOfAcquisition',
-        'i18n.%s.archivalHistory',
-        'i18n.%s.appraisal',
-        'i18n.%s.physicalCharacteristics',
-        'i18n.%s.receivedExtentUnits',
-        'alternativeIdentifiers.i18n.%s.name',
-        'creators.i18n.%s.authorizedFormOfName',
-        'alternativeIdentifiers.i18n.%s.note',
-        'alternativeIdentifiers.type.i18n.%s.name'), null, $boost);
+      $fields = arElasticSearchPluginUtil::getI18nFieldNames(
+        array(
+          'donors.i18n.%s.authorizedFormOfName',
+          'i18n.%s.title',
+          'i18n.%s.scopeAndContent',
+          'i18n.%s.locationInformation',
+          'i18n.%s.processingNotes',
+          'i18n.%s.sourceOfAcquisition',
+          'i18n.%s.archivalHistory',
+          'i18n.%s.appraisal',
+          'i18n.%s.physicalCharacteristics',
+          'i18n.%s.receivedExtentUnits',
+          'alternativeIdentifiers.i18n.%s.name',
+          'creators.i18n.%s.authorizedFormOfName',
+          'alternativeIdentifiers.i18n.%s.note',
+          'alternativeIdentifiers.type.i18n.%s.name',
+          'accessionEvents.i18n.%s.agent',
+          'accessionEvents.type.i18n.%s.name',
+          'accessionEvents.notes.i18n.%s.content'
+        ),
+        null,
+        $boost
+      );
 
       $fields[] = 'identifier^10';
       $fields[] = 'donors.contactInformations.contactPerson';
+      $fields[] = 'accessionEvents.dateString';
 
       $queryString->setFields($fields);
 

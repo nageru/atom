@@ -14,7 +14,11 @@
 
 <?php slot('content') ?>
 
+  <?php echo $form->renderGlobalErrors() ?>
+
   <?php echo $form->renderFormTag(url_for(array('module' => 'settings', 'action' => 'clipboard'))) ?>
+
+    <?php echo $form->renderHiddenFields() ?>
 
     <div id="content">
 
@@ -57,6 +61,16 @@
 
         <?php echo $form->clipboard_send_http_method
           ->label(__('HTTP method to use when sending clipboard contents'))
+          ->renderRow() ?>
+
+      </fieldset>
+
+      <fieldset class="collapsible">
+
+        <legend><?php echo __('Clipboard export') ?></legend>
+
+        <?php echo $form->clipboard_export_digitalobjects_enabled
+          ->label(__('Enable digital object export'))
           ->renderRow() ?>
 
       </fieldset>

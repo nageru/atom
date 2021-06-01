@@ -21,6 +21,12 @@ class RepositoryUploadLimitComponent extends sfComponent
 {
   public function execute($request)
   {
+    // If repository quotas are disabled, don't show this component
+    if (!sfConfig::get('app_enable_repository_quotas', true))
+    {
+      return sfView::NONE;
+    }
+
     $this->resource = $request->getAttribute('sf_route')->resource;
 
     if (isset($this->resource) && 'QubitInformationObject' == get_class($this->resource))
@@ -28,12 +34,7 @@ class RepositoryUploadLimitComponent extends sfComponent
       $this->resource = $this->resource->getRepository(array('inherit' => true));
     }
 
-    if (!isset($this->resource))
-    {
-      return sfView::NONE;
-    }
-
-    if (!$this->getUser()->isAuthenticated())
+    if (!isset($this->resource) || !QubitAcl::check($this->resource, 'update'))
     {
       return sfView::NONE;
     }
@@ -118,5 +119,11 @@ class RepositoryUploadLimitComponent extends sfComponent
     {
       $this->diskUsage = round($this->diskUsage, 2);
     }
+
+    // Create a new form to (based on the configuration) render the hidden
+    // field needed for CRSF protection. Ideally, the entire form would use
+    // sfForm to render and validate but its submission is made with an Ajax
+    // request validated in the editUploadLimitAction.
+    $this->form = new sfForm;
   }
 }

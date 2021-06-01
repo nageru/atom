@@ -73,6 +73,9 @@ class csvInformationObjectExport extends QubitFlatfileExport
    */
   protected function modifyRowBeforeExport()
   {
+    // Set common column values
+    parent::modifyRowBeforeExport();
+
     // Keep parent columns blank if description has no parent
     if ($this->resource->parentId != QubitInformationObject::ROOT_ID)
     {
@@ -114,12 +117,6 @@ class csvInformationObjectExport extends QubitFlatfileExport
       'descriptionStatus',
       $this->descriptionStatusTerms[$this->resource->descriptionStatusId]
     );
-
-    // Set digital object public URL
-    $this->setColumn('digitalObjectURI', $this->resource->getDigitalObjectPublicUrl());
-
-    // Grab checksum for this digital object
-    $this->setColumn('digitalObjectChecksum', $this->resource->getDigitalObjectChecksum());
 
     // Set publication status
     $this->setColumn('publicationStatus', $this->resource->getPublicationStatus());

@@ -20,7 +20,11 @@
     <pre>$ php symfony search:populate</pre>
   </div>
 
+  <?php echo $form->renderGlobalErrors() ?>
+
   <?php echo $form->renderFormTag(url_for(array('module' => 'settings', 'action' => 'identifier'))) ?>
+  
+    <?php echo $form->renderHiddenFields() ?>
 
     <div id="content">
 
@@ -62,6 +66,13 @@
 
         <?php echo $form->inherit_code_dc_xml
           ->label(__('Inherit reference code (DC XML)'))
+          ->renderRow() ?>
+
+        <?php echo $form->prevent_duplicate_actor_identifiers
+          ->label(__(
+              '%1% identifiers: prevent entry/import of duplicates',
+              array('%1%' => sfConfig::get('app_ui_label_actor'))
+            ))
           ->renderRow() ?>
 
       </fieldset>

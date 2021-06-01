@@ -43,18 +43,26 @@ class DefaultMoveAction extends sfAction
       QubitAcl::forwardUnauthorized();
     }
 
-    // "parent" form field
+    // Parent form field
     $this->form->setValidator('parent', new sfValidatorString(array('required' => true)));
     $this->form->setWidget('parent', new sfWidgetFormInputHidden);
 
-    // Root is default parent
-    if ($this->resource instanceof QubitInformationObject)
+    // Get parent from GET parameters
+    if (isset($request->parent))
     {
-      $this->form->bind($request->getGetParameters() + array('parent' => QubitInformationObject::getById(QubitInformationObject::ROOT_ID)->slug, 'module' => 'informationobject'));
+      $this->form->setDefault('parent', $request->parent);
     }
-    else if ($this->resource instanceof QubitTerm)
+    else
     {
-      $this->form->bind($request->getGetParameters() + array('parent' => QubitTerm::getById(QubitTerm::ROOT_ID)->slug, 'module' => 'term'));
+      // Root is default parent
+      if ($this->resource instanceof QubitInformationObject)
+      {
+        $this->form->setDefault('parent', QubitInformationObject::getById(QubitInformationObject::ROOT_ID)->slug);
+      }
+      else if ($this->resource instanceof QubitTerm)
+      {
+        $this->form->setDefault('parent', QubitTerm::getById(QubitTerm::ROOT_ID)->slug);
+      }
     }
 
     if ($request->isMethod('post'))
@@ -103,14 +111,21 @@ class DefaultMoveAction extends sfAction
       $page = $request->page;
     }
 
-    // Avoid pagination over 10000 records
-    if ((int)$limit * $page > 100)
+    // Avoid pagination over ES' max result window config (default: 10000)
+    $maxResultWindow = arElasticSearchPluginConfiguration::getMaxResultWindow();
+
+    if ((int)$limit * $page > $maxResultWindow)
     {
       // Show alert
-      $message = $this->context->i18n->__("We've redirected you to the first page of results. To avoid using vast amounts of memory, AtoM limits pagination to 10,000 records. Please, narrow down your results.");
+      $message = $this->context->i18n->__(
+        "We've redirected you to the first page of results." .
+        " To avoid using vast amounts of memory, AtoM limits pagination to %1% records." .
+        " Please, narrow down your results.",
+        array('%1%' => $maxResultWindow)
+      );
       $this->getUser()->setFlash('notice', $message);
 
-      // Redirect to fist page
+      // Redirect to first page
       $params = $request->getParameterHolder()->getAll();
       unset($params['page']);
       $this->redirect($params);

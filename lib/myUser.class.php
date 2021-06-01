@@ -21,10 +21,6 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
 {
   public $user = null;
 
-  // Instance of QubitClipboard that uses the current
-  // storage to save a list of selected information objects
-  private $clipboard = null;
-
   // Module-specific permissions get temporarily stored here for access checks
   protected
     $security = array();
@@ -75,6 +71,12 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
       {
         $this->signOut();
       }
+    }
+
+    // Allow reverse proxies to pass a header to change culture
+    if (!empty($_SERVER['HTTP_X_ATOM_CULTURE']))
+    {
+      $this->setCulture($_SERVER['HTTP_X_ATOM_CULTURE']);
     }
   }
 
@@ -128,6 +130,15 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
   }
 
   public function authenticate($username, $password)
+  {
+    $authenticated = $this->authenticateWithBasicAuth($username, $password);
+    return $authenticated;
+  }
+
+  // This method is is intended to be overridable in user classes that inherit
+  // from myUser. This enables authorization schemes such as CAS to retain a
+  // basic auth option for DIP Upload that can be voided if necessary.
+  public function authenticateWithBasicAuth($username, $password)
   {
     $authenticated = false;
     // anonymous is not a real user
@@ -292,15 +303,5 @@ class myUser extends sfBasicSecurityUser implements Zend_Acl_Role_Interface
     }
 
     return parent::isAuthenticated();
-  }
-
-  public function getClipboard()
-  {
-    if (!isset($this->clipboard))
-    {
-      $this->clipboard = new QubitClipboard($this->storage);
-    }
-
-    return $this->clipboard;
   }
 }

@@ -32,6 +32,7 @@ class QubitFlatfileExport
   public $standardColumns = array();       // flatfile columns that are object properties
   public $columnMap       = array();       // flatfile columns that map to object properties
   public $propertyMap     = array();       // flatfile columns that map to Qubit properties
+  public $user            = null;          // user doing the export
 
   protected $resource;                     // current resource being exported
   protected $row;                          // current row being prepared for export
@@ -192,6 +193,16 @@ class QubitFlatfileExport
       }
       else
       {
+        // If config array being overridden is a sequential array,
+        // replace all elements in the array (e.g. isad 'columnNames').
+        // If config array being overridden is an associative array,
+        // override elements are merged so do not use this logic
+        // (e.g. rad 'map').
+        if ($config[$key] === array_values($config[$key]))
+        {
+          $config[$key] = array();
+        }
+
         $this->overrideConfigData($config[$key], $mixin[$key]);
       }
     }
@@ -485,5 +496,67 @@ class QubitFlatfileExport
    */
   protected function modifyRowBeforeExport()
   {
+    $this->setDigitalObjectValues();
+  }
+
+  /**
+   * Set digital object URL and checksum values
+   *
+   * If the user has "readMaster" permission use master DO values, otherwise
+   * use reference DO values
+   *
+   * @return void
+   */
+  protected function setDigitalObjectValues()
+  {
+    $digitalObject = $this->getAllowedDigitalObject();
+
+    if (!empty($digitalObject))
+    {
+      $siteUrl = rtrim(QubitSetting::getByName('siteBaseUrl'), '/ ');
+
+      $this->setColumn(
+        'digitalObjectURI', $siteUrl . $digitalObject->getFullPath()
+      );
+      $this->setColumn(
+        'digitalObjectChecksum', $digitalObject->getChecksum()
+      );
+    }
+    else
+    {
+      $this->setColumn('digitalObjectURI', '');
+      $this->setColumn('digitalObjectChecksum', '');
+    }
+  }
+
+  /**
+   * Get the highest quality digital object to which the current user has access
+   *
+   * @return QubitDigitalObject|null a digital object, or null
+   */
+  protected function getAllowedDigitalObject()
+  {
+    $digitalObject = $this->resource->getDigitalObject();
+
+    if (null === $digitalObject)
+    {
+      return null;
+    }
+
+    // If user can access the master DO, use the master DO metadata
+    if (QubitAcl::check($this->resource, 'readMaster', ['user' => $this->user]))
+    {
+      return $digitalObject;
+    }
+
+    // If user can access the reference DO, use the reference DO metadata
+    if (QubitAcl::check(
+      $this->resource, 'readReference', ['user' => $this->user])
+    )
+    {
+      return $digitalObject->reference;
+    }
+
+    return null;
   }
 }

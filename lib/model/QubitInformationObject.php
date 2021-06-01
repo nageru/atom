@@ -74,6 +74,14 @@ class QubitInformationObject extends BaseInformationObject
       case 'formatRegistryName':
       case 'objectUUID':
       case 'aipUUID':
+      case 'aipName':
+      case 'relativePathWithinAip':
+      case 'originalFileName':
+      case 'originalFileSize':
+      case 'originalFileIngestedAt':
+      case 'preservationCopyFileName':
+      case 'preservationCopyFileSize':
+      case 'preservationCopyNormalizedAt':
 
         if (!isset($this->values[$name]))
         {
@@ -1318,30 +1326,6 @@ class QubitInformationObject extends BaseInformationObject
     }
 
     return $nameAccessPointString;
-  }
-
-
-  /******************
-    Digital Objects
-  ******************/
-
-  /**
-   * Get the total digital object count for this & all descendents to this
-   * information object.
-   *
-   * @return int  The total digital object count.
-   */
-  public function getDescendentDigitalObjectCount()
-  {
-    $sql = '
-      SELECT COUNT(d.id) FROM information_object i
-      INNER JOIN digital_object d ON i.id=d.object_id
-      WHERE i.lft > ? and i.lft < ?
-    ';
-
-    $params = array($this->lft, $this->rgt);
-
-    return QubitPdo::fetchColumn($sql, $params);
   }
 
   /****************
@@ -3070,43 +3054,6 @@ class QubitInformationObject extends BaseInformationObject
   public function getCleanExtentAndMedium($options = array())
   {
     return strip_tags($this->getExtentAndMedium($options));
-  }
-
-  /**
-   * Return the absolute link to the digital object master unless the user has
-   * no permission (readMaster). Text objects are always allowed for reading.
-   *
-   * @return string Absolute link to the digital object master
-   */
-  public function getDigitalObjectLink()
-  {
-    if (count($this->digitalObjectsRelatedByobjectId) <= 0)
-    {
-      return;
-    }
-
-    $digitalObject = $this->digitalObjectsRelatedByobjectId[0];
-    if (!$digitalObject->masterAccessibleViaUrl())
-    {
-      return;
-    }
-
-    $isText = in_array($digitalObject->mediaTypeId, array(QubitTerm::TEXT_ID));
-    $hasReadMaster = QubitAcl::check($this, 'readMaster');
-
-    if (QubitGrantedRight::checkPremis($this->id, 'readMaster') && ($hasReadMaster || $isText))
-    {
-      if (QubitTerm::EXTERNAL_URI_ID == $digitalObject->usageId)
-      {
-        return $digitalObject->path;
-      }
-      else
-      {
-        $request = sfContext::getInstance()->getRequest();
-        return $request->getUriPrefix().$request->getRelativeUrlRoot().
-          $digitalObject->getFullPath();
-      }
-    }
   }
 
   /*

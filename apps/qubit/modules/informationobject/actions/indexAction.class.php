@@ -83,7 +83,7 @@ class InformationObjectIndexAction extends sfAction
           }
         }
 
-        $validatorSchema->levelOfDescription = new sfValidatorBlacklist(array(
+        $validatorSchema->levelOfDescription = new QubitValidatorForbiddenValues(array(
           'forbidden_values' => $forbiddenValues,
           'required' => true));
 
@@ -130,6 +130,6 @@ class InformationObjectIndexAction extends sfAction
       $this->response->addMeta('description', truncate_text(strip_markdown($scopeAndContent), 150));
     }
 
-    $this->digitalObjectLink = $this->resource->getDigitalObjectLink();
+    $this->digitalObjectLink = $this->resource->getDigitalObjectUrl();
   }
 }

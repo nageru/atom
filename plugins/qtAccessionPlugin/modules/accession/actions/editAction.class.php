@@ -174,8 +174,10 @@ class AccessionEditAction extends DefaultEditAction
           $this->form->setDefault('date', $dt->format('Y-m-d'));
         }
 
-        $this->form->setValidator('date', new sfValidatorString);
         $this->form->setWidget('date', new sfWidgetFormInput);
+        $this->form->setValidator('date', new sfValidatorDate(array(
+          'date_format' => '/^(?P<year>\d{4})-(?P<month>\d{2})-(?P<day>\d{2})$/',
+          'date_format_error' => 'YYYY-MM-DD')));
 
         break;
 
@@ -372,6 +374,11 @@ class AccessionEditAction extends DefaultEditAction
     $this->alternativeIdentifiersComponent->resource = $this->resource;
     $this->alternativeIdentifiersComponent->execute($this->request);
 
+    // Handle accession events
+    $this->eventsComponent = new AccessionEventsComponent($this->context, 'accession', 'events');
+    $this->eventsComponent->resource = $this->resource;
+    $this->eventsComponent->execute($this->request);
+
     if ($request->isMethod('post'))
     {
       $this->form->bind($request->getPostParameters());
@@ -407,6 +414,7 @@ class AccessionEditAction extends DefaultEditAction
         $this->resource->save();
 
         $this->alternativeIdentifiersComponent->processForm();
+        $this->eventsComponent->processForm();
 
         QubitSearch::getInstance()->update($this->resource);
 

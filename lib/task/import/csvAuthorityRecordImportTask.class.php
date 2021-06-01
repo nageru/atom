@@ -234,6 +234,31 @@ EOF;
       {
         if ($self->object)
         {
+          // Warn or abort if identifier's already been used
+          if (!empty($identifier = $self->columnValue('descriptionIdentifier'))
+              && QubitValidatorActorDescriptionIdentifier::identifierUsedByAnotherActor($identifier, $self->object))
+          {
+            $error = sfContext::getInstance()
+                       ->i18n
+                       ->__(
+                         '%1% identifier "%2%" not unique.',
+                         array(
+                           '%1%' => sfConfig::get('app_ui_label_actor'),
+                           '%2%' => $identifier
+                         )
+                       );
+
+            if (sfConfig::get('app_prevent_duplicate_actor_identifiers', false))
+            {
+              $error .= sfContext::getInstance()->i18n->__(' Import aborted.');
+              throw new sfException($error);
+            }
+            else
+            {
+              echo $self->logError($error);
+            }
+          }
+
           if (
             isset($self->rowStatusVars['typeOfEntity'])
             && $self->rowStatusVars['typeOfEntity']

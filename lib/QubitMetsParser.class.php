@@ -205,23 +205,43 @@ class QubitMetsParser
    */
   public function getOriginalFilename($fileId)
   {
-    if ((false !== $file = $this->document->xpath('//m:fileSec/m:fileGrp[@USE="original"]/m:file[@ID="'.$fileId.'"]'))
+    if (
+      (false !== $file = $this->document->xpath(
+        '//m:fileSec/m:fileGrp[@USE="original"]/m:file[@ID="'.$fileId.'"]')
+      )
       && (null !== $admId = $file[0]['ADMID'])
-      && (false !== $xmlData = $this->document->xpath('//m:amdSec[@ID="'.(string)$admId.'"]/m:techMD/m:mdWrap/m:xmlData')))
-    {
-      $xmlData = simplexml_load_string($xmlData[0]->asXML());
-      $this->registerNamespaces($xmlData, array('p' => 'premis'));
+      && (false !== $originalName = $this->document->xpath(
+        '//m:amdSec[@ID="'.(string) $admId.'"]/m:techMD/m:mdWrap/m:xmlData/p:object/p:originalName'
+      ))
+    ) {
+      $parts = explode('/', (string) $originalName[0]);
 
-      if (false !== $originalName = $xmlData->xpath('//p:object//p:originalName'))
-      {
-        return end(explode('/', (string)$originalName[0]));
-      }
+      return end($parts);
     }
   }
 
+  /**
+   * The <fileGrp type="original"> provides a comprehensive catalog of all of
+   * the "original" files stored in the AIP, which is useful when submission
+   * documents, normalized files, etc. are not relevant
+   *
+   * @return SimpleXmlElement a SimpleXML collection of fileGrp files
+   */
   public function getFilesFromOriginalFileGrp()
   {
-    return $this->document->xpath('//m:mets/m:fileSec/m:fileGrp[@USE="original"]/m:file');
+    return $this->document->xpath(
+      '//m:mets/m:fileSec/m:fileGrp[@USE="original"]/m:file'
+    );
+  }
+
+  /**
+   * Return a simple count of original files in the AIP
+   *
+   * @return int the number of original files in the AIP
+   */
+  public function getOriginalFileCount()
+  {
+    return count($this->getFilesFromOriginalFileGrp());
   }
 
   /*
@@ -430,7 +450,9 @@ class QubitMetsParser
 
     if (!isset($amdSecId))
     {
-      return 'AMD section was not found for object UUID: ' . $objectUuid;
+      throw new sfException(
+        'AMD section was not found for object UUID: ' . $objectUuid
+      );
     }
 
     $this->objectXpath = '//m:amdSec[@ID="'.$amdSecId.'"]/m:techMD/m:mdWrap[@MDTYPE="PREMIS:OBJECT"]/m:xmlData/p:object/';
@@ -907,28 +929,28 @@ class QubitMetsParser
     $format = array();
 
     $fields = array(
-      'name' => array(
+      'formatName' => array(
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:format/p:formatDesignation/p:formatName',
         'type' => 'string'),
-      'version' => array(
+      'formatVersion' => array(
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:format/p:formatDesignation/p:formatVersion',
         'type' => 'string'),
-      'registryName' => array(
+      'formatRegistryName' => array(
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:format/p:formatRegistry/p:formatRegistryName',
         'type' => 'string'),
-      'registryKey' => array(
+      'formatRegistryKey' => array(
         'xpath' => $this->objectXpath.'p:objectCharacteristics/p:format/p:formatRegistry/p:formatRegistryKey',
         'type' => 'string'));
 
     foreach ($fields as $fieldName => $options)
     {
       // Allow empty values in format data
-      $format[$fieldName] = $value = $this->getFieldValue($this->document, $options['xpath'], $options['type']);
-    }
-
-    if (!empty($format))
-    {
-      QubitProperty::addUnique($this->resource->id, 'format', serialize($format), array('scope' => 'premisData', 'indexOnSave' => false));
+      QubitProperty::addUnique(
+        $this->resource->id,
+        $fieldName,
+        $this->getFieldValue($this->document, $options['xpath'], $options['type']),
+        array('scope' => 'premisData', 'indexOnSave' => false)
+      );
     }
   }
 
@@ -1120,4 +1142,243 @@ class QubitMetsParser
       }
     }
   }
+
+  /**
+   * Return an original file path and name relative to the AIP root directory
+   *
+   * The file path is parsed from a METS <fileSec><file><FLocat> element
+   *
+   * @param string $fileId the <file @ID> attribute value
+   *
+   * @return string|null the file's relative path, or null if not found
+   */
+  public function getOriginalPathInAip($fileId)
+  {
+    foreach ($this->getFilesFromOriginalFileGrp() as $file)
+    {
+      if ($file['ID'] == $fileId)
+      {
+        // Get xlink:href value, e.g.
+        // <mets:FLocat xlink:href="objects/pictures/Landing_zone.jpg" ... />
+        return (string) $file->children('mets', true)->FLocat->attributes(
+          'http://www.w3.org/1999/xlink'
+        );
+      }
+    }
+  }
+
+  /**
+   * Get the <mets:file> element from the original file group
+   *
+   * @param string $fileId METS FILEID
+   *
+   * @return SimpleXMLElement the <mets:file> element
+   */
+  protected function getOriginalFile($fileId)
+  {
+    if (
+      (false !== $file = $this->document->xpath(
+        sprintf('//m:fileSec/m:fileGrp[@USE="original"]/m:file[@ID="%s"]', $fileId)
+      ))
+    ) {
+      return $file[0];
+    }
+  }
+
+  /**
+   * Get the <mets:file> element from the preservation file group
+   *
+   * @param string $fileId METS FILEID
+   *
+   * @return SimpleXMLElement the <mets:file> element
+   */
+  protected function getPreservationFile($fileId)
+  {
+    if (
+      (null !== $originalFile = $this->getOriginalFile($fileId))
+      && (null !== $groupId = $originalFile['GROUPID'])
+      && (false !== $file = $this->document->xpath(
+        sprintf('//m:fileSec/m:fileGrp[@USE="preservation"]/m:file[@GROUPID="%s"]', $groupId)
+      ))
+    ) {
+      return $file[0];
+    }
+  }
+
+  /**
+   * Get the filename part of the path in the <premis:originalName> element of a <mets:amdSec> element
+   *
+   * @param string $admId METS ADMID
+   *
+   * @return string the filename part of the <premis:originalName> path
+   */
+  protected function getOriginalFileNameFromAmdSec($admId)
+  {
+    if (
+      (false !== $originalName = $this->document->xpath(
+        sprintf('//m:amdSec[@ID="%s"]/m:techMD/m:mdWrap/m:xmlData/p:object/p:originalName', $admId)
+     ))
+    ) {
+      $parts = explode('/', (string) $originalName[0]);
+
+      return end($parts);
+    }
+  }
+
+  /**
+   * Get the <premis:size> element of the PREMIS object in a <mets:amdSec> element
+   *
+   * @param string $admId METS ADMID
+   *
+   * @return SimpleXMLElement the <premis:size> element
+   */
+  protected function getSizeFromAmdSec($admId)
+  {
+    if (
+      (false !== $size = $this->document->xpath(
+        sprintf('//m:amdSec[@ID="%s"]/m:techMD/m:mdWrap/m:xmlData/p:object/p:objectCharacteristics/p:size', $admId)
+     ))
+    ) {
+      return $size[0];
+    }
+  }
+
+  /**
+   * Get the size of the "original" file
+   *
+   * @param string $fileId METS FILEID
+   *
+   * @return string the size of the original file
+   */
+  public function getOriginalFileSize($fileId)
+  {
+    if (
+      (null !== $file = $this->getOriginalFile($fileId))
+      && (null !== $admId = $file['ADMID'])
+      && (null !== $size = $this->getSizeFromAmdSec($admId))
+    ) {
+      return (string)$size;
+    }
+  }
+
+  /**
+   * Get the filename of the preservation copy of a file
+   *
+   * @param string $fileId METS FILEID
+   *
+   * @return string the filename of the preservation copy
+   */
+  public function getPreservationCopyFilename($fileId)
+  {
+    if (
+      (null !== $file = $this->getPreservationFile($fileId))
+      && (null !== $admId = $file['ADMID'])
+    ) {
+      return $this->getOriginalFileNameFromAmdSec($admId);
+    }
+  }
+
+  /**
+   * Get the size of the preservation copy of a file
+   *
+   * @param string $fileId METS FILEID
+   *
+   * @return string the size of the preservation copy
+   */
+  public function getPreservationCopyFileSize($fileId)
+  {
+    if (
+      (null !== $file = $this->getPreservationFile($fileId))
+      && (null !== $admId = $file['ADMID'])
+      && (null !== $size = $this->getSizeFromAmdSec($admId))
+    ) {
+      return (string)$size;
+    }
+  }
+
+  /**
+   * Get the PREMIS events of a single type in a <mets:amdSec> element
+   *
+   * @param string $admId METS ADMID
+   * @param string $eventType a PREMIS event type
+   *
+   * @return array the list of <premis:event> elements
+   */
+  protected function getPremisEventsByType($admId, $eventType)
+  {
+    $events = array();
+    $selector = sprintf(
+      '//m:amdSec[@ID="%s"]/m:digiprovMD/m:mdWrap[@MDTYPE="PREMIS:EVENT"]/m:xmlData/p:event', $admId
+    );
+    foreach ($this->document->xpath($selector) as $event)
+    {
+      $this->registerNamespaces($event, array('p' => 'premis'));
+      $types = $event->xpath('p:eventType');
+      foreach ($types as $type)
+      {
+        if ($eventType === (string)$type)
+        {
+          array_push($events, $event);
+        }
+      }
+    }
+
+    return $events;
+  }
+
+  /**
+   * Get the datetime of the first event with a <premis:eventDateTime> element
+   *
+   * @param array $events list of SimpleXmlElement objects representing PREMIS events
+   *
+   * @return string the datetime of the first event with a <premis:eventDateTime> element
+   */
+  protected function getFirstEventDateTime($events)
+  {
+    foreach ($events as $event)
+    {
+      $eventDateTimes = $event->xpath('p:eventDateTime');
+      if (false !== $eventDateTimes)
+      {
+        return (string)$eventDateTimes[0];
+      }
+    }
+  }
+
+  /**
+   * Get the datetime of the ingestion PREMIS event of the original file
+   *
+   * @param string $fileId METS FILEID
+   *
+   * @return string the datetime of the first ingestion event
+   */
+  public function getOriginalFileIngestionTime($fileId)
+  {
+    if (
+      (null !== $file = $this->getOriginalFile($fileId))
+      && (null !== $admId = $file['ADMID'])
+      && (null !== $events = $this->getPremisEventsByType($admId, 'ingestion'))
+    ) {
+      return $this->getFirstEventDateTime($events);
+    }
+  }
+
+  /**
+   * Get the datetime of the creation PREMIS event of the preservation file
+   *
+   * @param string $fileId METS FILEID
+   *
+   * @return string the datetime of the first creation event
+   */
+  public function getPreservationCopyCreationTime($fileId)
+  {
+    if (
+      (null !== $file = $this->getPreservationFile($fileId))
+      && (null !== $admId = $file['ADMID'])
+      && (null !== $events = $this->getPremisEventsByType($admId, 'creation'))
+    ) {
+      return $this->getFirstEventDateTime($events);
+    }
+  }
+
 }

@@ -8,14 +8,30 @@
           var showNotification = function (version)
             {
               // Show notification only when server version is greater
-              if (-1 == version_compare(Qubit.updateCheck.currentVersion, version))
+              if (
+                -1 == version_compare(Qubit.updateCheck.currentVersion, version)
+                && !$('#update-check > span').length
+              )
               {
                 $('<span>' + Qubit.updateCheck.notificationMessage.replace(/\%\d+\%/g, version) + '</span>').prependTo('#update-check').parent().show();
               }
             };
 
-          var version = YAHOO.util.Cookie.get('update_checked');
+          var cookies = document.cookie.split(';');
+          var version = null;
 
+          for (var i = 0; i < cookies.length; i++)
+          {
+            var [key, value] = cookies[i].split('=');
+
+            if (key.trim() == 'update_checked')
+            {
+              version = value.trim();
+
+              break;
+            }
+          }
+          
           if (version)
           {
             showNotification(version);
@@ -34,7 +50,7 @@
               {
                 showNotification(data.version);
 
-                YAHOO.util.Cookie.set('update_checked', data.version, { path: Qubit.updateCheck.cookiePath });
+                document.cookie = 'update_checked=' + data.version + ';path=' + Qubit.updateCheck.cookiePath;
               }
           });
         }

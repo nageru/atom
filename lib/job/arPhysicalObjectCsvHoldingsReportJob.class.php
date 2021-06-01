@@ -24,7 +24,7 @@
  * @subpackage jobs
  */
 
-class arPhysicalObjectCsvHoldingsReportJob extends arBaseJob
+class arPhysicalObjectCsvHoldingsReportJob extends arExportJob
 {
   /**
    * @see arBaseJob::$requiredParameters
@@ -57,12 +57,11 @@ class arPhysicalObjectCsvHoldingsReportJob extends arBaseJob
 
     // Compress CSV export files as a ZIP archive
     $this->info($this->i18n->__('Creating ZIP file %1.', ['%1' => $this->getDownloadFilePath()]));
-    $success = $this->createZipForDownload($tempPath);
+    $errors = $this->createZipForDownload($tempPath);
 
-    if ($success !== true)
+    if (!empty($errors))
     {
-      $this->error($this->i18n->__('Failed to create ZIP file.'));
-
+      $this->error($this->i18n->__('Failed to create ZIP file.') . ' : ' . implode(' : ', $errors));
       return false;
     }
 

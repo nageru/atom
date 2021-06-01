@@ -55,14 +55,14 @@
             <td>
               <?php if ($doc['hasDigitalObject']): ?>
                 <?php if (null !== $io = QubitInformationObject::getById($hit->getId())): ?>
-                  <?php if (null !== $link = $io->getDigitalObjectLink()): ?>
+                  <?php if (null !== $link = $io->getDigitalObjectUrl()): ?>
                     <?php echo link_to(__('View'), $link) ?>
                   <?php endif; ?>
                 <?php endif; ?>
               <?php endif; ?>
             </td>
             <td>
-              <?php echo get_component('object', 'clipboardButton', array('slug' => $doc['slug'], 'wide' => true)) ?>
+              <?php echo get_component('clipboard', 'button', array('slug' => $doc['slug'], 'wide' => true, 'type' => 'informationObject')) ?>
             </td>
           </tr>
         <?php endforeach; ?>

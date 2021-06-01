@@ -14,7 +14,17 @@
 
 <?php slot('content') ?>
 
+  <?php echo $permissionsForm->renderGlobalErrors() ?>
+  <?php echo $permissionsAccessStatementsForm->renderGlobalErrors() ?>
+  <?php echo $permissionsCopyrightStatementForm->renderGlobalErrors() ?>
+  <?php echo $permissionsPreservationSystemAccessStatementForm->renderGlobalErrors() ?>
+
   <form action="<?php echo url_for('settings/permissions') ?>" method="post" autocomplete="off">
+
+    <?php echo $permissionsForm->renderHiddenFields() ?>
+    <?php echo $permissionsAccessStatementsForm->renderHiddenFields() ?>
+    <?php echo $permissionsCopyrightStatementForm->renderHiddenFields() ?>
+    <?php echo $permissionsPreservationSystemAccessStatementForm->renderHiddenFields() ?>
 
     <div id="content">
 
@@ -159,6 +169,24 @@
           ->label(__('Copyright statement')), $copyrightStatementSetting, array('name' => 'value', 'class' => 'resizable')) ?>
 
         <input class="btn" type="submit" name="preview" value="<?php echo __('Preview') ?>"/>
+
+      </fieldset>
+
+      <fieldset class="collapsible" id="preservationSystemAccessStatementArea">
+
+        <legend><?php echo __('Preservation system access statement') ?></legend>
+
+        <?php echo $permissionsPreservationSystemAccessStatementForm->preservationSystemAccessStatementEnabled
+          ->label(__('Enable access statement'))
+          ->renderRow() ?>
+
+        <br />
+        <div class="alert alert-info">
+          <?php echo __('When enabled the following text will appear in the %1% metadata section to describe how a user may access the original and preservation copy of the file stored in a linked digital preservation system. The text appears in the "Permissions" field. When disabled, the "Permissions" field is not displayed.', array('%1%' => mb_strtolower(sfConfig::get('app_ui_label_digitalobject')))) ?>
+        </div>
+
+        <?php echo render_field($permissionsPreservationSystemAccessStatementForm->preservationSystemAccessStatement
+          ->label(__('Access statement')), $preservationSystemAccessStatementSetting, array('name' => 'value', 'class' => 'resizable')) ?>
 
       </fieldset>
 
