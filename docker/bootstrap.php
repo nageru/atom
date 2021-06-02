@@ -53,12 +53,16 @@ $CONFIG = array(
   'atom.mysql_password'     => getenv_or_fail('ATOM_MYSQL_PASSWORD'),
   'atom.debug_ip'           => getenv_default('ATOM_DEBUG_IP', ''),
   'php.max_execution_time'  => getenv_default('ATOM_PHP_MAX_EXECUTION_TIME', '120'),
+  'php.max_children'        => getenv_default('ATOM_PHP_MAX_CHILDREN', '5'),
   'php.max_input_time'      => getenv_default('ATOM_PHP_MAX_INPUT_TIME', '120'),
   'php.memory_limit'        => getenv_default('ATOM_PHP_MEMORY_LIMIT', '512M'),
   'php.post_max_size'       => getenv_default('ATOM_PHP_POST_MAX_SIZE', '72M'),
   'php.upload_max_filesize' => getenv_default('ATOM_PHP_UPLOAD_MAX_FILESIZE', '64M'),
   'php.max_file_uploads'    => getenv_default('ATOM_PHP_MAX_FILE_UPLOADS', '20'),
-  'php.date.timezone'       => getenv_default('ATOM_PHP_DATE_TIMEZONE', 'America/Vancouver')
+  'php.date.timezone'       => getenv_default('ATOM_PHP_DATE_TIMEZONE', 'America/Vancouver'),
+  'php.start_servers'       => getenv_default('ATOM_PHP_START_SERVERS', '2'),
+  'php.min_spare_servers'   => getenv_default('ATOM_PHP_MIN_SPARE_SERVERS', '1'),
+  'php.max_spare_servers'   => getenv_default('ATOM_PHP_MAX_SPARE_SERVERS', '3')
 );
 
 
@@ -292,10 +296,10 @@ user = root
 group = root
 listen = [::]:9000
 pm = dynamic
-pm.max_children = 5
-pm.start_servers = 2
-pm.min_spare_servers = 1
-pm.max_spare_servers = 3
+pm.max_children = ${CONFIG['php.max_children']}
+pm.start_servers = ${CONFIG['php.start_servers']}
+pm.min_spare_servers = ${CONFIG['php.min_spare_servers']}
+pm.max_spare_servers = ${CONFIG['php.max_spare_servers']}
 env[ATOM_DEBUG_IP] = ${CONFIG['atom.debug_ip']}
 
 EOT;
