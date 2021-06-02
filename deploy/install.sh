@@ -132,6 +132,14 @@ docker run -d --network atom-network \
         --env ATOM_MYSQL_USERNAME=atom \
         --env ATOM_MYSQL_PASSWORD=AeJua4xe \
 	--env ATOM_DEBUG_IP=172.22.0.1 \
+        --env ATOM_PHP_MAX_EXECUTION_TIME=120 \
+	--env ATOM_PHP_MAX_CHILDREN=10 \
+	--env ATOM_PHP_MAX_INPUT_TIME=120 \
+	--env ATOM_PHP_MEMORY_LIMIT=1G \
+	--env ATOM_PHP_POST_MAX_SIZE=126M \
+	--env ATOM_PHP_UPLOAD_MAX_FILESIZE=128M \
+	--env ATOM_PHP_MAX_FILE_UPLOADS=20 \
+	--env ATOM_PHP_DATE_TIMEZONE="Europe/Madrid" \
         --mount type=volume,source=atom-composer-deps,target=/atom/src/vendor/composer \
 	--mount type=volume,source=atom-src,target=/atom/src \
 	--mount type=volume,source=atom-data,target=/atom/src/uploads \
@@ -146,6 +154,7 @@ docker run -d -p 63001:80/tcp --network atom-network \
 	-e "TZ=Europe/Madrid" \
 	--mount type=volume,source=atom-src,target=/atom/src,readonly=true \
 	--mount type=bind,source=${NGINX_CFG}/etc/nginx/nginx.conf,target=/etc/nginx/nginx.conf,readonly=true\
+	--mount type=volume,source=atom-data,target=/atom/src/uploads \
 	--restart on-failure \
 	--name atom-nginx \
         nginx:latest
