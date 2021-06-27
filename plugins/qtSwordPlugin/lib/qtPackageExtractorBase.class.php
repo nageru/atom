@@ -101,6 +101,7 @@ class qtPackageExtractorBase
 
         case 'application/zip':
           $directory = $this->filename.'_dir';
+          mkdir ($directory);  
           $command = vsprintf('unzip -n -d %s %s', array($directory, $this->filename));
           exec($command, $output, $return);
           if (2 > $return)
