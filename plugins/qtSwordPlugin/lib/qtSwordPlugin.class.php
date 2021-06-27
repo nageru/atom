@@ -21,7 +21,8 @@ class qtSwordPlugin
 {
   public static function saveRequestContent()
   {
-    $filename = tempnam('/tmp', 'php_qubit_');
+      
+    $filename = tempnam(sfConfig::get('app_sword_deposit_dir', '/tmp'), 'php_qubit_');
 
     $file = fopen($filename, 'w');
     $source = fopen("php://input", 'r');
