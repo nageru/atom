@@ -50,9 +50,13 @@
 // Local tweaks
 
 @white: #ffffff;
+@topBarButtonHoverColor: rgb(208, 185, 144);
+@bodyBackgroundColor: rgb(208, 185, 144);
+@bodyDarkColor: rgb(144, 110, 80);
+@bodyMidColor: rgb(133, 112, 64);
 
 body {
-  background-color: #999;
+  background-color: @bodyBackgroundColor;
   font-family:'Franklin Gothic Medium';
   font-weight: normal;
   font-style: normal;    
@@ -74,7 +78,7 @@ button {
 }
 
 .open > button.top-dropdown, button.top-dropdown:hover, button.top-dropdown:focus {
-    background-color: #ff5555 !important;
+    background-color: rgb(144, 110, 80) !important;
     background-image: url(../../arDominionPlugin/images/white-arrow.png);
     color: #fff;
 }
@@ -104,9 +108,16 @@ button {
   color: #ffffff;  
 }
 
+.top-dropdown-container .top-dropdown-header {
+    background-color: @bodyBackgroundColor;
+    padding: 0 10px;
+    border-bottom: 1px solid #eee;
+}
+
+
 #search-bar #search-form-wrapper input {
     border: none;
-    background-color: #aaaaaa;
+    background-color: @bodyBackgroundColor;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -123,6 +134,12 @@ button {
     color: @white;
 }
 
+#clipboard-menu .top-dropdown-header > span {
+    display: block;
+    color: #000000;
+    margin: -6px 0 5px 0;
+}
+
 .border-bottom-left {
     font-family:'Franklin Gothic Medium';
     font-weight: normal;
@@ -136,17 +153,17 @@ button {
     font-family:'Franklin Gothic Medium';
     font-weight: normal;
     font-style: normal;    
-    background-color: #aaaaaa;
+    background-color: ;
     color: @white;
 }
 
 .search-popover#search-realm div.active {
-    background-color: #777777;
+    background-color: rgb(114, 110, 80);
 }
 
 .search-popover#search-realm a {
-    background-color: #eee;
-    color: #000000;
+    background-color: @bodyBackgroundColor;
+    color: #ffffff;
     border-radius: 4px;
 }
 
@@ -171,6 +188,16 @@ button {
 
 .c-btn {
   border-color: @white;
+}
+
+#sidebar a {
+  color: @white;
+  background-color: @bodyBackgroundColor;    
+}
+
+#content,
+#content a {
+  background-color: @bodyMidColor;  
 }
 
 a,
