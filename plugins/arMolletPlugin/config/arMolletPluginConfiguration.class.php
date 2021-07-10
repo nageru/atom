@@ -5,8 +5,8 @@ class arMolletPluginConfiguration extends sfPluginConfiguration
   // Summary and version. AtoM recognizes any plugin as a theme as long as
   // the $summary string contains the word "theme" in it (case-insensitive).
   public static
-    $summary = 'Theme plugin, extension of arDominionPlugin.',
-    $version = '0.0.1';
+    $summary = 'Theme plugin for Ajuntament de Mollet del Vallès',
+    $version = '1.0.';
 
   public function contextLoadFactories(sfEvent $event)
   {
